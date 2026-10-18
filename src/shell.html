@@ -242,6 +242,15 @@ body.preview .mode-note{display:block}
   background:var(--paper-3);border-radius:8px;padding:10px 14px;margin:16px 0;line-height:1.75}
 
 
+
+.lab-tools{display:flex;gap:6px;align-items:center}
+.lab-btn{font-family:var(--sans);font-size:11px;color:var(--ink-2);background:var(--paper);
+  border:1px solid var(--line-2);border-radius:99px;padding:3px 10px;cursor:pointer;transition:.15s}
+.lab-btn:hover{border-color:var(--red);color:var(--red)}
+.lab:fullscreen{display:flex;flex-direction:column;background:var(--paper);border-radius:0}
+.lab:fullscreen canvas{flex:1;height:auto;min-height:0}
+.lab:fullscreen .lab-ctrl,.lab:fullscreen .lab-foot{flex:0 0 auto}
+
 /* 速览表 */
 .tbl.quick td{font-family:var(--sans);font-size:13.6px;line-height:1.75}
 .tbl.quick td:first-child{white-space:nowrap;font-weight:600}
@@ -468,6 +477,7 @@ window.MathJax = {
 
   var LABS={
     "sup":{
+      anim:{k:"beta",from:1.28,to:0.55,ms:5200},
       name:"上确界 · β 能不能再压低？",
       ctrls:[{k:"beta",label:"β",min:0.5,max:1.3,step:0.005,val:1.15,fmt:3}],
       draw:function(ctx,w,h,p,st){
@@ -500,6 +510,7 @@ window.MathJax = {
       }
     },
     "seq-eps":{
+      anim:{k:"eps",from:0.3,to:0.02,ms:5200},
       name:"ε-N · 尾巴能不能全进带子",
       ctrls:[{k:"eps",label:"ε",min:0.02,max:0.3,step:0.01,val:0.2,fmt:2}],
       draw:function(ctx,w,h,p,st){
@@ -525,6 +536,7 @@ window.MathJax = {
       }
     },
     "fun-eps":{
+      anim:{k:"eps",from:3.6,to:0.3,ms:5200},
       name:"ε-δ · δ 要多小才够",
       ctrls:[{k:"eps",label:"ε",min:0.2,max:4,step:0.1,val:1.2,fmt:1},
              {k:"delta",label:"δ",min:0.05,max:1.2,step:0.01,val:0.2,fmt:2}],
@@ -554,6 +566,7 @@ window.MathJax = {
       }
     },
     "secant":{
+      anim:{k:"h",from:1.4,to:0.02,ms:5200},
       name:"割线 → 切线 · h 越来越小",
       ctrls:[{k:"h",label:"h",min:0.02,max:1.5,step:0.01,val:1.0,fmt:2}],
       draw:function(ctx,w,h,p,st){
@@ -576,6 +589,7 @@ window.MathJax = {
       }
     },
     "riemann":{
+      anim:{k:"n",from:1,to:60,ms:6000},
       name:"Riemann 和 · 矩形越多越像",
       ctrls:[{k:"n",label:"n",min:1,max:60,step:1,val:6,fmt:0}],
       draw:function(ctx,w,h,p,st){
@@ -604,6 +618,7 @@ window.MathJax = {
       }
     },
     "taylor":{
+      anim:{k:"m",from:1,to:9,ms:6000},
       name:"Taylor 多项式逼近 sin x",
       ctrls:[{k:"m",label:"阶数 m",min:1,max:9,step:1,val:3,fmt:0}],
       draw:function(ctx,w,h,p,st){
@@ -635,6 +650,7 @@ window.MathJax = {
       }
     },
     "uniform":{
+      anim:{k:"x0",from:1,to:0.15,ms:5200},
       name:"一致连续 · 同一个 ε，δ 却越来越小",
       ctrls:[{k:"x0",label:"x₀",min:0.15,max:1,step:0.005,val:0.6,fmt:3}],
       draw:function(ctx,w,h,p,st){
@@ -662,6 +678,7 @@ window.MathJax = {
       }
     },
     "bisect":{
+      anim:{k:"n",from:0,to:12,ms:6000},
       name:"二分法 · 区间套怎样夹住根",
       ctrls:[{k:"n",label:"步数 n",min:0,max:12,step:1,val:3,fmt:0}],
       draw:function(ctx,w,h,p,st){
@@ -689,6 +706,7 @@ window.MathJax = {
       }
     },
     "ptest":{
+      anim:{k:"R",from:2,to:20,ms:5200},
       name:"p 积分 · 面积到底收不收敛",
       ctrls:[{k:"p",label:"p",min:0.4,max:2.6,step:0.05,val:1.4,fmt:2},
              {k:"R",label:"上限 R",min:2,max:20,step:0.5,val:8,fmt:1}],
@@ -713,6 +731,93 @@ window.MathJax = {
           (conv?"p &gt; 1：R 再大也就停在 1/(p−1) = <b>"+(1/(pp-1)).toFixed(3)+"</b> 附近，<span class='ok'>收敛</span>。"
                :"p ≤ 1：R 越大值越大、<b>没有上界</b>，<span class='no'>发散</span>。");
       }
+    },    "squeeze":{
+      name:"夹逼准则 · 两边一挤，中间没处跑",
+      ctrls:[{k:"n",label:"看第 n 项",min:2,max:30,step:1,val:8,fmt:0}],
+      anim:{k:"n",from:2,to:30,ms:6000},
+      draw:function(ctx,w,h,p,st){
+        var m=axes(ctx,w,h,p,[0,31],[0.45,1.5],{l:50,r:20,t:22,b:30});
+        var n0=Math.round(st.n);
+        for(var n=2;n<=30;n++){
+          var a=1-1/n,b=1+1/n,c=1+Math.sin(n)/n;
+          ctx.globalAlpha=.55;
+          ctx.fillStyle=p.blue;
+          ctx.beginPath();ctx.arc(m.X(n),m.Y(a),2.4,0,7);ctx.fill();
+          ctx.fillStyle=p.red;
+          ctx.beginPath();ctx.arc(m.X(n),m.Y(b),2.4,0,7);ctx.fill();
+          ctx.globalAlpha=1;
+          ctx.fillStyle=p.green;
+          ctx.beginPath();ctx.arc(m.X(n),m.Y(c),2.8,0,7);ctx.fill();
+        }
+        line(ctx,m,0,1,31,1,p.ink3,[4,4],1.1);
+        line(ctx,m,n0,0.45,n0,1.5,p.amber,[3,3],1.4);
+        var yy=[["aₙ = 1−1/n",p.blue],["cₙ = 1+sin n/n",p.green],["bₙ = 1+1/n",p.red]];
+        ctx.save();ctx.font="11px 'Noto Sans CJK SC',system-ui,sans-serif";
+        ctx.textAlign="left";ctx.textBaseline="middle";
+        yy.forEach(function(t,i){ctx.fillStyle=t[1];ctx.fillRect(m.pad.l+8,m.pad.t+10+i*16,10,3);
+          ctx.fillText(t[0],m.pad.l+24,m.pad.t+11+i*16);});
+        ctx.restore();
+      },
+      foot:function(st){
+        var n=Math.round(st.n),a=1-1/n,b=1+1/n,c=1+Math.sin(n)/n;
+        return "第 "+n+" 项：aₙ = <b>"+a.toFixed(4)+"</b> ≤ cₙ = <b>"+c.toFixed(4)+
+          "</b> ≤ bₙ = <b>"+b.toFixed(4)+"</b>。上下两条都往 1 挤，中间那条<b>没有别的去处</b>，只能跟着收敛到 1——这就是夹逼。";
+      }
+    },
+    "break":{
+      name:"间断点四型 · 拖动切换",
+      ctrls:[{k:"kind",label:"类型",min:0,max:3,step:1,val:0,fmt:0}],
+      draw:function(ctx,w,h,p,st){
+        var k=Math.round(st.kind);
+        var xr = k===3?[-0.55,0.55]:[-3,3];
+        var yr = k===2?[-5,5]:[-1.8,2.2];
+        var m=axes(ctx,w,h,p,xr,yr,{l:50,r:20,t:18,b:30});
+        function curve(f,from,to,color,skip){
+          ctx.save();ctx.strokeStyle=color;ctx.lineWidth=2.2;ctx.beginPath();
+          var started=false;
+          for(var i=0;i<=600;i++){
+            var x=from+(to-from)*i/600, y=f(x);
+            if(!isFinite(y)||y>yr[1]||y<yr[0]||(skip&&Math.abs(x)<skip)){started=false;continue;}
+            if(!started){ctx.moveTo(m.X(x),m.Y(y));started=true;}
+            else ctx.lineTo(m.X(x),m.Y(y));
+          }
+          ctx.stroke();ctx.restore();
+        }
+        if(k===0){
+          curve(function(x){return Math.sin(x)/x;},-3,3,p.ink,0.004);
+          dot(ctx,m,0,1,p.ink,4.4);
+          ctx.save();ctx.fillStyle=p.paper||"#fff";ctx.beginPath();ctx.arc(m.X(0),m.Y(1),3,0,7);ctx.fill();ctx.restore();
+          ctx.save();ctx.strokeStyle=p.ink;ctx.lineWidth=1.6;ctx.beginPath();ctx.arc(m.X(0),m.Y(1),4,0,7);ctx.stroke();ctx.restore();
+          dot(ctx,m,0,0.5,p.red,4.4);
+          tag(ctx,m,0,0.5,"f(0)=0.5",p.red,8,14);
+        } else if(k===1){
+          line(ctx,m,-3,-1,0,-1,p.ink,[],2.2);
+          line(ctx,m,0,1,3,1,p.ink,[],2.2);
+          ctx.save();ctx.strokeStyle=p.ink3;ctx.lineWidth=1.2;ctx.setLineDash([4,4]);
+          ctx.beginPath();ctx.moveTo(m.X(0),m.Y(-1));ctx.lineTo(m.X(0),m.Y(1));ctx.stroke();ctx.restore();
+          dot(ctx,m,0,-1,p.blue,4);dot(ctx,m,0,1,p.blue,4);
+          tag(ctx,m,0,-1,"左极限 −1",p.blue,-70,-8);tag(ctx,m,0,1,"右极限 1",p.blue,10,8);
+        } else if(k===2){
+          curve(function(x){return 1/x;},0.09,3,p.ink);
+          curve(function(x){return 1/x;},-3,-0.09,p.ink);
+          ctx.save();ctx.strokeStyle=p.red;ctx.lineWidth=1.4;ctx.setLineDash([5,4]);
+          ctx.beginPath();ctx.moveTo(m.X(0),m.Y(yr[0]));ctx.lineTo(m.X(0),m.Y(yr[1]));ctx.stroke();ctx.restore();
+          tag(ctx,m,0.2,3.4,"x → 0⁺ 冲到 +∞",p.red,6,0);
+        } else {
+          curve(function(x){return Math.sin(1/x);},-0.55,-0.004,p.ink);
+          curve(function(x){return Math.sin(1/x);},0.004,0.55,p.ink);
+          ctx.save();ctx.fillStyle=p.red;ctx.globalAlpha=.12;
+          ctx.fillRect(m.X(-0.05),m.pad.t,m.X(0.05)-m.X(-0.05),m.ih);ctx.restore();
+          tag(ctx,m,0.1,1.5,"越靠近 0 振荡越快",p.red,6,0);
+        }
+      },
+      foot:function(st){
+        var k=Math.round(st.kind);
+        if(k===0) return "<b>可去间断点</b>：sin x / x 在 0 附近的极限是 1，但函数值取成了 0.5。补一句 f(0)=1 就连续了。";
+        if(k===1) return "<b>跳跃间断点</b>：sgn x 的左极限 −1、右极限 1，两个都算得出来，但<b>不相等</b>，所以极限不存在。";
+        if(k===2) return "<b>第二类（无穷型）</b>：1/x 在 0 处无界，右极限 +∞、左极限 −∞，连“趋于一个数”都谈不上。";
+        return "<b>第二类（振荡型）</b>：sin(1/x) 在 0 附近无限次穿过每一个值，既不趋于数，也不趋于无穷——它只是不肯安定。";
+      }
     },
   };
 
@@ -721,20 +826,28 @@ window.MathJax = {
     var id=root.getAttribute("data-lab"), cfg=LABS[id];
     if(!cfg) return;
     root.innerHTML='<div class="lab-bar"><span class="lab-tag">交互实验 · '+cfg.name+
-      '</span><span class="lab-tip">拖动滑块 / 触屏也可</span></div>'+
+      '</span><span class="lab-tools"></span></div>'+
       '<canvas></canvas><div class="lab-ctrl"></div><div class="lab-foot"></div>';
-    var cv=root.querySelector("canvas"), ctrl=root.querySelector(".lab-ctrl"), foot=root.querySelector(".lab-foot");
-    var st={};
+    var bar=root.querySelector(".lab-bar"), tools=root.querySelector(".lab-tools"),
+        cv=root.querySelector("canvas"), ctrl=root.querySelector(".lab-ctrl"), foot=root.querySelector(".lab-foot");
+    var st={}, inputs={}, outs={}, metas={};
     cfg.ctrls.forEach(function(c){
       var l=document.createElement("label");
       l.innerHTML='<span>'+c.label+'</span><input type="range" min="'+c.min+'" max="'+c.max+
         '" step="'+c.step+'" value="'+c.val+'"><output></output>';
       var inp=l.querySelector("input"), out=l.querySelector("output");
-      st[c.k]=c.val;
+      st[c.k]=c.val; inputs[c.k]=inp; outs[c.k]=out; metas[c.k]=c;
       var show=function(){out.textContent=(c.fmt!==undefined&&c.fmt>0)?(+inp.value).toFixed(c.fmt):String(inp.value);};
-      inp.addEventListener("input",function(){st[c.k]=+inp.value;show();draw();});
+      inp.addEventListener("input",function(){stopAnim();st[c.k]=+inp.value;show();draw();});
       show();ctrl.appendChild(l);
     });
+
+    function setVal(k,v){
+      st[k]=v;
+      var inp=inputs[k]; if(inp) inp.value=v;
+      var o=outs[k], c=metas[k];
+      if(o) o.textContent=(c.fmt!==undefined&&c.fmt>0)?(+v).toFixed(c.fmt):String(Math.round(v));
+    }
     function draw(){
       var w=cv.clientWidth||600,hh=cv.clientHeight||282;
       var dpr=Math.min(window.devicePixelRatio||1,2);
@@ -746,8 +859,52 @@ window.MathJax = {
       cfg.draw(ctx,w,hh,pal(),st);
       foot.innerHTML=cfg.foot(st);
     }
+
+    /* ---- 自动演示 ---- */
+    var raf=null, t0=0, playing=false, animBtn=null;
+    function stopAnim(){
+      if(!playing&&!raf) return;
+      playing=false; if(raf) cancelAnimationFrame(raf); raf=null; t0=0;
+      if(animBtn) animBtn.textContent="▶ 自动演示";
+    }
+    function tick(ts){
+      if(!playing) return;
+      if(!t0) t0=ts;
+      var dur=cfg.anim.ms||4800;
+      var ph=((ts-t0)%(dur*2))/dur;
+      var u=ph<=1?ph:2-ph;
+      var e=u<0.5?2*u*u:1-Math.pow(-2*u+2,2)/2;
+      setVal(cfg.anim.k, cfg.anim.from+(cfg.anim.to-cfg.anim.from)*e);
+      draw();
+      raf=requestAnimationFrame(tick);
+    }
+    if(cfg.anim){
+      animBtn=document.createElement("button");
+      animBtn.type="button"; animBtn.className="lab-btn"; animBtn.textContent="▶ 自动演示";
+      animBtn.addEventListener("click",function(){
+        if(playing){stopAnim();return;}
+        playing=true; animBtn.textContent="⏸ 暂停"; t0=0; raf=requestAnimationFrame(tick);
+      });
+      tools.appendChild(animBtn);
+    }
+
+    /* ---- 全屏 ---- */
+    if(document.fullscreenEnabled){
+      var fsBtn=document.createElement("button");
+      fsBtn.type="button"; fsBtn.className="lab-btn"; fsBtn.textContent="全屏";
+      fsBtn.addEventListener("click",function(){
+        if(document.fullscreenElement) document.exitFullscreen();
+        else if(root.requestFullscreen) root.requestFullscreen();
+      });
+      document.addEventListener("fullscreenchange",function(){
+        fsBtn.textContent = document.fullscreenElement ? "退出全屏" : "全屏";
+        setTimeout(draw,80);
+      });
+      tools.appendChild(fsBtn);
+    }
+
     redraws.push(draw);
-    if(window.ResizeObserver) new ResizeObserver(draw).observe(cv);
+    if(window.ResizeObserver) new ResizeObserver(function(){draw();}).observe(cv);
     else window.addEventListener("resize",draw);
     draw();
   }
