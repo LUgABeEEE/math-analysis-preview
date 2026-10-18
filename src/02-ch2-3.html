@@ -1,0 +1,370 @@
+<section class="chap" id="ch2" data-no="02" data-title="数列极限" style="--ch:2">
+  <div class="chap-head">
+    <div class="chap-no">02</div>
+    <h2>数列极限<small class="en">Limits of Sequences</small></h2>
+  </div>
+  <p class="src">教材对应：第二章 数列极限 · §1 数列极限的概念　§2 收敛数列的性质　§3 数列极限存在的条件</p>
+<div class="ask"><b>课 前 3 问</b>
+    <ol><li>“无限接近”这句话，能不能改写成一句可以逐项检验的话？</li><li>为什么光“有界”不够，还要“单调”，才能保证一定收敛？</li><li>相邻两项越来越近的数列，一定收敛吗？</li></ol>
+    <span class="ask-hint">读完本章约 20 分钟 · 答不出没关系，把问题带进课堂</span>
+  </div>
+
+  <div class="roadmap"><b>本章地图</b>
+    <ul>
+      <li>$\eps$-$N$ 定义：把"无限接近"翻译成可检验的不等式</li>
+      <li>用定义证极限：<b>放大法</b>与构造 $N$</li>
+      <li>四条性质：唯一、有界、保号、四则；夹逼</li>
+      <li>两条存在性定理：单调有界、Cauchy 准则</li>
+      <li>子列：证明<b>发散</b>最省力的工具</li>
+    </ul>
+  </div>
+
+  <p>这是全书的第一个硬骨头，也是最重要的一章。后面函数极限、连续、导数、积分，全是它的变体。请把这一章的每个证明都亲手写一遍——不是"看懂"，是"默写"。</p>
+
+  <h3>2.1 定义：把"无限接近"写成不等式</h3>
+
+  <div class="box def"><div class="tag">数列极限（$\eps$-$N$ 定义）</div>
+    <p>设 $\{a_n\}$ 是数列，$a\in\R$。若</p>
+    <p>$$\forall\eps&gt;0,\ \exists N\in\N^*,\ \forall n&gt;N:\quad |a_n-a|&lt;\eps,$$</p>
+    <p>则称数列 $\{a_n\}$ <b>收敛于</b> $a$，记作 $\lim_{n\to\infty}a_n=a$ 或 $a_n\to a$。否则称它<b>发散</b>。</p>
+  </div>
+
+  <p class="plain">所谓"$a_n$ 收敛到 $a$"，就是一句承诺：<b>你说要多近，我就能保证从某一项起，以后每一项都在这么近之内。</b>ε 是你要的精度，N 是我给你的起点。精度越苛刻，起点越靠后——这是全部代价。</p>
+
+  <div class="box note"><div class="tag">读法</div>
+    <p>三层结构，缺一不可：</p>
+    <ul>
+      <li>$\forall\eps&gt;0$：<b>任给</b>一个精度。对手先出招，你不能挑 $\eps$。</li>
+      <li>$\exists N$：你要<b>回应</b>一个起点。$N$ 可以依赖 $\eps$，通常写成 $N(\eps)$。</li>
+      <li>$\forall n&gt;N$：从起点往后，<b>每一项</b>都要满足。只验证几项或"趋势上"满足都不算。</li>
+    </ul>
+    <p>几何上：$a$ 的任意 $\eps$-邻域之外，最多只有 $N$ 项。<b>"有限多个例外"是关键词</b>——极限只约束尾巴，不管开头怎么乱。</p>
+  </div>
+
+  <div class="lab" data-lab="seq-eps"></div>
+
+  <div class="box ex"><div class="tag">从定义出发</div>
+    <p>证明 $\lim_{n\to\infty}\dfrac1n=0$。</p>
+    <details class="ans"><summary>解答</summary><div class="body">
+      <p>任给 $\eps&gt;0$。要使 $\left|\frac1n-0\right|=\frac1n&lt;\eps$，只需 $n&gt;\frac1\eps$。取 $N=\left[\frac1\eps\right]+1$（保证 $N&gt;\frac1\eps$），则当 $n&gt;N$ 时 $\frac1n\le\frac{1}{N+1}&lt;\eps$。</p>
+      <p>故 $\forall\eps&gt;0$ 存在这样的 $N$，按定义 $\lim\frac1n=0$。<span class="qed">∎</span></p>
+    </div></details>
+  </div>
+
+  <div class="box tip"><div class="tag">方法 · 放大法的标准流程</div>
+    <p>① 写出 $|a_n-a|$；② <b>放大</b>成一个只含 $n$ 的简单式子 $b_n$；③ 解 $b_n&lt;\eps$ 得 $n&gt;N(\eps)$；④ 取整并声明。</p>
+    <p>放大时可以用"$n\ge1$ 时 $\frac{1}{n+1}&lt;\frac1n$"这类粗糙估计——<b>粗糙没关系，只要方向对</b>。极限证明不追求最优的 $N$，只追求存在的 $N$。</p>
+  </div>
+
+  <div class="box ex"><div class="tag">带分式的极限</div>
+    <p>证明 $\lim_{n\to\infty}\dfrac{3n+1}{2n+1}=\dfrac32$。</p>
+    <details class="ans"><summary>解答</summary><div class="body">
+      <p>$$\left|\frac{3n+1}{2n+1}-\frac32\right|=\left|\frac{6n+2-6n-3}{2(2n+1)}\right|=\frac{1}{2(2n+1)}&lt;\frac{1}{2n}.$$</p>
+      <p>任给 $\eps&gt;0$，取 $N=\left[\frac{1}{2\eps}\right]+1$，则 $n&gt;N$ 时 $\frac{1}{2n}&lt;\eps$，故原式成立。<span class="qed">∎</span></p>
+    </div></details>
+  </div>
+
+  <div class="box ex"><div class="tag">几何数列</div>
+    <p>设 $0&lt;q&lt;1$，证明 $\lim_{n\to\infty}q^n=0$。</p>
+    <details class="ans"><summary>解答（用 Bernoulli 不等式）</summary><div class="body">
+      <p>写 $q=\dfrac{1}{1+h}$，其中 $h=\dfrac{1-q}{q}&gt;0$。由 Bernoulli 不等式 $(1+h)^n\ge 1+nh$，得</p>
+      <p>$$0&lt;q^n=\frac{1}{(1+h)^n}\le\frac{1}{1+nh}&lt;\frac{1}{nh}.$$</p>
+      <p>任给 $\eps&gt;0$，取 $N=\left[\frac{1}{h\eps}\right]+1$，则 $n&gt;N$ 时 $q^n&lt;\eps$。<span class="qed">∎</span></p>
+    </div></details>
+  </div>
+
+  <div class="box warn"><div class="tag">易错</div>
+    <p>① <b>$\eps$ 是任给的</b>，不能"取 $\eps=0.01$ 验证通过"就算完。<br>
+       ② $N$ <b>必须先于</b> $n$ 确定：正确的顺序是"任给 $\eps$ → 造出 $N$ → 对一切 $n&gt;N$"。写成"对每个 $n$ 存在 $N$"就完全变味了。<br>
+       ③ 不等式是严格小于 $&lt;$，取 $N=\left[\frac1\eps\right]$ 可能不够（$\eps=1$ 时 $n&gt;1$ 就要求 $1/n&lt;1$，$n=2$ 时 $1/2&lt;1$ 成立，侥幸对了；但 $\eps=1/2$ 时会出问题）。<b>稳妥做法：取 $N=[\cdot]+1$。</b></p>
+  </div>
+
+  <h3>2.2 收敛数列的四条性质</h3>
+
+  <div class="box thm" data-k="定理"><div class="tag">极限唯一</div>
+    <p>若 $a_n\to a$ 且 $a_n\to b$，则 $a=b$。</p>
+    <details class="proof"><summary>证明</summary><div class="body">
+      <p>反证，设 $a\ne b$，不妨 $a&lt;b$。取 $\eps=\dfrac{b-a}{2}&gt;0$。由定义存在 $N_1,N_2$，使 $n&gt;N_1$ 时 $|a_n-a|&lt;\eps$，$n&gt;N_2$ 时 $|a_n-b|&lt;\eps$。</p>
+      <p>取 $n&gt;\max\{N_1,N_2\}$，则</p>
+      <p>$$b-a=|b-a|\le|b-a_n|+|a_n-a|&lt;2\eps=b-a,$$</p>
+      <p>矛盾。这里用了三角不等式把两个邻域"接"起来。<span class="qed">∎</span></p>
+    </div></details>
+  </div>
+
+  <div class="box thm" data-k="定理"><div class="tag">收敛必有界</div>
+    <p>若 $\{a_n\}$ 收敛，则 $\{a_n\}$ 有界。</p>
+    <details class="proof"><summary>证明</summary><div class="body">
+      <p>设 $a_n\to a$。取 $\eps=1$，存在 $N$ 使 $n&gt;N$ 时 $|a_n-a|&lt;1$，即 $|a_n|&lt;|a|+1$。</p>
+      <p>令 $M=\max\{|a_1|,|a_2|,\dots,|a_N|,|a|+1\}$，则对一切 $n$ 有 $|a_n|\le M$。<span class="qed">∎</span></p>
+      <p>注意这里的思路：<b>尾巴用极限控制，开头有限项用 $\max$ 收编</b>。这个"有限项取最大"的套路全书通用。</p>
+    </div></details>
+  </div>
+
+  <p>逆命题不成立：$a_n=(-1)^n$ 有界但发散。所以"有界"是收敛的<b>必要不充分</b>条件，常用来快速判定发散。</p>
+
+  <div class="box thm" data-k="定理"><div class="tag">保号性与保序性</div>
+    <p>(1) 若 $a_n\to a&gt;0$，则存在 $N$，当 $n&gt;N$ 时 $a_n&gt;\dfrac a2&gt;0$。</p>
+    <p>(2) 若 $a_n\to a$，$b_n\to b$ 且 $a&lt;b$，则存在 $N$，当 $n&gt;N$ 时 $a_n&lt;b_n$。</p>
+    <p>但<b>极限保持非严格不等号</b>：若 $a_n\le b_n$ 恒成立，则 $a\le b$（可能取等）。</p>
+    <details class="proof"><summary>证明 (1)</summary><div class="body">
+      <p>取 $\eps=\frac a2&gt;0$，存在 $N$ 使 $n&gt;N$ 时 $|a_n-a|&lt;\frac a2$，特别地 $a_n&gt;a-\frac a2=\frac a2&gt;0$。<span class="qed">∎</span></p>
+    </div></details>
+  </div>
+
+  <div class="box warn"><div class="tag">易错</div>
+    <p>若 $a_n&gt;0$ 恒成立，只能推出 $a\ge 0$，<b>不能</b>推出 $a&gt;0$。例：$a_n=\frac1n&gt;0$，但极限是 $0$。"严格不等号在取极限时会退化"，这个现象在中值定理、积分不等式里反复出现。</p>
+  </div>
+
+  <div class="box thm" data-k="定理"><div class="tag">四则运算</div>
+    <p>若 $a_n\to a$，$b_n\to b$，则</p>
+    <p>$$a_n\pm b_n\to a\pm b,\qquad a_nb_n\to ab,\qquad \frac{a_n}{b_n}\to\frac ab\ (b\ne0).$$</p>
+    <details class="proof"><summary>证明要点（乘积与商）</summary><div class="body">
+      <p><b>乘积：</b>$|a_nb_n-ab|=|a_nb_n-ab_n+ab_n-ab|\le|b_n||a_n-a|+|a||b_n-b|$。由有界性 $|b_n|\le M$，两项都可压到 $\eps/2$。</p>
+      <p><b>商：</b>先证 $\frac{1}{b_n}\to\frac1b$。由保号性，$n$ 充分大时 $|b_n|&gt;\frac{|b|}{2}$，于是</p>
+      <p>$$\left|\frac1{b_n}-\frac1b\right|=\frac{|b_n-b|}{|b_n||b|}\le\frac{2}{|b|^2}|b_n-b|\to0.$$</p>
+      <p>再用乘积法则。<span class="qed">∎</span></p>
+    </div></details>
+  </div>
+
+  <h3>2.3 夹逼准则：从两边挤</h3>
+
+  <div class="box thm" data-k="定理"><div class="tag">夹逼准则</div>
+    <p>若存在 $N_0$，使 $n&gt;N_0$ 时 $a_n\le c_n\le b_n$，且 $a_n\to L$，$b_n\to L$，则 $c_n\to L$。</p>
+    <details class="proof"><summary>证明</summary><div class="body">
+      <p>任给 $\eps&gt;0$。存在 $N_1$ 使 $n&gt;N_1$ 时 $L-\eps&lt;a_n$；存在 $N_2$ 使 $n&gt;N_2$ 时 $b_n&lt;L+\eps$。取 $N=\max\{N_0,N_1,N_2\}$，则 $n&gt;N$ 时</p>
+      <p>$$L-\eps&lt;a_n\le c_n\le b_n&lt;L+\eps,$$</p>
+      <p>即 $|c_n-L|&lt;\eps$。<span class="qed">∎</span></p>
+    </div></details>
+  </div>
+
+  <div class="box ex"><div class="tag">夹逼的经典用法</div>
+    <p>证明 $\lim_{n\to\infty}\sqrt[n]{n}=1$，以及 $\lim_{n\to\infty}\dfrac{2^n}{n!}=0$。</p>
+    <details class="ans"><summary>解答</summary><div class="body">
+      <p><b>(1)</b> 令 $h_n=\sqrt[n]{n}-1\ge0$，则 $n=(1+h_n)^n\ge\dfrac{n(n-1)}{2}h_n^2$（二项式展开取 $h_n^2$ 项），故</p>
+      <p>$$0\le h_n\le\sqrt{\frac{2}{n-1}}\to0,$$</p>
+      <p>由夹逼 $h_n\to0$，即 $\sqrt[n]{n}\to1$。</p>
+      <p><b>(2)</b> 当 $n\ge2$ 时 $0&lt;\dfrac{2^n}{n!}=\dfrac{2}{1}\cdot\dfrac{2}{2}\cdot\dfrac{2}{3}\cdots\dfrac{2}{n}\le 2\cdot\dfrac{2}{n}=\dfrac4n\to0$。（中间那些因子都 $\le1$，只留下前两个。）</p>
+    </div></details>
+  </div>
+
+  <div class="box tip"><div class="tag">方法 · 二项式展开是分析里的"不等式工厂"</div>
+    <p>想证 $\sqrt[n]{n}\to1$、$(1+\frac1n)^n$ 有上界、$n^k q^n\to0$，都用同一个动作：把 $(1+h)^n$ 展开，<b>只保留你需要的项</b>，其余全扔（因为它们非负）。扔掉是合法的，因为你在放大。</p>
+  </div>
+
+  <h3>2.4 存在性：不用先知道极限是多少</h3>
+
+  <p>上面所有定理都需要先猜出 $a$。但很多数列的极限根本写不出（比如 $e$）。这时需要"存在性定理"。</p>
+
+  <div class="box thm" data-k="定理"><div class="tag">单调有界定理</div>
+    <p>单调递增且有上界的数列必收敛；单调递减且有下界的数列必收敛。</p>
+    <details class="proof"><summary>证明（用确界原理）</summary><div class="body">
+      <p>设 $\{a_n\}$ 递增有上界。由确界原理，$a=\sup\{a_n:n\in\N^*\}$ 存在。</p>
+      <p>任给 $\eps&gt;0$。由上确界的第二条，存在 $N$ 使 $a_N&gt;a-\eps$。当 $n&gt;N$ 时，由递增性 $a_n\ge a_N&gt;a-\eps$，又 $a_n\le a$，故 $|a_n-a|&lt;\eps$。<span class="qed">∎</span></p>
+      <p>看，这里 <b>第一章的确界原理终于派上了用场</b>——"极限存在"不是凭空断言，是从完备性里取出来的。</p>
+    </div></details>
+  </div>
+
+  <div class="box ex"><div class="tag">递推数列</div>
+    <p>设 $a_1=1$，$a_{n+1}=\sqrt{2+a_n}$。证明 $\{a_n\}$ 收敛并求极限。</p>
+    <details class="ans"><summary>解答（三步：有界、单调、解方程）</summary><div class="body">
+      <p><b>① 有界：</b>归纳证明 $a_n&lt;2$。$a_1=1&lt;2$；若 $a_n&lt;2$，则 $a_{n+1}=\sqrt{2+a_n}&lt;\sqrt4=2$。</p>
+      <p><b>② 单调：</b>$a_{n+1}^2-a_n^2=(2+a_n)-a_n^2=(2-a_n)(1+a_n)&gt;0$，又都为正，故 $a_{n+1}&gt;a_n$。</p>
+      <p><b>③ 求值：</b>由单调有界定理，极限 $L$ 存在。在递推式两边取极限，得 $L=\sqrt{2+L}$，即 $L^2-L-2=0$，$L=2$ 或 $-1$。因 $a_n&gt;0$，故 $L=2$。</p>
+      <p><b>注意：</b>必须先证极限存在，才能"两边取极限"。这个顺序错了就是循环论证。</p>
+    </div></details>
+  </div>
+
+  <div class="box thm" data-k="定理"><div class="tag">$e$ 的定义</div>
+    <p>数列 $a_n=\left(1+\dfrac1n\right)^n$ 单调递增且有上界 $3$，故收敛；其极限记为 $e$。</p>
+    <details class="proof"><summary>证明思路</summary><div class="body">
+      <p>用二项式展开：</p>
+      <p>$$a_n=\sum_{k=0}^{n}\frac{n(n-1)\cdots(n-k+1)}{k!\,n^k}=\sum_{k=0}^{n}\frac1{k!}\prod_{j=1}^{k-1}\left(1-\frac jn\right).$$</p>
+      <p>每个因子 $\left(1-\frac jn\right)$ 随 $n$ 增大而增大，且项数也增加，故 $a_n$ 递增。又</p>
+      <p>$$a_n\le\sum_{k=0}^{n}\frac1{k!}\le 1+1+\frac12+\frac1{2^2}+\cdots&lt;3.$$</p>
+      <p>由单调有界定理收敛。<span class="qed">∎</span></p>
+    </div></details>
+  </div>
+
+  <div class="box thm" data-k="定理"><div class="tag">Cauchy 收敛准则</div>
+    <p>$\{a_n\}$ 收敛 $\iff$ $\forall\eps&gt;0,\ \exists N,\ \forall m,n&gt;N:\ |a_m-a_n|&lt;\eps$。</p>
+    <p>满足后一条的数列称为<b> Cauchy 列</b>。它的好处是<b>不需要预先知道极限值</b>。</p>
+  </div>
+
+  <div class="box warn"><div class="tag">易错</div>
+    <p>"$|a_{n+1}-a_n|\to0$"<b>不能</b>推出收敛。反例：$a_n=\ln n$，相邻差 $\ln(1+\frac1n)\to0$，但 $a_n\to+\infty$。Cauchy 准则要求的是<b>任意两项</b>都靠近，而不是相邻两项。</p>
+  </div>
+
+  <h3>2.5 子列：证明发散的最快方式</h3>
+
+  <div class="box thm" data-k="定理"><div class="tag">子列的性质</div>
+    <p>若 $a_n\to a$，则 $\{a_n\}$ 的<b>任何</b>子列都收敛于 $a$。</p>
+    <p>逆否：<b>若能找到两个子列收敛到不同的值（或某个子列发散），则原数列发散。</b></p>
+  </div>
+
+  <div class="box ex"><div class="tag">判定发散</div>
+    <p>证明 $a_n=(-1)^n$ 发散。</p>
+    <details class="ans"><summary>解答</summary><div class="body">
+      <p>取偶子列 $a_{2k}=1\to1$，奇子列 $a_{2k-1}=-1\to-1$。若原数列收敛于 $a$，则两个子列都应收敛于 $a$，于是 $1=-1$，矛盾。</p>
+    </div></details>
+  </div>
+
+  <p>顺带一提：有界数列必有收敛子列（Bolzano–Weierstrass 定理），这条在第七章会用有限覆盖定理证明。它说明"有界"虽然不足以保证收敛，但至少保证"某一部分收敛"。</p>
+
+  <div class="quiz">
+    <div class="tag">预 习 自 测</div>
+    <ol>
+      <li>用定义证明 $\lim\limits_{n\to\infty}\dfrac{n+1}{2n-1}=\dfrac12$。</li>
+      <li>设 $a_n=\dfrac{1}{\sqrt{n^2+1}}+\dfrac{1}{\sqrt{n^2+2}}+\cdots+\dfrac{1}{\sqrt{n^2+n}}$。用夹逼求 $\lim a_n$。</li>
+      <li>设 $a_1&gt;0$，$a_{n+1}=\dfrac12\left(a_n+\dfrac{2}{a_n}\right)$。证明它收敛并求极限。</li>
+      <li>判断：若 $a_n$ 有界，则 $a_n$ 收敛。（对/错，并说明）</li>
+    </ol>
+    <details class="ans"><summary>答案与提示</summary><div class="body">
+      <p><b>1.</b> $\left|\frac{n+1}{2n-1}-\frac12\right|=\left|\frac{2n+2-2n+1}{2(2n-1)}\right|=\frac{3}{2(2n-1)}\le\frac{3}{2n}$，取 $N=[\frac{3}{2\eps}]+1$。</p>
+      <p><b>2.</b> 共 $n$ 项，每项介于 $\frac{1}{\sqrt{n^2+n}}$ 与 $\frac1n$ 之间，故 $\frac{n}{\sqrt{n^2+n}}\le a_n\le\frac{n}{n}=1$。两端都趋于 $1$，故 $a_n\to1$。</p>
+      <p><b>3.</b> 由 AM-GM，$a_{n+1}\ge\sqrt2$（$n\ge1$ 时），故有下界。再证 $n\ge2$ 时单调递减：$a_{n+1}-a_n=\frac{1}{2}(\frac{2}{a_n}-a_n)=\frac{2-a_n^2}{2a_n}\le0$（因 $a_n\ge\sqrt2$）。极限 $L$ 满足 $L=\frac12(L+\frac2L)$，得 $L=\sqrt2$。</p>
+      <p><b>4.</b> <b>错。</b> $a_n=(-1)^n$ 有界但发散。这是本章最经典的判断题。</p>
+    </div></details>
+  </div>
+</section>
+
+<section class="chap" id="ch3" data-no="03" data-title="函数极限" style="--ch:3">
+  <div class="chap-head">
+    <div class="chap-no">03</div>
+    <h2>函数极限<small class="en">Limits of Functions</small></h2>
+  </div>
+
+  <p class="src">教材对应：第三章 函数极限 · §1 概念　§2 性质　§3 存在的条件　§4 两个重要极限　§5 无穷小量与无穷大量</p>
+<div class="ask"><b>课 前 3 问</b>
+    <ol><li>极限存不存在，和函数在那一点取什么值有关系吗？</li><li>$\eps$ 和 $\delta$ 各管什么？谁依赖谁？</li><li>为什么 $\dfrac{\sin x}{x}$ 在 $0$ 处不能直接代入？</li></ol>
+    <span class="ask-hint">读完本章约 20 分钟 · 答不出没关系，把问题带进课堂</span>
+  </div>
+
+  <div class="roadmap"><b>本章地图</b>
+    <ul>
+      <li>$\eps$-$\delta$ 定义与它的三种变体（单侧、$x\to\infty$）</li>
+      <li>Heine 定理：函数极限可以化归为数列极限（把第二章的定理全搬过来）</li>
+      <li>两个重要极限；无穷小的阶与等价替换</li>
+    </ul>
+  </div>
+
+  <p>数列极限只研究"$n\to\infty$"，而函数要研究"$x$ 从各个方向逼近 $x_0$"。定义只多了一个 $\delta$，但细节上多了几个坑。</p>
+
+  <h3>3.1 定义：$\eps$-$\delta$ 语言</h3>
+
+  <div class="box def"><div class="tag">$x\to x_0$ 时的极限</div>
+    <p>设 $f$ 在 $x_0$ 的某个去心邻域内有定义。若存在 $A\in\R$，使</p>
+    <p>$$\forall\eps&gt;0,\ \exists\delta&gt;0,\ \forall x:\ 0&lt;|x-x_0|&lt;\delta\ \Rightarrow\ |f(x)-A|&lt;\eps,$$</p>
+    <p>则称 $f$ 当 $x\to x_0$ 时以 $A$ 为极限，记 $\lim\limits_{x\to x_0}f(x)=A$。</p>
+  </div>
+
+  <div class="box note"><div class="tag">读法</div>
+    <p>$\eps$-$\delta$ 就是 $\eps$-$N$ 换了个马甲：$\eps$ 管"输出多接近"，$\delta$ 管"输入多接近"。<b>$\delta$ 是 $\eps$ 的函数</b>：$\eps$ 给了之后你才去找 $\delta$。</p>
+    <p>定义里写的是 $0&lt;|x-x_0|$，特别注意：<b>$f$ 在 $x_0$ 处的值 $f(x_0)$ 完全不参与</b>。极限存在与"$f$ 在 $x_0$ 有没有定义、等于多少"无关。</p>
+  </div>
+
+  <p class="plain">ε 是"输出允许的偏差"，δ 是"输入要靠近到什么程度"。能对每个 ε 都找到一个 δ，就说明输出真的跟着输入走；只要有一个 ε 找不到 δ，极限就不存在。</p>
+
+  <div class="lab" data-lab="fun-eps"></div>
+
+  <table class="tbl">
+    <caption>三种变体：只改一个量词部分</caption>
+    <tr><th style="width:170px">情形</th><th>定义（在 $\forall\eps&gt;0$ 之后）</th></tr>
+    <tr><td>$x\to x_0^+$</td><td>$\exists\delta&gt;0,\ 0&lt;x-x_0&lt;\delta\imp|f(x)-A|&lt;\eps$</td></tr>
+    <tr><td>$x\to x_0^-$</td><td>$\exists\delta&gt;0,\ 0&lt;x_0-x&lt;\delta\imp|f(x)-A|&lt;\eps$</td></tr>
+    <tr><td>$x\to+\infty$</td><td>$\exists M&gt;0,\ x&gt;M\imp|f(x)-A|&lt;\eps$</td></tr>
+    <tr><td>$x\to-\infty$</td><td>$\exists M&gt;0,\ x&lt;-M\imp|f(x)-A|&lt;\eps$</td></tr>
+  </table>
+
+  <div class="box prop" data-k="命题"><div class="tag">双侧极限与单侧极限</div>
+    <p>$\lim_{x\to x_0}f(x)=A$ $\iff$ 左右极限都存在且都等于 $A$。</p>
+    <p>这是判断"极限不存在"的常用武器：只要左右极限不等，双侧极限就不存在。</p>
+  </div>
+
+  <div class="box ex"><div class="tag">符号函数</div>
+    <p>$f(x)=\operatorname{sgn}x$ 在 $x=0$ 处：左极限 $-1$，右极限 $1$，<b>极限不存在</b>。</p>
+  </div>
+
+  <h3>3.2 Heine 定理：把函数问题变成数列问题</h3>
+
+  <div class="box thm" data-k="定理"><div class="tag">Heine 定理（归结原则）</div>
+    <p>$\lim\limits_{x\to x_0}f(x)=A$ 的充要条件是：<b>对任意</b>满足 $x_n\ne x_0$ 且 $x_n\to x_0$ 的数列，都有 $f(x_n)\to A$。</p>
+    <details class="proof"><summary>证明思路</summary><div class="body">
+      <p><b>必要性</b>不难：$\eps$ 给 $\delta$，数列的"最终性"给 $n&gt;N$ 时的 $0&lt;|x_n-x_0|&lt;\delta$。</p>
+      <p><b>充分性</b>用反证：若极限不为 $A$，则存在 $\eps_0&gt;0$，使对每个 $\delta=\frac1n$ 都能找到 $x_n$ 满足 $0&lt;|x_n-x_0|&lt;\frac1n$ 但 $|f(x_n)-A|\ge\eps_0$。于是 $x_n\to x_0$ 而 $f(x_n)\not\to A$，矛盾。<span class="qed">∎</span></p>
+    </div></details>
+  </div>
+
+  <p>Heine 定理的价值在于：<b>数列极限的所有性质（唯一性、保号性、四则运算、夹逼）可以整包搬过来</b>，不必重新用 $\eps$-$\delta$ 证一遍。</p>
+
+  <div class="box tip"><div class="tag">方法 · 用 Heine 判定极限不存在</div>
+    <p>找两条数列 $x_n,y_n\to x_0$，使 $f(x_n)$ 与 $f(y_n)$ 趋于不同的值。例：$f(x)=\sin\frac1x$，取 $x_n=\frac{1}{2n\pi}$ 得 $f(x_n)=0$；取 $y_n=\frac{1}{2n\pi+\pi/2}$ 得 $f(y_n)=1$。故 $x\to0$ 时极限不存在。</p>
+    <p>另一条常用的路：$f(x)=\frac{|x|}{x}$（$x\to0$）左右极限为 $\pm1$。</p>
+  </div>
+
+  <h3>3.3 两个重要极限</h3>
+
+  <div class="box thm" data-k="定理"><div class="tag">两个重要极限</div>
+    <p>$$\lim_{x\to0}\frac{\sin x}{x}=1,\qquad \lim_{x\to\infty}\left(1+\frac1x\right)^x=e.$$</p>
+    <details class="proof"><summary>第一个的证明思路</summary><div class="body">
+      <p>对 $0&lt;x&lt;\frac\pi2$，由单位圆中的面积关系得 $\sin x&lt;x&lt;\tan x$，于是</p>
+      <p>$$\cos x&lt;\frac{\sin x}{x}&lt;1.$$</p>
+      <p>由 $\cos x\to1$（$x\to0$）及夹逼，得 $\frac{\sin x}{x}\to1$。$x&lt;0$ 时用 $\frac{\sin x}{x}=\frac{\sin(-x)}{-x}$ 化归。</p>
+      <p>注意：这个证明<b>借用了 $\sin$ 的几何定义和弧度制</b>。严格化要等到级数章用幂级数定义 $\sin$，那时 $\frac{\sin x}{x}\to1$ 是逐项估计的结果。</p>
+    </div></details>
+  </div>
+
+  <div class="box ex"><div class="tag">用重要极限算几个</div>
+    <p>求 (1) $\lim\limits_{x\to0}\dfrac{\sin3x}{x}$；(2) $\lim\limits_{x\to0}\dfrac{1-\cos x}{x^2}$；(3) $\lim\limits_{x\to\infty}\left(1+\dfrac2x\right)^x$。</p>
+    <details class="ans"><summary>解答</summary><div class="body">
+      <p><b>(1)</b> $\dfrac{\sin3x}{x}=3\cdot\dfrac{\sin3x}{3x}\to3$。</p>
+      <p><b>(2)</b> $\dfrac{1-\cos x}{x^2}=\dfrac{2\sin^2\frac x2}{x^2}=\dfrac12\left(\dfrac{\sin(x/2)}{x/2}\right)^2\to\dfrac12$。</p>
+      <p><b>(3)</b> $\left(1+\frac2x\right)^x=\left[\left(1+\frac{2}{x}\right)^{x/2}\right]^2\to e^2$。</p>
+    </div></details>
+  </div>
+
+  <h3>3.4 无穷小、阶与等价替换</h3>
+
+  <div class="box def"><div class="tag">无穷小与阶</div>
+    <p>若 $\lim_{x\to x_0}\alpha(x)=0$，称 $\alpha$ 是 $x\to x_0$ 时的<b>无穷小</b>。</p>
+    <p>设 $\alpha,\beta$ 都是无穷小，且 $\beta\ne0$：</p>
+    <ul>
+      <li>若 $\frac\alpha\beta\to0$，记 $\alpha=o(\beta)$，称 $\alpha$ 是<b>高阶</b>无穷小；</li>
+      <li>若 $\frac\alpha\beta\to c\ne0$，记 $\alpha=O(\beta)$，称<b>同阶</b>；特别 $c=1$ 时记 $\alpha\sim\beta$，称<b>等价</b>无穷小。</li>
+    </ul>
+  </div>
+
+  <table class="tbl">
+    <caption>$x\to0$ 时最常用的等价无穷小</caption>
+    <tr><th>函数</th><th>等价于</th><th>函数</th><th>等价于</th></tr>
+    <tr><td>$\sin x$</td><td>$x$</td><td>$\tan x$</td><td>$x$</td></tr>
+    <tr><td>$1-\cos x$</td><td>$\frac12x^2$</td><td>$\ln(1+x)$</td><td>$x$</td></tr>
+    <tr><td>$e^x-1$</td><td>$x$</td><td>$(1+x)^\alpha-1$</td><td>$\alpha x$</td></tr>
+    <tr><td>$\arcsin x$</td><td>$x$</td><td>$\arctan x$</td><td>$x$</td></tr>
+  </table>
+
+  <div class="box thm" data-k="定理"><div class="tag">等价替换（只对乘除因子有效）</div>
+    <p>若 $\alpha\sim\alpha'$，$\beta\sim\beta'$，则 $\lim\dfrac{\alpha}{\beta}=\lim\dfrac{\alpha'}{\beta'}$（只要后者存在）。</p>
+  </div>
+
+  <div class="box warn"><div class="tag">易错</div>
+    <p><b>加减法中不能随意替换！</b> 例如 $\lim\limits_{x\to0}\dfrac{\tan x-\sin x}{x^3}$。若把 $\tan x,\sin x$ 都换成 $x$，得 $0$，<b>答案错</b>。正确做法：</p>
+    <p>$$\tan x-\sin x=\tan x(1-\cos x)\sim x\cdot\frac{x^2}{2}=\frac{x^3}{2},$$</p>
+    <p>故极限为 $\frac12$。原因：两个等价量相减时，低阶部分正好抵消，剩下的高阶项才是主角——而"等价"只保留了低阶信息。</p>
+  </div>
+
+  <div class="quiz">
+    <div class="tag">预 习 自 测</div>
+    <ol>
+      <li>用 $\eps$-$\delta$ 证明 $\lim\limits_{x\to2}(3x-1)=5$。</li>
+      <li>求 $\lim\limits_{x\to0}\dfrac{\sqrt{1+x}-1}{x}$。</li>
+      <li>求 $\lim\limits_{x\to0}x\sin\dfrac1x$，并说明为什么不能用"$\sin\frac1x$ 无极限"来否定它。</li>
+      <li>判断 $\lim\limits_{x\to0}\dfrac{\sin x}{x}=1$ 的证明中，"$\cos x&lt;\frac{\sin x}{x}&lt;1$"这一步依赖了什么前提。</li>
+    </ol>
+    <details class="ans"><summary>答案与提示</summary><div class="body">
+      <p><b>1.</b> $|3x-1-5|=3|x-2|$，任给 $\eps&gt;0$ 取 $\delta=\eps/3$ 即可。</p>
+      <p><b>2.</b> 有理化：$\frac{\sqrt{1+x}-1}{x}=\frac{1}{\sqrt{1+x}+1}\to\frac12$。</p>
+      <p><b>3.</b> $0\le|x\sin\frac1x|\le|x|\to0$，由夹逼极限为 $0$。有界量乘无穷小仍是无穷小——虽然 $\sin\frac1x$ 本身没有极限，但它有界，被 $x\to0$ 压住了。</p>
+      <p><b>4.</b> 依赖 $0&lt;x&lt;\frac\pi2$（单位圆中扇形面积夹在三角形之间），还要依赖 $\cos x\to1$ 本身。这正是"循环论证风险"的典型位置。</p>
+    </div></details>
+  </div>
+</section>

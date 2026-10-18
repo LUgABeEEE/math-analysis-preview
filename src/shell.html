@@ -1,0 +1,803 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>数学分析 · 上册预习讲义</title>
+<meta name="description" content="写给数学系大一新生的《数学分析》上册预习讲义：极限、连续、微分、积分。">
+<style>
+/* ============ 基础变量 ============ */
+:root{
+  --paper:#fbf9f4; --paper-2:#f4f0e6; --paper-3:#efe9db;
+  --ink:#1f1b16; --ink-2:#4b443a; --ink-3:#7d7365; --line:#e4ddcf; --line-2:#d3c9b5;
+  --red:#9c2f21; --red-bg:#fbf1ee;
+  --blue:#1d4e79; --blue-bg:#eef3f8;
+  --green:#2f6b4f; --green-bg:#eef5f0;
+  --amber:#8a5d0a; --amber-bg:#fbf5e7;
+  --violet:#5b4a86; --violet-bg:#f2f0f8;
+  --shadow:0 1px 2px rgba(60,45,20,.05),0 8px 24px -12px rgba(60,45,20,.18);
+  --serif:"Noto Serif CJK SC","Source Han Serif SC","Source Han Serif CN","Songti SC","STSong","SimSun",Georgia,serif;
+  --sans:"Noto Sans CJK SC","Source Han Sans SC","PingFang SC","Microsoft YaHei",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"JetBrains Mono","SFMono-Regular",Consolas,"Liberation Mono",monospace;
+}
+html[data-theme="dark"]{
+  --paper:#15130f; --paper-2:#1d1a15; --paper-3:#25211a;
+  --ink:#e9e3d5; --ink-2:#c3baa8; --ink-3:#8f8574; --line:#2f2a22; --line-2:#3d372c;
+  --red:#e08a7a; --red-bg:#2a1b17;
+  --blue:#8ab8de; --blue-bg:#16222e;
+  --green:#84c4a2; --green-bg:#152420;
+  --amber:#dcb165; --amber-bg:#271f11;
+  --violet:#b4a4dd; --violet-bg:#1f1b2a;
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px -12px rgba(0,0,0,.7);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth; -webkit-text-size-adjust:100%}
+body{
+  margin:0; background:var(--paper); color:var(--ink);
+  font-family:var(--serif); font-size:17px; line-height:1.95;
+  text-rendering:optimizeLegibility; -webkit-font-smoothing:antialiased;
+  transition:background .25s,color .25s;
+}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto} *{transition:none!important;animation:none!important}}
+
+/* ============ 顶部进度条 ============ */
+#progress{position:fixed;top:0;left:0;height:3px;width:0;z-index:99;
+  background:linear-gradient(90deg,var(--red),#c8791f);transition:width .1s linear}
+
+/* ============ 侧栏 ============ */
+.sidebar{
+  position:fixed;top:0;left:0;width:274px;height:100vh;overflow-y:auto;overscroll-behavior:contain;
+  background:var(--paper-2);border-right:1px solid var(--line);padding:26px 18px 60px;z-index:50;
+  scrollbar-width:thin;
+}
+.sidebar::-webkit-scrollbar{width:6px}
+.sidebar::-webkit-scrollbar-thumb{background:var(--line-2);border-radius:3px}
+.brand{font-family:var(--sans);margin-bottom:6px}
+.brand b{display:block;font-size:15px;letter-spacing:.12em;color:var(--red);font-weight:700}
+.brand span{display:block;font-size:11.5px;color:var(--ink-3);letter-spacing:.06em;margin-top:3px}
+.toc-title{font-family:var(--sans);font-size:10.5px;letter-spacing:.22em;color:var(--ink-3);
+  margin:22px 0 8px;padding-bottom:6px;border-bottom:1px solid var(--line)}
+.toc{list-style:none;margin:0;padding:0;font-family:var(--sans)}
+.toc li{margin:1px 0}
+.toc a{display:flex;gap:9px;align-items:baseline;padding:5px 8px 5px 9px;border-radius:6px;
+  color:var(--ink-2);text-decoration:none;font-size:13.5px;line-height:1.5;transition:.15s}
+.toc a:hover{background:var(--paper-3);color:var(--ink)}
+.toc a.active{background:var(--paper-3);color:var(--red);font-weight:600;box-shadow:inset 2px 0 0 var(--red)}
+.toc .n{font-family:var(--mono);font-size:10.5px;color:var(--ink-3);min-width:20px;letter-spacing:-.02em}
+.toc a.active .n{color:var(--red)}
+.toc a.done .n::after{content:"✓";color:var(--green);font-size:10px;margin-left:1px}
+.toc.sub a{padding-left:26px;font-size:12.5px;color:var(--ink-3)}
+.sidebar-foot{margin-top:26px;padding-top:14px;border-top:1px solid var(--line);
+  font-family:var(--sans);font-size:11px;color:var(--ink-3);line-height:1.8}
+.btn{font-family:var(--sans);font-size:12px;border:1px solid var(--line-2);background:transparent;
+  color:var(--ink-2);padding:6px 12px;border-radius:99px;cursor:pointer;transition:.15s;width:100%}
+.btn:hover{background:var(--paper-3);color:var(--ink)}
+
+/* ============ 主区 ============ */
+main{margin-left:274px;padding:0 44px 120px}
+.wrap{max-width:820px;margin:0 auto}
+
+/* 头部 */
+.hero{padding:78px 0 42px;border-bottom:1px solid var(--line);margin-bottom:14px}
+.hero .kicker{font-family:var(--sans);font-size:11.5px;letter-spacing:.24em;color:var(--red);font-weight:600}
+.hero h1{font-size:clamp(30px,4.4vw,46px);line-height:1.28;margin:16px 0 12px;font-weight:700;letter-spacing:.01em}
+.hero h1 small{display:block;font-size:.42em;font-weight:400;color:var(--ink-3);letter-spacing:.16em;margin-top:10px}
+.hero .lede{font-size:16.5px;color:var(--ink-2);max-width:640px;line-height:2}
+.hero .meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:26px;font-family:var(--sans);font-size:11.5px}
+.hero .meta span{border:1px solid var(--line-2);color:var(--ink-3);padding:4px 11px;border-radius:99px}
+
+/* 章 */
+.chap{padding:54px 0 18px;border-top:1px solid var(--line);margin-top:38px;counter-reset:defn res ex}
+.chap:first-of-type{border-top:none}
+.chap-head{display:flex;align-items:flex-start;gap:18px;margin-bottom:10px}
+.chap-no{font-family:var(--mono);font-size:12px;color:var(--red);border:1px solid currentColor;
+  border-radius:50%;width:42px;height:42px;flex:0 0 42px;display:flex;align-items:center;justify-content:center;
+  letter-spacing:.02em;margin-top:7px;font-weight:600}
+.chap-no.star{font-family:var(--sans);font-size:16px;line-height:1}
+.chap-head h2{font-size:clamp(23px,3vw,30px);margin:0;font-weight:700;letter-spacing:.01em;line-height:1.4}
+.chap-head .en{font-family:var(--sans);font-size:11px;letter-spacing:.2em;color:var(--ink-3);
+  text-transform:uppercase;display:block;margin-top:6px;font-weight:400}
+
+/* 本章地图 */
+.roadmap{background:var(--paper-2);border:1px solid var(--line);border-radius:10px;padding:16px 20px;
+  margin:20px 0 26px;font-size:14.5px;color:var(--ink-2);line-height:1.9;font-family:var(--sans)}
+.roadmap>b:first-child{font-family:var(--sans);font-size:10.5px;letter-spacing:.2em;color:var(--ink-3);
+  display:block;margin-bottom:8px;font-weight:600}
+.roadmap ul{margin:0;padding-left:1.1em}
+.roadmap li{margin:2px 0}
+
+/* 节标题 */
+h3{font-size:19.5px;margin:46px 0 12px;font-weight:700;line-height:1.5;padding-left:14px;
+  border-left:3px solid var(--red);letter-spacing:.01em}
+h4{font-size:15.5px;margin:28px 0 8px;font-weight:700;color:var(--ink-2);font-family:var(--sans)}
+p{margin:0 0 15px}
+a{color:var(--blue)}
+strong{font-weight:700;color:var(--ink)}
+em{font-style:normal;background:linear-gradient(transparent 62%,rgba(200,121,31,.28) 62%);padding:0 1px}
+code{font-family:var(--mono);font-size:.86em;background:var(--paper-3);padding:.1em .38em;border-radius:4px}
+
+/* ============ 盒子 ============ */
+.box{--c:var(--blue);--bg:var(--blue-bg);
+  border-left:3px solid var(--c);background:var(--bg);border-radius:2px 10px 10px 2px;
+  padding:15px 20px 13px;margin:22px 0;font-size:16.2px;position:relative}
+.box>.tag{font-family:var(--sans);font-size:12px;font-weight:700;letter-spacing:.06em;color:var(--c);
+  display:block;margin-bottom:5px}
+.box>.tag .num{font-feature-settings:"tnum";letter-spacing:.02em}
+.box>.tag::before{font-weight:700}
+.box p:last-child{margin-bottom:0}
+.box p{margin-bottom:11px}
+.box ul,.box ol{margin:6px 0 11px;padding-left:1.35em}
+.box li{margin:3px 0}
+
+.def{--c:var(--blue);--bg:var(--blue-bg)}
+
+.def{counter-increment:defn}
+
+.thm,.prop,.lem,.cor{--c:var(--red);--bg:var(--red-bg);counter-increment:res}
+
+
+.ex{--c:var(--green);--bg:var(--green-bg);counter-increment:ex}
+
+
+.note{--c:var(--blue);--bg:transparent;border-left-style:dotted;border-left-width:2px}
+
+.key{--c:var(--red);--bg:transparent;border-left-width:4px}
+
+.warn{--c:var(--amber);--bg:var(--amber-bg)}
+
+.tip{--c:var(--violet);--bg:var(--violet-bg)}
+
+.hist{--c:var(--ink-3);--bg:transparent;border-left-style:dotted;border-left-width:2px;font-size:15px;color:var(--ink-2)}
+
+
+/* 证明折叠 */
+details.proof{margin:12px 0 0;font-size:15.6px}
+details.proof>summary{cursor:pointer;font-family:var(--sans);font-size:12.5px;color:var(--c,var(--ink-3));
+  letter-spacing:.05em;list-style:none;user-select:none;display:inline-block;padding:2px 0}
+details.proof>summary::-webkit-details-marker{display:none}
+details.proof>summary::before{content:"▸ ";display:inline-block;transition:transform .15s}
+details.proof[open]>summary::before{content:"▾ "}
+details.proof>summary:hover{text-decoration:underline;text-underline-offset:3px}
+details.proof .body{padding:8px 0 0 2px;color:var(--ink-2);border-top:1px dashed var(--line-2);margin-top:6px}
+details.proof .body p{margin-bottom:10px}
+.qed{color:var(--ink-3);font-size:.9em}
+
+/* 自测 */
+.quiz{border:1px solid var(--line-2);border-radius:10px;padding:18px 22px;margin:28px 0;background:var(--paper-2)}
+.quiz>.tag{font-family:var(--sans);font-size:11px;letter-spacing:.2em;color:var(--red);font-weight:700;margin-bottom:10px}
+.quiz ol{padding-left:1.3em;margin:0}
+.quiz li{margin:7px 0}
+details.ans{margin-top:14px;font-size:15.4px}
+details.ans>summary{cursor:pointer;font-family:var(--sans);font-size:12.5px;color:var(--blue);
+  letter-spacing:.05em;list-style:none}
+details.ans>summary::-webkit-details-marker{display:none}
+details.ans>summary::before{content:"▸ "}
+details.ans[open]>summary::before{content:"▾ "}
+details.ans .body{padding-top:10px;border-top:1px dashed var(--line-2);margin-top:8px;color:var(--ink-2)}
+details.ans .body p{margin-bottom:9px}
+
+/* 表格 */
+.tbl{width:100%;border-collapse:collapse;margin:20px 0;font-size:14.8px;font-family:var(--sans)}
+.tbl caption{font-family:var(--sans);font-size:12px;color:var(--ink-3);text-align:left;padding-bottom:7px;letter-spacing:.05em}
+.tbl th,.tbl td{border-bottom:1px solid var(--line);padding:9px 10px;text-align:left;vertical-align:top}
+.tbl th{font-weight:700;color:var(--ink);background:var(--paper-2);font-size:13.5px;letter-spacing:.04em}
+.tbl tr:hover td{background:var(--paper-2)}
+
+/* 两栏卡片 */
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin:22px 0}
+.card{border:1px solid var(--line);border-radius:10px;padding:14px 16px;background:var(--paper-2);font-size:14.6px;line-height:1.85}
+.card>b:first-child{display:block;font-family:var(--sans);font-size:13px;margin-bottom:5px;color:var(--red);letter-spacing:.03em}
+
+
+/* 图 */
+.fig{margin:26px 0;text-align:center}
+.fig svg{width:100%;max-width:660px;color:var(--ink-2)}
+.fig text{font-family:var(--sans);font-size:12.5px;fill:currentColor}
+.fig .hot{color:var(--red)} .fig .mute{color:var(--ink-3)} .fig .soft{color:var(--blue)}
+.fig figcaption{font-family:var(--sans);font-size:12.5px;color:var(--ink-3);margin-top:6px;line-height:1.7}
+
+
+/* ============ 交互实验 ============ */
+.lab{margin:28px 0;border:1px solid var(--line-2);border-radius:12px;overflow:hidden;
+  background:var(--paper-2);box-shadow:var(--shadow)}
+.lab-bar{display:flex;justify-content:space-between;align-items:center;gap:10px;
+  padding:10px 16px;background:var(--paper-3);font-family:var(--sans);font-size:11.5px;letter-spacing:.06em}
+.lab-tag{color:var(--red);font-weight:700}
+.lab-tip{color:var(--ink-3);font-size:11px}
+.lab canvas{display:block;width:100%;height:282px;background:var(--paper);touch-action:pan-y}
+.lab-ctrl{display:flex;flex-wrap:wrap;gap:10px 24px;padding:12px 16px;border-top:1px solid var(--line);
+  font-family:var(--sans);font-size:12.5px;color:var(--ink-2)}
+.lab-ctrl label{display:flex;align-items:center;gap:9px}
+.lab-ctrl input[type=range]{width:132px;accent-color:var(--red);cursor:pointer}
+.lab-ctrl output{font-family:var(--mono);font-size:12px;color:var(--red);min-width:46px;
+  font-feature-settings:"tnum"}
+.lab-foot{padding:10px 16px 14px;font-family:var(--sans);font-size:12.5px;color:var(--ink-2);
+  border-top:1px dashed var(--line);line-height:1.8}
+.lab-foot b{color:var(--red);font-feature-settings:"tnum"}
+.lab-foot .ok{color:var(--green);font-weight:700}
+.lab-foot .no{color:var(--red);font-weight:700}
+
+/* 教材对应 */
+.src{font-family:var(--sans);font-size:11.5px;color:var(--ink-3);margin:-6px 0 20px 60px;letter-spacing:.02em}
+/* 说人话 */
+.plain{border-left:2px dashed var(--green);padding:0 0 0 14px;color:var(--ink-2);margin:16px 0;
+  font-size:15.8px;line-height:1.9}
+.plain::before{content:"说人话";font-family:var(--sans);font-size:10.5px;letter-spacing:.14em;
+  color:var(--green);font-weight:700;margin-right:.7em;vertical-align:.1em}
+@media print{.lab-ctrl,.lab-bar{display:none}.lab canvas{height:220px}}
+
+
+/* ============ 预习模式 ============ */
+.ask{background:var(--amber-bg);border:1px solid var(--line);border-left:3px solid var(--amber);
+  border-radius:2px 10px 10px 2px;padding:14px 18px;margin:18px 0 16px;font-size:15.4px;line-height:1.85}
+.ask>b{display:block;font-family:var(--sans);font-size:11px;letter-spacing:.18em;color:var(--amber);
+  margin-bottom:7px;font-weight:700}
+.ask ol{margin:0;padding-left:1.35em}
+.ask li{margin:3px 0}
+.ask-hint{display:block;margin-top:9px;font-family:var(--sans);font-size:11.5px;color:var(--ink-3)}
+body.preview .quiz{display:none}
+body.preview #apB,body.preview #apC{display:none}
+body.preview .mode-note{display:block}
+.mode-note{display:none;font-family:var(--sans);font-size:12px;color:var(--ink-3);
+  background:var(--paper-3);border-radius:8px;padding:10px 14px;margin:16px 0;line-height:1.75}
+
+
+/* 速览表 */
+.tbl.quick td{font-family:var(--sans);font-size:13.6px;line-height:1.75}
+.tbl.quick td:first-child{white-space:nowrap;font-weight:600}
+.tbl.quick a{color:var(--red);text-decoration:none;border-bottom:1px dotted var(--line-2)}
+.tbl.quick a:hover{border-bottom-color:var(--red)}
+
+/* 页脚 */
+.endnote{margin-top:80px;padding-top:26px;border-top:1px solid var(--line);font-family:var(--sans);
+  font-size:12.5px;color:var(--ink-3);line-height:2}
+
+/* 回到顶部 */
+#totop{position:fixed;right:26px;bottom:26px;width:44px;height:44px;border-radius:50%;
+  border:1px solid var(--line-2);background:var(--paper-2);color:var(--ink-2);cursor:pointer;
+  font-size:17px;display:none;place-items:center;z-index:60;box-shadow:var(--shadow)}
+#totop.show{display:grid}
+
+/* 移动端 */
+#navtoggle{display:none;position:fixed;left:16px;bottom:20px;z-index:70;
+  width:50px;height:50px;border-radius:50%;border:1px solid var(--line-2);
+  background:var(--paper-2);color:var(--ink);font-size:19px;cursor:pointer;box-shadow:var(--shadow)}
+#scrim{display:none;position:fixed;inset:0;background:rgba(20,15,5,.42);z-index:45}
+
+@media(max-width:980px){
+  main{margin-left:0;padding:0 20px 90px}
+  .sidebar{transform:translateX(-100%);transition:transform .22s ease;width:284px;box-shadow:var(--shadow)}
+  body.nav-open .sidebar{transform:none}
+  body.nav-open #scrim{display:block}
+  #navtoggle{display:grid;place-items:center}
+  .hero{padding-top:56px}
+  .box{padding:13px 15px 11px}
+  body{font-size:16.5px}
+}
+
+/* 打印 */
+@media print{
+  #progress,.sidebar,#totop,#navtoggle,#scrim{display:none!important}
+  main{margin:0;padding:0}
+  body{font-size:11pt;background:#fff;color:#000}
+  .chap{page-break-before:always;border-top:none;margin-top:0;padding-top:0}
+  .chap:first-of-type{page-break-before:auto}
+  .box{break-inside:avoid;background:#f7f7f7!important}
+  details.proof,details.ans{display:block}
+  details>summary{display:none}
+  details .body{display:block!important}
+  a{color:#000;text-decoration:none}
+}
+</style>
+</head>
+<body>
+<div id="progress"></div>
+
+<aside class="sidebar" id="sidebar">
+  <div class="brand">
+    <b>数学分析 · 上册</b>
+    <span>预习讲义 / PREVIEW NOTES</span>
+  </div>
+  <div class="toc-title">目 录</div>
+  <ul class="toc" id="toc">
+    <!-- TOC -->
+  </ul>
+  <div class="sidebar-foot">
+    <button class="btn" id="modeBtn">预习模式</button>
+    <div id="readbox">已读 <b id="readcount">0</b> / <span id="readtotal">0</span></div>
+    <button class="btn" id="themeBtn" style="margin-top:10px">切换深色 / 浅色</button>
+    <p style="margin-top:12px">公式为矢量渲染，可离线阅读。<br>建议按章预习：先看地图 → 读定义 → 盖住证明自己写 → 做自测。</p>
+  </div>
+</aside>
+<div id="scrim"></div>
+<button id="navtoggle" aria-label="目录">☰</button>
+<button id="totop" aria-label="回到顶部">↑</button>
+
+<main><div class="wrap">
+{{CONTENT}}
+</div></main>
+
+<script>
+window.MathJax = {
+  tex:{inlineMath:[['$','$'],['\\(','\\)']], displayMath:[['$$','$$'],['\\[','\\]']], processEscapes:true,
+       macros:{R:"\\mathbb{R}",N:"\\mathbb{N}",Z:"\\mathbb{Z}",Q:"\\mathbb{Q}",eps:"\\varepsilon",
+               dd:"\\mathrm{d}",imp:"\\Rightarrow",iff:"\\Leftrightarrow",sl:"\\displaystyle"}},
+  svg:{fontCache:'global',scale:1.03},
+  options:{skipHtmlTags:['script','noscript','style','textarea','pre','code'],
+           renderActions:{addMenu:[]}},
+  startup:{typeset:true}
+};
+</script>
+<script>
+{{MATHJAX}}
+</script>
+<script>
+(function(){
+  "use strict";
+  var $=function(s,c){return (c||document).querySelector(s)};
+  var $$=function(s,c){return Array.prototype.slice.call((c||document).querySelectorAll(s))};
+
+  /* ---- 目录自动生成 ---- */
+  var toc=$('#toc'), chaps=$$('.chap'), html='';
+  chaps.forEach(function(ch){
+    var id=ch.id, no=ch.getAttribute('data-no'), title=ch.getAttribute('data-title');
+    html+='<li><a href="#'+id+'" data-target="'+id+'"><span class="n">'+no+'</span><span>'+title+'</span></a></li>';
+  });
+  toc.innerHTML=html;
+
+  /* ---- 滚动进度 ---- */
+  var bar=$('#progress'), totop=$('#totop');
+  function onScroll(){
+    var h=document.documentElement;
+    var max=h.scrollHeight-h.clientHeight;
+    var p=max>0?(h.scrollTop||document.body.scrollTop)/max*100:0;
+    bar.style.width=p+'%';
+    totop.classList.toggle('show',(h.scrollTop||document.body.scrollTop)>600);
+  }
+  document.addEventListener('scroll',onScroll,{passive:true}); onScroll();
+
+  /* ---- scrollspy ---- */
+  var links=$$('#toc a'), map={};
+  links.forEach(function(a){map[a.getAttribute('data-target')]=a});
+  var current=null;
+  function spy(){
+    var y=window.scrollY+Math.min(220,window.innerHeight*0.28), found=null;
+    for(var i=0;i<chaps.length;i++){
+      if(chaps[i].getBoundingClientRect().top+window.scrollY<=y) found=chaps[i];
+    }
+    if(found&&found.id!==current){
+      current=found.id;
+      links.forEach(function(a){a.classList.toggle('active',a.getAttribute('data-target')===current)});
+      var a=map[current];
+      if(a){ var sb=$('#sidebar'); var r=a.getBoundingClientRect(), sr=sb.getBoundingClientRect();
+        if(r.top<sr.top+40||r.bottom>sr.bottom-40){ sb.scrollTop += r.top-sr.top-sr.height/2+40; } }
+    }
+  }
+  document.addEventListener('scroll',spy,{passive:true}); spy();
+
+  /* ---- 已读标记 ---- */
+  var readKey='ma-preview-read-v1', read={};
+  try{read=JSON.parse(localStorage.getItem(readKey)||'{}')}catch(e){read={}}
+  function paintRead(){ links.forEach(function(a){
+    if(read[a.getAttribute('data-target')]) a.classList.add('done'); }); }
+  paintRead();
+  function markRead(){
+    var changed=false;
+    chaps.forEach(function(ch){
+      var bottom=ch.getBoundingClientRect().bottom;
+      if(bottom<window.innerHeight*0.35 && !read[ch.id]){ read[ch.id]=1; changed=true; }
+    });
+    if(changed){ try{localStorage.setItem(readKey,JSON.stringify(read))}catch(e){} paintRead(); }
+  }
+  document.addEventListener('scroll',markRead,{passive:true});
+
+  /* ---- 主题 ---- */
+  var themeBtn=$('#themeBtn'), root=document.documentElement;
+  var saved=null; try{saved=localStorage.getItem('ma-theme')}catch(e){}
+  if(saved) root.setAttribute('data-theme',saved);
+  themeBtn.addEventListener('click',function(){
+    var t=root.getAttribute('data-theme')==='dark'?'light':'dark';
+    root.setAttribute('data-theme',t);
+    try{localStorage.setItem('ma-theme',t)}catch(e){}
+    if(window.MathJax&&MathJax.typesetPromise) MathJax.typesetPromise().catch(function(){});
+    document.dispatchEvent(new CustomEvent('themechange'));
+  });
+
+  /* ---- 移动端目录 ---- */
+  $('#navtoggle').addEventListener('click',function(){document.body.classList.toggle('nav-open')});
+  $('#scrim').addEventListener('click',function(){document.body.classList.remove('nav-open')});
+  toc.addEventListener('click',function(e){
+    if(e.target.closest('a')){document.body.classList.remove('nav-open')}
+  });
+
+  /* ---- 回到顶部 ---- */
+  totop.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'})});
+})();
+</script>
+
+<script>
+/* ============ 交互实验引擎（纯 Canvas，无外部依赖） ============ */
+(function(){
+  "use strict";
+  var V=function(n){return getComputedStyle(document.documentElement).getPropertyValue(n).trim();};
+  function pal(){return {ink:V("--ink"),ink2:V("--ink-2"),ink3:V("--ink-3"),line:V("--line-2"),
+    red:V("--red"),blue:V("--blue"),green:V("--green"),amber:V("--amber")};}
+  var FONT='11px "Noto Sans CJK SC","PingFang SC",system-ui,sans-serif';
+  function fmt(v){
+    if(Math.abs(v)>=1000) return v.toFixed(0);
+    if(Math.abs(v)>=10) return (+v.toFixed(1)).toString();
+    if(Math.abs(v)>=1) return (+v.toFixed(2)).toString();
+    return (+v.toFixed(3)).toString();
+  }
+  function axes(ctx,w,h,p,xr,yr,pad){
+    pad=pad||{l:50,r:20,t:16,b:30};
+    var iw=w-pad.l-pad.r, ih=h-pad.t-pad.b;
+    var X=function(x){return pad.l+(x-xr[0])/(xr[1]-xr[0])*iw;};
+    var Y=function(y){return pad.t+(yr[1]-y)/(yr[1]-yr[0])*ih;};
+    ctx.save();
+    ctx.strokeStyle=p.line;ctx.lineWidth=1;
+    for(var i=0;i<=4;i++){
+      var gx=pad.l+iw*i/4, gy=pad.t+ih*i/4;
+      ctx.beginPath();ctx.moveTo(gx,pad.t);ctx.lineTo(gx,pad.t+ih);ctx.stroke();
+      ctx.beginPath();ctx.moveTo(pad.l,gy);ctx.lineTo(pad.l+iw,gy);ctx.stroke();
+    }
+    ctx.strokeStyle=p.ink3;ctx.lineWidth=1.1;
+    if(yr[0]<0&&yr[1]>0){var y0=Y(0);ctx.beginPath();ctx.moveTo(pad.l,y0);ctx.lineTo(pad.l+iw,y0);ctx.stroke();}
+    if(xr[0]<0&&xr[1]>0){var x0=X(0);ctx.beginPath();ctx.moveTo(x0,pad.t);ctx.lineTo(x0,pad.t+ih);ctx.stroke();}
+    ctx.fillStyle=p.ink3;ctx.font=FONT;ctx.textAlign="right";ctx.textBaseline="middle";
+    ctx.fillText(fmt(xr[0]),pad.l-6,pad.t+ih+2);
+    ctx.textAlign="center";
+    ctx.fillText(fmt(xr[1]),pad.l+iw,pad.t+ih+14);
+    ctx.textAlign="left";
+    ctx.fillText(fmt(yr[1]),6,pad.t+4);
+    ctx.fillText(fmt(yr[0]),6,pad.t+ih-2);
+    ctx.restore();
+    return {X:X,Y:Y,iw:iw,ih:ih,pad:pad,w:w,h:h,rx:xr,ry:yr};
+  }
+  function line(ctx,m,x1,y1,x2,y2,color,dash,lw){
+    ctx.save();ctx.strokeStyle=color;ctx.lineWidth=lw||1.6;ctx.setLineDash(dash||[]);
+    ctx.beginPath();ctx.moveTo(m.X(x1),m.Y(y1));ctx.lineTo(m.X(x2),m.Y(y2));ctx.stroke();ctx.restore();
+  }
+  function dot(ctx,m,x,y,color,r){
+    ctx.save();ctx.fillStyle=color;ctx.beginPath();ctx.arc(m.X(x),m.Y(y),r||3.4,0,7);ctx.fill();ctx.restore();
+  }
+  function tag(ctx,m,x,y,text,color,dx,dy){
+    ctx.save();ctx.fillStyle=color;ctx.font=FONT;ctx.textAlign="left";ctx.textBaseline="middle";
+    ctx.fillText(text,m.X(x)+(dx||6),m.Y(y)+(dy||-10));ctx.restore();
+  }
+
+  var LABS={
+    "sup":{
+      name:"上确界 · β 能不能再压低？",
+      ctrls:[{k:"beta",label:"β",min:0.5,max:1.3,step:0.005,val:1.15,fmt:3}],
+      draw:function(ctx,w,h,p,st){
+        var pad={l:52,r:24,t:30,b:40}, iw=w-pad.l-pad.r, y=h-pad.b;
+        var X=function(x){return pad.l+(x/1.32)*iw;};
+        ctx.save();ctx.fillStyle=p.red;ctx.globalAlpha=.10;
+        ctx.fillRect(X(st.beta),pad.t,X(1.32)-X(st.beta),y-pad.t);ctx.restore();
+        ctx.save();ctx.strokeStyle=p.ink3;ctx.lineWidth=1.3;
+        ctx.beginPath();ctx.moveTo(pad.l,y);ctx.lineTo(pad.l+iw,y);ctx.stroke();
+        ctx.fillStyle=p.ink3;ctx.font=FONT;ctx.textAlign="center";ctx.textBaseline="top";
+        [0,0.25,0.5,0.75,1,1.25].forEach(function(t){
+          ctx.beginPath();ctx.moveTo(X(t),y-4);ctx.lineTo(X(t),y+4);ctx.stroke();
+          ctx.fillText(fmt(t),X(t),y+8);
+        });ctx.restore();
+        for(var n=1;n<=300;n++){var x=1-1/n;ctx.fillStyle=p.blue;
+          ctx.beginPath();ctx.arc(X(x),y-18,1.9,0,7);ctx.fill();}
+        ctx.save();ctx.fillStyle=p.blue;ctx.font=FONT;ctx.textAlign="left";ctx.textBaseline="middle";
+        ctx.fillText("S = { 1 − 1/n }",X(0.02),y-46);ctx.restore();
+        ctx.save();ctx.strokeStyle=p.red;ctx.lineWidth=1.8;ctx.setLineDash([5,4]);
+        ctx.beginPath();ctx.moveTo(X(st.beta),y);ctx.lineTo(X(st.beta),pad.t-4);ctx.stroke();ctx.restore();
+        ctx.save();ctx.fillStyle=p.red;ctx.font=FONT;ctx.textAlign="center";ctx.textBaseline="bottom";
+        ctx.fillText("β = "+st.beta.toFixed(3),X(st.beta),pad.t-8);ctx.restore();
+
+      },
+      foot:function(st){
+        var b=st.beta;
+        if(b<1-1e-6) return "β 现在<b>还不是上界</b>：只要 n 取足够大，1−1/n 就会超过 β（红色区域里会冒出新点）。把 β 往右拖，越过 1 试试。";
+        if(b>1+1e-6) return "β 现在是上界，但<b>不是最小的</b>：明明可以压到 1。上确界要求「再也压不下去」。";
+        return "<span class='ok'>β = 1 就是最小上界</span>：再往左挪一丁点，就有 1−1/n 跑出去。所以 sup S = 1，而 1 ∉ S。";
+      }
+    },
+    "seq-eps":{
+      name:"ε-N · 尾巴能不能全进带子",
+      ctrls:[{k:"eps",label:"ε",min:0.02,max:0.3,step:0.01,val:0.2,fmt:2}],
+      draw:function(ctx,w,h,p,st){
+        var m=axes(ctx,w,h,p,[0,42],[0.6,2.15],{l:50,r:20,t:18,b:32});
+        var e=st.eps;
+        ctx.save();ctx.fillStyle=p.blue;ctx.globalAlpha=.13;
+        var yT=Math.max(m.Y(1+e),m.pad.t), yB=Math.min(m.Y(1-e),m.pad.t+m.ih);
+        ctx.fillRect(m.pad.l,yT,m.iw,Math.max(1,yB-yT));ctx.restore();
+        line(ctx,m,0,1,42,1,p.ink3,[4,4],1.2);
+        var N=Math.floor(1/e)+1;
+        for(var n=1;n<=40;n++){
+          var a=1+1/n;
+          dot(ctx,m,n,a,(n>N?p.green:p.red),n>N?3.0:4.2);
+        }
+        if(N<=40) line(ctx,m,N+0.5,0.6,N+0.5,2.15,p.amber,[3,3],1.4);
+        ctx.save();ctx.fillStyle=p.amber;ctx.font=FONT;ctx.textAlign="left";
+        ctx.fillText("N = "+N,m.X(Math.min(N+1,36)),m.Y(2.05));ctx.restore();
+      },
+      foot:function(st){
+        var e=st.eps,N=Math.floor(1/e)+1;
+        return "ε = <b>"+e.toFixed(2)+"</b> → 取 N = <b>"+N+"</b>。从第 N+1 项起，"+
+          "所有点都落在 1±ε 的蓝色带子里（绿色）；带子外只剩 <b>"+Math.min(N,40)+"</b> 个点——有限多个例外，这正是收敛的意思。";
+      }
+    },
+    "fun-eps":{
+      name:"ε-δ · δ 要多小才够",
+      ctrls:[{k:"eps",label:"ε",min:0.2,max:4,step:0.1,val:1.2,fmt:1},
+             {k:"delta",label:"δ",min:0.05,max:1.2,step:0.01,val:0.2,fmt:2}],
+      draw:function(ctx,w,h,p,st){
+        var m=axes(ctx,w,h,p,[0,3.2],[0,10],{l:50,r:20,t:18,b:30});
+        var d=st.delta,e=st.eps,x0=2,A=4;
+        ctx.save();ctx.fillStyle=p.blue;ctx.globalAlpha=.12;
+        ctx.fillRect(m.pad.l,m.Y(A+e),m.iw,m.Y(A-e)-m.Y(A+e));ctx.restore();
+        var worst=4*d+d*d;
+        ctx.save();ctx.fillStyle=(worst<e?p.green:p.red);ctx.globalAlpha=.13;
+        ctx.fillRect(m.X(x0-d),m.pad.t,m.X(x0+d)-m.X(x0-d),m.ih);ctx.restore();
+        ctx.save();ctx.strokeStyle=p.ink;ctx.lineWidth=2.2;ctx.beginPath();
+        for(var i=0;i<=200;i++){var x=3.2*i/200,y=x*x;if(i===0)ctx.moveTo(m.X(x),m.Y(y));else ctx.lineTo(m.X(x),m.Y(y));}
+        ctx.stroke();ctx.restore();
+        line(ctx,m,x0-d,A+e,x0+d,A+e,p.blue,[4,4],1);
+        line(ctx,m,x0-d,A-e,x0+d,A-e,p.blue,[4,4],1);
+        line(ctx,m,x0,0,x0,10,p.ink3,[2,3],1);
+        dot(ctx,m,x0,A,p.red,4.2);
+      },
+      foot:function(st){
+        var d=st.delta,e=st.eps,worst=4*d+d*d;
+        return (worst<e
+          ?"<span class='ok'>这个 δ 合格</span>："
+          :"<span class='no'>这个 δ 太大了</span>：")+
+          "在 |x−2|&lt;δ 内，|x²−4| 最大能达到 4δ+δ² = <b>"+worst.toFixed(3)+
+          "</b>，而要求是 &lt; ε = <b>"+e.toFixed(1)+"</b>。ε 变小，δ 就得跟着变小。";
+      }
+    },
+    "secant":{
+      name:"割线 → 切线 · h 越来越小",
+      ctrls:[{k:"h",label:"h",min:0.02,max:1.5,step:0.01,val:1.0,fmt:2}],
+      draw:function(ctx,w,h,p,st){
+        var m=axes(ctx,w,h,p,[0,2.8],[0,8],{l:50,r:20,t:18,b:30});
+        var hh=st.h,x0=1,y0=1;
+        ctx.save();ctx.strokeStyle=p.ink;ctx.lineWidth=2.2;ctx.beginPath();
+        for(var i=0;i<=200;i++){var x=2.8*i/200,y=x*x;if(i===0)ctx.moveTo(m.X(x),m.Y(y));else ctx.lineTo(m.X(x),m.Y(y));}
+        ctx.stroke();ctx.restore();
+        var x1=x0+hh,y1=x1*x1,k=(y1-y0)/(x1-x0);
+        line(ctx,m,0.05,y0+k*(0.05-x0),2.7,y0+k*(2.7-x0),p.red,[],1.8);
+        line(ctx,m,0.05,y0+2*(0.05-x0),2.7,y0+2*(2.7-x0),p.green,[5,4],1.2);
+        line(ctx,m,x0+hh,y0,x0+hh,y1,p.ink3,[3,3],1);
+        dot(ctx,m,x0,y0,p.ink,4);dot(ctx,m,x1,y1,p.red,4);
+        tag(ctx,m,x0,y0,"P(1,1)",p.ink2,-6,16);
+        tag(ctx,m,x1,y1,"Q",p.red,6,-8);
+      },
+      foot:function(st){
+        var k=2+st.h;
+        return "割线斜率 k = [(1+h)²−1]/h = <b>2+h = "+k.toFixed(2)+"</b>。h 越小，Q 越贴近 P，割线越像切线；h→0 时 k→<b>2</b>，这就是 f′(1)。绿色虚线是真正的切线。";
+      }
+    },
+    "riemann":{
+      name:"Riemann 和 · 矩形越多越像",
+      ctrls:[{k:"n",label:"n",min:1,max:60,step:1,val:6,fmt:0}],
+      draw:function(ctx,w,h,p,st){
+        var m=axes(ctx,w,h,p,[0,1],[0,1.05],{l:50,r:20,t:18,b:30});
+        var n=Math.round(st.n);
+        ctx.save();ctx.fillStyle=p.blue;ctx.globalAlpha=.16;
+        for(var i=0;i<n;i++){
+          var xl=i/n,xr=(i+1)/n,yy=xl*xl;
+          ctx.fillRect(m.X(xl),m.Y(yy),m.X(xr)-m.X(xl),m.Y(0)-m.Y(yy));
+          ctx.strokeStyle=p.blue;ctx.globalAlpha=.35;ctx.lineWidth=1;
+          ctx.strokeRect(m.X(xl),m.Y(yy),m.X(xr)-m.X(xl),m.Y(0)-m.Y(yy));ctx.globalAlpha=.16;
+          ctx.fillStyle=p.blue;
+        }
+        ctx.restore();
+        ctx.save();ctx.strokeStyle=p.red;ctx.lineWidth=2.2;ctx.beginPath();
+        for(var j=0;j<=200;j++){var x=((j/200)**1)*1;var y=x*x;if(j===0)ctx.moveTo(m.X(x),m.Y(y));else ctx.lineTo(m.X(x),m.Y(y));}
+        ctx.stroke();ctx.restore();
+        line(ctx,m,0,1/3,1,1/3,p.green,[5,4],1.3);
+      },
+      foot:function(st){
+        var n=Math.round(st.n),s=0;
+        for(var i=0;i<n;i++){s+=(i/n)*(i/n)*(1/n);}
+        var err=Math.abs(s-1/3);
+        return "n = <b>"+n+"</b>，左端点 Riemann 和 S<sub>n</sub> = <b>"+s.toFixed(4)+
+          "</b>，与真值 1/3 相差 "+err.toFixed(4)+"。n 越大误差越小——但<b>不管 n 多大都不等于 1/3</b>，等号来自取极限。";
+      }
+    },
+    "taylor":{
+      name:"Taylor 多项式逼近 sin x",
+      ctrls:[{k:"m",label:"阶数 m",min:1,max:9,step:1,val:3,fmt:0}],
+      draw:function(ctx,w,h,p,st){
+        var m=axes(ctx,w,h,p,[-4,4],[-2.2,2.2],{l:50,r:20,t:18,b:30});
+        var mm=Math.round(st.m);
+        function P(x){var s=0,t=x;for(var k=0;k<mm;k++){s+=t;t*=-x*x/((2*k+2)*(2*k+3));}return s;}
+        ctx.save();ctx.strokeStyle=p.blue;ctx.lineWidth=2.4;ctx.beginPath();
+        for(var i=0;i<=300;i++){var x=-4+8*i/300;if(Math.abs(x)>3.9)continue;
+          if(i===0)ctx.moveTo(m.X(x),m.Y(Math.sin(x)));else ctx.lineTo(m.X(x),m.Y(Math.sin(x)));}
+        ctx.stroke();ctx.restore();
+        ctx.save();ctx.strokeStyle=p.red;ctx.lineWidth=1.8;ctx.setLineDash([6,4]);ctx.beginPath();
+        for(var j=0;j<=300;j++){var x2=-4+8*j/300,vy=P(x2);if(Math.abs(vy)>3)continue;
+          if(j===0)ctx.moveTo(m.X(x2),m.Y(vy));else ctx.lineTo(m.X(x2),m.Y(vy));}
+        ctx.stroke();ctx.restore();
+        ctx.save();
+        ctx.fillStyle=p.blue;ctx.fillRect(m.pad.l+12,m.pad.t+8,16,3);
+        ctx.font=FONT;ctx.textAlign="left";ctx.textBaseline="middle";
+        ctx.fillText("sin x",m.pad.l+34,m.pad.t+10);
+        ctx.fillStyle=p.red;ctx.fillRect(m.pad.l+12,m.pad.t+26,16,3);
+        ctx.fillText("P"+(2*mm-1)+"(x)",m.pad.l+34,m.pad.t+28);
+        ctx.restore();
+      },
+      foot:function(st){
+        var mm=Math.round(st.m),mx=0;
+        function P(x){var s=0,t=x;for(var k=0;k<mm;k++){s+=t;t*=-x*x/((2*k+2)*(2*k+3));}return s;}
+        for(var i=0;i<=800;i++){var x=-Math.PI+2*Math.PI*i/800;mx=Math.max(mx,Math.abs(P(x)-Math.sin(x)));}
+        return "P<sub>"+(2*mm-1)+"</sub>(x) = x − x³/3! + … ，在 [−π, π] 上的最大偏差约 <b>"+mx.toFixed(4)+
+          "</b>。阶数越高，贴合区间越宽——但在 |x|&gt;π 附近会迅速跑偏（虚线冲出去）。";
+      }
+    },
+    "uniform":{
+      name:"一致连续 · 同一个 ε，δ 却越来越小",
+      ctrls:[{k:"x0",label:"x₀",min:0.15,max:1,step:0.005,val:0.6,fmt:3}],
+      draw:function(ctx,w,h,p,st){
+        var m=axes(ctx,w,h,p,[0,1.05],[0,7],{l:50,r:20,t:18,b:30});
+        var x0=st.x0, e=0.35, y0=1/x0;
+        var left=1/(1/x0+e), right=1/(1/x0-e);
+        ctx.save();ctx.fillStyle=p.blue;ctx.globalAlpha=.12;
+        ctx.fillRect(m.pad.l,m.Y(y0+e),m.iw,m.Y(y0-e)-m.Y(y0+e));ctx.restore();
+        ctx.save();ctx.fillStyle=p.green;ctx.globalAlpha=.14;
+        ctx.fillRect(m.X(left),m.pad.t,m.X(right)-m.X(left),m.ih);ctx.restore();
+        ctx.save();ctx.strokeStyle=p.ink;ctx.lineWidth=2.2;ctx.beginPath();
+        for(var i=0;i<=260;i++){var x=0.14+0.9*i/260,y=1/x;if(y>7)continue;
+          if(i===0)ctx.moveTo(m.X(x),m.Y(y));else ctx.lineTo(m.X(x),m.Y(y));}
+        ctx.stroke();ctx.restore();
+        dot(ctx,m,x0,y0,p.red,4.2);
+        ctx.save();ctx.fillStyle=p.red;ctx.font=FONT;ctx.textAlign="center";
+        ctx.fillText("x₀",m.X(x0),m.Y(y0)-12);ctx.restore();
+      },
+      foot:function(st){
+        var x0=st.x0,e=0.35,y0=1/x0;
+        var left=1/(1/x0+e),right=1/(1/x0-e);
+        var dl=x0-left,dr=right-x0,d=Math.min(dl,dr);
+        return "取 ε = 0.35。要让 f(x)=1/x 的取值落在 y₀±ε 内，输入端只能允许 δ ≈ <b>"+d.toFixed(4)+
+          "</b>。x₀ 越靠近 0，δ 就越小、而且<b>没有下限</b>——所以找不到一个对全区间通用的 δ，这正是「连续但不一致连续」。";
+      }
+    },
+    "bisect":{
+      name:"二分法 · 区间套怎样夹住根",
+      ctrls:[{k:"n",label:"步数 n",min:0,max:12,step:1,val:3,fmt:0}],
+      draw:function(ctx,w,h,p,st){
+        var m=axes(ctx,w,h,p,[0.8,1.9],[-1.6,2.2],{l:50,r:20,t:18,b:30});
+        function f(x){return x*x*x-x-1;}
+        var a=1,b=2;
+        for(var i=0;i<st.n;i++){var c=(a+b)/2;if(f(c)===0){a=b=c;break;}if(f(a)*f(c)<0)b=c;else a=c;}
+        ctx.save();ctx.fillStyle=p.blue;ctx.globalAlpha=.13;
+        ctx.fillRect(m.X(a),m.pad.t,m.X(b)-m.X(a),m.ih);ctx.restore();
+        ctx.save();ctx.strokeStyle=p.ink;ctx.lineWidth=2.2;ctx.beginPath();
+        for(var j=0;j<=240;j++){var x=0.8+1.1*j/240,y=f(x);
+          if(j===0)ctx.moveTo(m.X(x),m.Y(y));else ctx.lineTo(m.X(x),m.Y(y));}
+        ctx.stroke();ctx.restore();
+        line(ctx,m,0.8,0,1.9,0,p.ink3,[4,4],1.1);
+        dot(ctx,m,(a+b)/2,0,p.red,4.4);
+        ctx.save();ctx.fillStyle=p.red;ctx.font=FONT;ctx.textAlign="center";
+        ctx.fillText("根 ≈ "+((a+b)/2).toFixed(6),m.X((a+b)/2),m.Y(0)-14);ctx.restore();
+      },
+      foot:function(st){
+        var a=1,b=2;
+        function f(x){return x*x*x-x-1;}
+        for(var i=0;i<st.n;i++){var c=(a+b)/2;if(f(a)*f(c)<0)b=c;else a=c;}
+        return "第 <b>"+st.n+"</b> 步后，根被夹在 ["+a.toFixed(6)+", "+b.toFixed(6)+
+          "] 里，区间长度 "+(b-a).toFixed(6)+"。每步长度减半，<b>区间套</b>保证这些区间有唯一的公共点，那就是根。";
+      }
+    },
+    "ptest":{
+      name:"p 积分 · 面积到底收不收敛",
+      ctrls:[{k:"p",label:"p",min:0.4,max:2.6,step:0.05,val:1.4,fmt:2},
+             {k:"R",label:"上限 R",min:2,max:20,step:0.5,val:8,fmt:1}],
+      draw:function(ctx,w,h,p,st){
+        var m=axes(ctx,w,h,p,[0,20.5],[0,1.6],{l:50,r:20,t:18,b:30});
+        var pp=st.p,R=st.R;
+        ctx.save();ctx.fillStyle=p.blue;ctx.globalAlpha=.16;
+        ctx.beginPath();ctx.moveTo(m.X(1),m.Y(0));
+        for(var i=0;i<=200;i++){var x=1+(R-1)*i/200;ctx.lineTo(m.X(x),m.Y(Math.pow(x,-pp)));}
+        ctx.lineTo(m.X(R),m.Y(0));ctx.closePath();ctx.fill();ctx.restore();
+        ctx.save();ctx.strokeStyle=p.ink;ctx.lineWidth=2.2;ctx.beginPath();
+        for(var j=0;j<=300;j++){var x2=1+19.5*j/300,y=Math.pow(x2,-pp);if(y>1.6)continue;
+          if(j===0)ctx.moveTo(m.X(x2),m.Y(y));else ctx.lineTo(m.X(x2),m.Y(y));}
+        ctx.stroke();ctx.restore();
+        line(ctx,m,R,0,R,1.6,p.red,[4,4],1.1);
+      },
+      foot:function(st){
+        var pp=st.p,R=st.R,v;
+        if(Math.abs(pp-1)<1e-6) v=Math.log(R); else v=(Math.pow(R,1-pp)-1)/(1-pp);
+        var conv = pp>1;
+        return "∫₁<sup>R</sup> x<sup>−"+pp.toFixed(2)+"</sup> dx = <b>"+v.toFixed(4)+"</b>（R="+R.toFixed(1)+"）。"+
+          (conv?"p &gt; 1：R 再大也就停在 1/(p−1) = <b>"+(1/(pp-1)).toFixed(3)+"</b> 附近，<span class='ok'>收敛</span>。"
+               :"p ≤ 1：R 越大值越大、<b>没有上界</b>，<span class='no'>发散</span>。");
+      }
+    },
+  };
+
+  var redraws=[];
+  function build(root){
+    var id=root.getAttribute("data-lab"), cfg=LABS[id];
+    if(!cfg) return;
+    root.innerHTML='<div class="lab-bar"><span class="lab-tag">交互实验 · '+cfg.name+
+      '</span><span class="lab-tip">拖动滑块 / 触屏也可</span></div>'+
+      '<canvas></canvas><div class="lab-ctrl"></div><div class="lab-foot"></div>';
+    var cv=root.querySelector("canvas"), ctrl=root.querySelector(".lab-ctrl"), foot=root.querySelector(".lab-foot");
+    var st={};
+    cfg.ctrls.forEach(function(c){
+      var l=document.createElement("label");
+      l.innerHTML='<span>'+c.label+'</span><input type="range" min="'+c.min+'" max="'+c.max+
+        '" step="'+c.step+'" value="'+c.val+'"><output></output>';
+      var inp=l.querySelector("input"), out=l.querySelector("output");
+      st[c.k]=c.val;
+      var show=function(){out.textContent=(c.fmt!==undefined&&c.fmt>0)?(+inp.value).toFixed(c.fmt):String(inp.value);};
+      inp.addEventListener("input",function(){st[c.k]=+inp.value;show();draw();});
+      show();ctrl.appendChild(l);
+    });
+    function draw(){
+      var w=cv.clientWidth||600,hh=cv.clientHeight||282;
+      var dpr=Math.min(window.devicePixelRatio||1,2);
+      if(cv.width!==Math.round(w*dpr)||cv.height!==Math.round(hh*dpr)){
+        cv.width=Math.round(w*dpr);cv.height=Math.round(hh*dpr);
+      }
+      var ctx=cv.getContext("2d");
+      ctx.setTransform(dpr,0,0,dpr,0,0);ctx.clearRect(0,0,w,hh);
+      cfg.draw(ctx,w,hh,pal(),st);
+      foot.innerHTML=cfg.foot(st);
+    }
+    redraws.push(draw);
+    if(window.ResizeObserver) new ResizeObserver(draw).observe(cv);
+    else window.addEventListener("resize",draw);
+    draw();
+  }
+  function boot(){Array.prototype.forEach.call(document.querySelectorAll(".lab[data-lab]"),build);}
+  if(document.readyState==="loading") document.addEventListener("DOMContentLoaded",boot); else boot();
+  document.addEventListener("themechange",function(){redraws.forEach(function(f){f();});});
+})();
+</script>
+
+
+<script>
+(function(){
+  "use strict";
+  var body=document.body;
+  var btn=document.getElementById("modeBtn");
+  var readbox=document.getElementById("readbox");
+  var rc=document.getElementById("readcount"), rt=document.getElementById("readtotal");
+  var KEY="ma-mode";
+  function saved(){try{return localStorage.getItem(KEY)}catch(e){return null}}
+  var preview=saved()==="preview";
+
+  function visibleChaps(){
+    return Array.prototype.filter.call(document.querySelectorAll(".chap"),function(c){
+      return c.offsetParent!==null;
+    });
+  }
+  function apply(){
+    body.classList.toggle("preview",preview);
+    btn.textContent = preview?"精简版 · 只看预习线（点此展开全部）":"完整版 · 点此只看预习线";
+    Array.prototype.forEach.call(document.querySelectorAll("#toc a"),function(a){
+      var t=document.querySelector(a.getAttribute("href"));
+      a.parentNode.style.display=(t&&t.offsetParent!==null)?"":"none";
+    });
+    if(rt){rt.textContent=visibleChaps().length;}
+    count();
+  }
+  function count(){
+    var read={};try{read=JSON.parse(localStorage.getItem("ma-preview-read-v1")||"{}")}catch(e){}
+    var n=visibleChaps().filter(function(c){return read[c.id]}).length;
+    if(rc)rc.textContent=n;
+  }
+  btn.addEventListener("click",function(){
+    preview=!preview;
+    try{localStorage.setItem(KEY,preview?"preview":"full")}catch(e){}
+    apply();
+  });
+  document.addEventListener("scroll",function(){setTimeout(count,0)},{passive:true});
+  apply();
+})();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,257 @@
+<section class="chap" id="apA" data-no="A" data-title="附录A · 公式速查" style="--ch:1">
+  <div class="chap-head">
+    <div class="chap-no">A</div>
+    <h2>附录 A · 公式速查<small class="en">Quick Reference</small></h2>
+  </div>
+
+  <p>预习阶段可以跳过这一份；想快速对齐、或做题时查公式，翻它最省时间。所有结论都在正文里出现过，这里只压成表格。</p>
+
+  <h3>A.1 极限</h3>
+
+  <table class="tbl">
+    <caption>存在性与判定</caption>
+    <tr><th style="width:170px">工具</th><th>用法要点</th></tr>
+    <tr><td>$\eps$-$N$ 定义</td><td>$\forall\eps&gt;0\ \exists N\ \forall n&gt;N:|a_n-a|&lt;\eps$；$N$ 可依赖 $\eps$，不可依赖 $n$</td></tr>
+    <tr><td>$\eps$-$\delta$ 定义</td><td>$\forall\eps&gt;0\ \exists\delta&gt;0\ \forall x:0&lt;|x-x_0|&lt;\delta\imp|f(x)-A|&lt;\eps$</td></tr>
+    <tr><td>夹逼</td><td>$a_n\le c_n\le b_n$ 且两端同极限 ⇒ 中间同极限</td></tr>
+    <tr><td>单调有界</td><td>递增有上界 / 递减有下界 ⇒ 收敛（用确界原理）</td></tr>
+    <tr><td>Cauchy 准则</td><td>$\forall\eps\ \exists N\ \forall m,n&gt;N:|a_m-a_n|&lt;\eps$，不需要预知极限</td></tr>
+    <tr><td>Heine 定理</td><td>函数极限 ⇔ 任意数列逼近都给出同一极限；常用于证"不存在"</td></tr>
+    <tr><td>子列</td><td>收敛 ⇒ 所有子列同极限；两个子列不同极限 ⇒ 发散</td></tr>
+  </table>
+
+  <table class="tbl">
+    <caption>$x\to0$ 时的等价无穷小（只可用于乘除因子）</caption>
+    <tr><th>$\sin x\sim x$</th><th>$\tan x\sim x$</th><th>$\arcsin x\sim x$</th><th>$\arctan x\sim x$</th></tr>
+    <tr><td>$1-\cos x\sim\frac{x^2}{2}$</td><td>$\ln(1+x)\sim x$</td><td>$e^x-1\sim x$</td><td>$(1+x)^\alpha-1\sim\alpha x$</td></tr>
+  </table>
+
+  <table class="tbl">
+    <caption>必背极限</caption>
+    <tr><td>$\lim\limits_{x\to0}\dfrac{\sin x}{x}=1$</td><td>$\lim\limits_{x\to\infty}\left(1+\dfrac1x\right)^x=e$</td><td>$\lim\limits_{x\to0}(1+x)^{1/x}=e$</td></tr>
+    <tr><td>$\lim\limits_{n\to\infty}\sqrt[n]{n}=1$</td><td>$\lim\limits_{n\to\infty}\sqrt[n]{a}=1\ (a&gt;0)$</td><td>$\lim\limits_{x\to0}\dfrac{\ln(1+x)}{x}=1$</td></tr>
+  </table>
+
+  <h3>A.2 导数</h3>
+
+  <table class="tbl">
+    <caption>基本导数公式</caption>
+    <tr><td>$(x^\alpha)'=\alpha x^{\alpha-1}$</td><td>$(e^x)'=e^x$</td><td>$(a^x)'=a^x\ln a$</td></tr>
+    <tr><td>$(\ln x)'=\dfrac1x$</td><td>$(\log_a x)'=\dfrac{1}{x\ln a}$</td><td>$(\sqrt x)'=\dfrac{1}{2\sqrt x}$</td></tr>
+    <tr><td>$(\sin x)'=\cos x$</td><td>$(\cos x)'=-\sin x$</td><td>$(\tan x)'=\sec^2x$</td></tr>
+    <tr><td>$(\cot x)'=-\csc^2x$</td><td>$(\sec x)'=\sec x\tan x$</td><td>$(\csc x)'=-\csc x\cot x$</td></tr>
+    <tr><td>$(\arcsin x)'=\dfrac{1}{\sqrt{1-x^2}}$</td><td>$(\arccos x)'=-\dfrac{1}{\sqrt{1-x^2}}$</td><td>$(\arctan x)'=\dfrac{1}{1+x^2}$</td></tr>
+    <tr><td>$(\sinh x)'=\cosh x$</td><td>$(\cosh x)'=\sinh x$</td><td>$(\tanh x)'=\dfrac{1}{\cosh^2x}$</td></tr>
+  </table>
+
+  <table class="tbl">
+    <caption>$n$ 阶导数</caption>
+    <tr><td>$(e^{ax})^{(n)}=a^ne^{ax}$</td><td>$(\sin x)^{(n)}=\sin\left(x+\dfrac{n\pi}{2}\right)$</td><td>$(\ln x)^{(n)}=\dfrac{(-1)^{n-1}(n-1)!}{x^n}$</td></tr>
+    <tr><td colspan="3">Leibniz：$(uv)^{(n)}=\sum\limits_{k=0}^{n}\binom nk u^{(k)}v^{(n-k)}$</td></tr>
+  </table>
+
+  <h3>A.3 Taylor 展开（$x_0=0$，带 Lagrange 余项）</h3>
+
+  <table class="tbl">
+    <tr><th style="width:120px">函数</th><th>展开式</th></tr>
+    <tr><td>$e^x$</td><td>$1+x+\dfrac{x^2}{2!}+\cdots+\dfrac{x^n}{n!}+\dfrac{e^{\xi}}{(n+1)!}x^{n+1}$（收敛域 $\R$）</td></tr>
+    <tr><td>$\sin x$</td><td>$x-\dfrac{x^3}{3!}+\dfrac{x^5}{5!}-\cdots+(-1)^{m}\dfrac{x^{2m+1}}{(2m+1)!}+o(x^{2m+2})$</td></tr>
+    <tr><td>$\cos x$</td><td>$1-\dfrac{x^2}{2!}+\dfrac{x^4}{4!}-\cdots+(-1)^{m}\dfrac{x^{2m}}{(2m)!}+o(x^{2m+1})$</td></tr>
+    <tr><td>$\ln(1+x)$</td><td>$x-\dfrac{x^2}{2}+\dfrac{x^3}{3}-\cdots+(-1)^{n-1}\dfrac{x^n}{n}+o(x^n)$（$|x|&lt;1$）</td></tr>
+    <tr><td>$(1+x)^\alpha$</td><td>$1+\alpha x+\dfrac{\alpha(\alpha-1)}{2!}x^2+\cdots$（$|x|&lt;1$）</td></tr>
+    <tr><td>$\arctan x$</td><td>$x-\dfrac{x^3}{3}+\dfrac{x^5}{5}-\cdots$（$|x|\le1$）</td></tr>
+    <tr><td>$\dfrac{1}{1-x}$</td><td>$1+x+x^2+\cdots+x^n+o(x^n)$（$|x|&lt;1$）</td></tr>
+  </table>
+
+  <h3>A.4 积分</h3>
+
+  <table class="tbl">
+    <caption>常用积分（$C$ 省略）</caption>
+    <tr><td>$\displaystyle\int x^\alpha\dd x=\frac{x^{\alpha+1}}{\alpha+1}$</td><td>$\displaystyle\int\frac{\dd x}{x}=\ln|x|$</td><td>$\displaystyle\int e^x\dd x=e^x$</td></tr>
+    <tr><td>$\displaystyle\int a^x\dd x=\frac{a^x}{\ln a}$</td><td>$\displaystyle\int\sin x\,\dd x=-\cos x$</td><td>$\displaystyle\int\cos x\,\dd x=\sin x$</td></tr>
+    <tr><td>$\displaystyle\int\sec^2x\,\dd x=\tan x$</td><td>$\displaystyle\int\csc^2x\,\dd x=-\cot x$</td><td>$\displaystyle\int\sec x\,\dd x=\ln|\sec x+\tan x|$</td></tr>
+    <tr><td>$\displaystyle\int\frac{\dd x}{1+x^2}=\arctan x$</td><td>$\displaystyle\int\frac{\dd x}{\sqrt{1-x^2}}=\arcsin x$</td><td>$\displaystyle\int\frac{\dd x}{x^2+a^2}=\frac1a\arctan\frac xa$</td></tr>
+    <tr><td>$\displaystyle\int\frac{\dd x}{x^2-a^2}=\frac{1}{2a}\ln\left|\frac{x-a}{x+a}\right|$</td><td>$\displaystyle\int\frac{\dd x}{\sqrt{x^2\pm a^2}}=\ln\left|x+\sqrt{x^2\pm a^2}\right|$</td><td>$\displaystyle\int\frac{\dd x}{\sqrt{a^2-x^2}}=\arcsin\frac xa$</td></tr>
+  </table>
+
+  <p>换元：$\displaystyle\int f(\varphi(x))\varphi'(x)\dd x=\int f(u)\dd u$；定积分换元要<b>同时换上下限</b>。</p>
+  <p>分部：$\displaystyle\int u\,\dd v=uv-\int v\,\dd u$，选 $u$ 的顺序「反对幂指三」。</p>
+
+  <h3>A.5 反常积分</h3>
+
+  <table class="tbl">
+    <tr><th style="width:230px">类型</th><th>收敛判据</th></tr>
+    <tr><td>$\displaystyle\int_1^{+\infty}\frac{\dd x}{x^p}$</td><td>$p&gt;1$ 收敛；$p\le1$ 发散</td></tr>
+    <tr><td>$\displaystyle\int_0^{1}\frac{\dd x}{x^p}$</td><td>$p&lt;1$ 收敛；$p\ge1$ 发散</td></tr>
+    <tr><td>比较法</td><td>$0\le f\le g$：$g$ 收敛 ⇒ $f$ 收敛；$f$ 发散 ⇒ $g$ 发散</td></tr>
+    <tr><td>极限比较</td><td>$f/g\to c\in(0,\infty)$ ⇒ 同敛散</td></tr>
+    <tr><td>绝对收敛</td><td>$\int|f|$ 收敛 ⇒ $\int f$ 收敛</td></tr>
+    <tr><td>$\Gamma$ 函数</td><td>$\Gamma(s)=\int_0^\infty x^{s-1}e^{-x}\dd x$，$\Gamma(s+1)=s\Gamma(s)$，$\Gamma(n+1)=n!$</td></tr>
+  </table>
+
+  <h3>A.6 中值定理一览</h3>
+
+  <table class="tbl">
+    <tr><th style="width:110px">定理</th><th style="width:270px">条件</th><th>结论</th></tr>
+    <tr><td>Fermat</td><td>$x_0$ 为极值点，$f'(x_0)$ 存在</td><td>$f'(x_0)=0$</td></tr>
+    <tr><td>Rolle</td><td>$[a,b]$ 连续，$(a,b)$ 可导，$f(a)=f(b)$</td><td>$\exists\xi:f'(\xi)=0$</td></tr>
+    <tr><td>Lagrange</td><td>$[a,b]$ 连续，$(a,b)$ 可导</td><td>$f(b)-f(a)=f'(\xi)(b-a)$</td></tr>
+    <tr><td>Cauchy</td><td>同上且 $g'\ne0$</td><td>$\dfrac{f(b)-f(a)}{g(b)-g(a)}=\dfrac{f'(\xi)}{g'(\xi)}$</td></tr>
+    <tr><td>Taylor</td><td>$n+1$ 阶可导</td><td>$f=\sum\frac{f^{(k)}(x_0)}{k!}(x-x_0)^k+R_n$</td></tr>
+  </table>
+
+  <h3>A.7 常用不等式</h3>
+
+  <table class="tbl">
+    <tr><td>三角不等式</td><td>$|a+b|\le|a|+|b|$；$\big||a|-|b|\big|\le|a-b|$</td></tr>
+    <tr><td>Bernoulli</td><td>$(1+x)^n\ge1+nx$（$x&gt;-1$）</td></tr>
+    <tr><td>均值</td><td>$\sqrt{ab}\le\dfrac{a+b}{2}\le\sqrt{\dfrac{a^2+b^2}{2}}$（$a,b\ge0$）</td></tr>
+    <tr><td>对数</td><td>$\dfrac{x}{1+x}&lt;\ln(1+x)&lt;x$（$x&gt;0$）</td></tr>
+    <tr><td>指数</td><td>$e^x\ge1+x$，$e^x&gt;1+x+\dfrac{x^2}{2}$（$x&gt;0$）</td></tr>
+    <tr><td>三角</td><td>$|\sin x|\le|x|$，$|\sin a-\sin b|\le|a-b|$</td></tr>
+  </table>
+</section>
+
+<section class="chap" id="apB" data-no="B" data-title="附录B · 综合自测" style="--ch:1">
+  <div class="chap-head">
+    <div class="chap-no">B</div>
+    <h2>附录 B · 综合自测<small class="en">Self-Test</small></h2>
+  </div>
+
+  <p>20 题，建议限时 90 分钟、闭卷。答案在每题下方折叠，<b>先写完整再展开</b>。</p>
+
+  <h3>第一组 · 判断（每题 2 分）</h3>
+
+  <div class="quiz">
+    <div class="tag">判 断 对 错</div>
+    <ol>
+      <li>收敛数列必有界。</li>
+      <li>有界数列必收敛。</li>
+      <li>若 $\lim_{x\to x_0}f(x)$ 存在，则 $f$ 在 $x_0$ 连续。</li>
+      <li>闭区间上的连续函数一定一致连续。</li>
+      <li>函数在某点可导，则在该点连续。</li>
+      <li>若 $f'(x_0)=0$，则 $x_0$ 一定是极值点。</li>
+      <li>若 $f$ 在 $[a,b]$ 上可积，则 $f$ 在 $[a,b]$ 上连续。</li>
+      <li>连续函数一定有原函数。</li>
+    </ol>
+    <details class="ans"><summary>答案与理由</summary><div class="body">
+      <p><b>1 对</b>（定理 2.2）。<b>2 错</b>：$(-1)^n$ 有界但发散。</p>
+      <p><b>3 错</b>：还需 $f(x_0)$ 有定义且等于该极限。例：$f(x)=1$（$x\ne0$），$f(0)=0$。</p>
+      <p><b>4 对</b>（Cantor 定理）。<b>5 对</b>（可导必连续）。</p>
+      <p><b>6 错</b>：$f(x)=x^3$ 在 $0$ 处 $f'(0)=0$，但不是极值点。</p>
+      <p><b>7 错</b>：有界 + 有限个间断点即可积。<b>8 对</b>（变上限积分 $\Phi(x)=\int_a^xf$）。</p>
+    </div></details>
+  </div>
+
+  <h3>第二组 · 计算（每题 5 分）</h3>
+
+  <div class="quiz">
+    <div class="tag">算 出 结 果</div>
+    <ol start="9">
+      <li>$\lim\limits_{n\to\infty}\left(1+\dfrac2n\right)^{3n}$。</li>
+      <li>$\lim\limits_{n\to\infty}\sqrt n\left(\sqrt{n+1}-\sqrt n\right)$。</li>
+      <li>$\lim\limits_{x\to0}\dfrac{e^x-1-x}{x^2}$。</li>
+      <li>$\displaystyle\int x\ln x\,\dd x$。</li>
+      <li>$\displaystyle\int_0^1xe^{-x}\dd x$。</li>
+      <li>$\displaystyle\int_0^{+\infty}\frac{\dd x}{1+x^2}$。</li>
+    </ol>
+    <details class="ans"><summary>答案</summary><div class="body">
+      <p><b>9.</b> $\left[\left(1+\frac2n\right)^{n/2}\right]^{6}\to e^{6}$。</p>
+      <p><b>10.</b> 有理化：$\frac{\sqrt n}{\sqrt{n+1}+\sqrt n}\to\frac12$。</p>
+      <p><b>11.</b> Peano：$e^x=1+x+\frac{x^2}{2}+o(x^2)$，答案 $\frac12$。</p>
+      <p><b>12.</b> 分部：$\frac{x^2}{2}\ln x-\frac{x^2}{4}+C$。</p>
+      <p><b>13.</b> 分部两次：$\left[-xe^{-x}-e^{-x}\right]_0^1=1-\frac2e$。</p>
+      <p><b>14.</b> $\arctan x\big|_0^\infty=\frac\pi2$。</p>
+    </div></details>
+  </div>
+
+  <h3>第三组 · 证明（每题 7 分）</h3>
+
+  <div class="quiz">
+    <div class="tag">写 出 完 整 论 证</div>
+    <ol start="15">
+      <li>用定义证明 $\lim\limits_{n\to\infty}\dfrac{2n+1}{n+3}=2$。</li>
+      <li>设 $a_1=1$，$a_{n+1}=\sqrt{6+a_n}$。证明收敛并求极限。</li>
+      <li>证明方程 $x^3+3x-1=0$ 在 $(0,1)$ 内有且仅有一个实根。</li>
+      <li>用 Lagrange 中值定理证明 $|\sin a-\sin b|\le|a-b|$。</li>
+      <li>证明 $\displaystyle\int_0^1x^m(1-x)^n\dd x=\frac{m!\,n!}{(m+n+1)!}$（$m,n\in\N$）。</li>
+      <li>判断 $\displaystyle\int_0^1\ln x\,\dd x$ 是否收敛；收敛则求值。</li>
+    </ol>
+    <details class="ans"><summary>答案要点</summary><div class="body">
+      <p><b>15.</b> $\left|\frac{2n+1}{n+3}-2\right|=\frac{5}{n+3}&lt;\frac5n$，取 $N=\left[\frac5\eps\right]+1$。</p>
+      <p><b>16.</b> 归纳证 $a_n&lt;3$ 且递增（$a_{n+1}^2-a_n^2=6+a_n-a_n^2=(3-a_n)(2+a_n)&gt;0$）。极限 $L=\sqrt{6+L}$ 得 $L=3$。</p>
+      <p><b>17.</b> $f(x)=x^3+3x-1$ 连续，$f(0)=-1&lt;0&lt;f(1)=3$，零点定理给存在性；$f'(x)=3x^2+3&gt;0$ 严格增给唯一性。</p>
+      <p><b>18.</b> 对 $f(t)=\sin t$ 在 $a,b$ 之间用 Lagrange：$|\sin a-\sin b|=|\cos\xi||a-b|\le|a-b|$。</p>
+      <p><b>19.</b> 记 $I_{m,n}$。分部积分：$I_{m,n}=\frac{n}{m+1}I_{m+1,n-1}$，反复用至 $n=0$，再用 $\int_0^1x^{m+n}\dd x=\frac{1}{m+n+1}$。</p>
+      <p><b>20.</b> 收敛。$\int_\eps^1\ln x\,\dd x=[x\ln x-x]_\eps^1=-1-(\eps\ln\eps-\eps)\to-1$（用 $\eps\ln\eps\to0$）。</p>
+    </div></details>
+  </div>
+
+  <div class="box tip"><div class="tag">方法 · 自评标准</div>
+    <p>≤ 60 分：回第一章到第四章重读定义，重点练 $\eps$ 语言。<br>
+       60–85：性质定理都懂了，欠的是"构造"——多做用定义证极限的题。<br>
+       ≥ 85：可以开始看下册（级数、多元）的前两章了。</p>
+  </div>
+</section>
+
+<section class="chap" id="apC" data-no="C" data-title="附录C · 学习路线" style="--ch:1">
+  <div class="chap-head">
+    <div class="chap-no">C</div>
+    <h2>附录 C · 一学期怎么走<small class="en">Study Plan</small></h2>
+  </div>
+
+  <h3>C.1 16 周地图</h3>
+
+  <table class="tbl">
+    <caption>按华东师大第六版上册的常规进度，各校略有出入</caption>
+    <tr><th style="width:80px">周次</th><th style="width:210px">内容</th><th>这一周的关键动作</th></tr>
+    <tr><td>1–2</td><td>第一章 实数集与函数</td><td>把「$\sup$ 的两个条件」写到能默写；补不等式</td></tr>
+    <tr><td>3–5</td><td>第二章 数列极限</td><td>每天两道 $\eps$-$N$ 证明，先放大再取 $N$</td></tr>
+    <tr><td>6–7</td><td>第三章 函数极限</td><td>把 $\eps$-$\delta$ 当 $\eps$-$N$ 的仿写；背等价无穷小</td></tr>
+    <tr><td>8</td><td>第四章 连续性</td><td>重点记反例：开区间、非闭区间各一个</td></tr>
+    <tr><td>9–10</td><td>第五章 导数与微分</td><td>链式法则推到不假思索；微分形式不变性</td></tr>
+    <tr><td>11–12</td><td>第六章 中值定理</td><td>构造辅助函数是唯一难点，整理 5 种套路</td></tr>
+    <tr><td>13</td><td>第七章 完备性</td><td>画一张六个定理的循环图，能口述每条箭头</td></tr>
+    <tr><td>14</td><td>第八、九章 积分</td><td>积分表背熟；换元与分部各练 20 题</td></tr>
+    <tr><td>15</td><td>第十、十一章 应用与反常积分</td><td>微元法写清"为什么近似成立"；$p$ 判别背下来</td></tr>
+    <tr><td>16</td><td>总复习</td><td>做附录 B，再按错题回章节</td></tr>
+  </table>
+
+  <h3>C.2 每天 40 分钟</h3>
+
+  <div class="cards">
+    <div class="card"><b>课前 10 分钟</b>看下一节的「本章地图」和定义，不懂的地方画问号。</div>
+    <div class="card"><b>课后 20 分钟</b>合上书，把当天定理的<b>条件</b>默写一遍，再找一个反例。</div>
+    <div class="card"><b>睡前 10 分钟</b>挑一道没做完的证明，只写第一步（通常是把定义展开）。</div>
+  </div>
+
+  <h3>C.3 十个高频误区</h3>
+
+  <table class="tbl">
+    <tr><th style="width:44px">#</th><th>误区</th><th>正确说法</th></tr>
+    <tr><td>1</td><td>把 $\forall\eps$ 换成某个具体的 $\eps$</td><td>$\eps$ 任给，你只能回应 $N$ 或 $\delta$</td></tr>
+    <tr><td>2</td><td>先取极限再证存在</td><td>先证极限存在（单调有界/Cauchy），才能两边取极限</td></tr>
+    <tr><td>3</td><td>用 L'Hospital 证 $\frac{\sin x}{x}\to1$</td><td>循环论证：$\sin'=\cos$ 依赖这个极限</td></tr>
+    <tr><td>4</td><td>加减法里用等价无穷小替换</td><td>只在乘除因子中替换；加减要先提取主部</td></tr>
+    <tr><td>5</td><td>开区间照搬闭区间定理</td><td>最值定理、一致连续、有限覆盖都要闭区间</td></tr>
+    <tr><td>6</td><td>认为 $f'=0$ 就是极值</td><td>驻点 $\ne$ 极值点（$x^3$）</td></tr>
+    <tr><td>7</td><td>忘记 $+C$</td><td>不定积分必带；定积分不带</td></tr>
+    <tr><td>8</td><td>换元后不换上下限</td><td>定积分换元三件套：被积式、$\dd x$、上下限</td></tr>
+    <tr><td>9</td><td>把"有界"当"收敛"</td><td>有界只保证有收敛子列（Bolzano–Weierstrass）</td></tr>
+    <tr><td>10</td><td>反常积分用奇偶性直接得 0</td><td>先判收敛；发散的积分没有"值"</td></tr>
+  </table>
+
+  <h3>C.4 考前 7 天</h3>
+
+  <ol>
+    <li><b>第 7–5 天</b>：只看定义与定理的条件，把"去掉条件会怎样"的反例过一遍。</li>
+    <li><b>第 4–3 天</b>：重做附录 B 的错题，每题写完整过程，不许跳步。</li>
+    <li><b>第 2 天</b>：把附录 A 的表格抄一遍（手抄，不打印），重点在导数与积分公式。</li>
+    <li><b>第 1 天</b>：只看错题本与反例本，早睡。</li>
+  </ol>
+
+  <div class="endnote">
+    <p>本讲义按华东师范大学数学科学学院编《数学分析》第六版（上册）的章节顺序编排，内容为预习用途，不替代教材与课堂。公式为 MathJax 矢量渲染，交互图为原生 Canvas 绘制，整本单文件、断网可读。</p>
+    <p>建议配合教材使用：<b>先读本讲义的定义与例题 → 再读教材的证明与习题 → 最后回到章末自测</b>。祝你这学期把 $\eps$ 语言拿下。</p>
+  </div>
+</section>

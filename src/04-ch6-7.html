@@ -1,0 +1,221 @@
+<section class="chap" id="ch6" data-no="06" data-title="微分中值定理" style="--ch:6">
+  <div class="chap-head">
+    <div class="chap-no">06</div>
+    <h2>微分中值定理<small class="en">Mean Value Theorems</small></h2>
+  </div>
+  <p class="src">教材对应：第六章 微分中值定理及其应用 · §1 拉格朗日定理与单调性　§2 柯西中值定理与不定式　§3 泰勒公式　§4 极值·最值·凹凸性</p>
+<div class="ask"><b>课 前 3 问</b>
+    <ol><li>一段路上的平均速度，为什么一定等于某一瞬间的瞬时速度？</li><li>罗尔定理的三个条件，去掉哪一个会让结论失效？</li><li>泰勒公式在用多项式“模仿”函数，模仿到什么程度算成功？</li></ol>
+    <span class="ask-hint">读完本章约 20 分钟 · 答不出没关系，把问题带进课堂</span>
+  </div>
+
+  <div class="roadmap"><b>本章地图</b>
+    <ul>
+      <li>一条链：Fermat 引理 → Rolle → Lagrange → Cauchy</li>
+      <li>Taylor 公式：两种余项，两种用途</li>
+      <li>L'Hospital 法则：条件比公式重要</li>
+      <li>单调、极值、凹凸、渐近线：把导数当"形状探测器"</li>
+    </ul>
+  </div>
+
+  <p>这一章是整个微分学的核心。它的价值在于：<b>把"函数在一个区间上的整体信息"和"某一点的导数"连起来</b>。所有"证明不等式""证明方程有根""估计误差"的题，入口都在这里。</p>
+
+  <h3>6.1 一条定理链</h3>
+
+  <div class="box thm" data-k="定理"><div class="tag">Fermat 引理</div>
+    <p>若 $f$ 在 $x_0$ 的某邻域内定义，在 $x_0$ 取<b>局部极值</b>，且 $f'(x_0)$ 存在，则 $f'(x_0)=0$。</p>
+    <details class="proof"><summary>证明（只证极大）</summary><div class="body">
+      <p>存在 $\delta&gt;0$ 使 $|x-x_0|&lt;\delta$ 时 $f(x)\le f(x_0)$。于是</p>
+      <p>$$\frac{f(x)-f(x_0)}{x-x_0}\begin{cases}\ge0,&x&lt;x_0,\\[2pt]\le0,&x&gt;x_0.\end{cases}$$</p>
+      <p>令 $x\to x_0^-$ 得 $f'(x_0)\ge0$，令 $x\to x_0^+$ 得 $f'(x_0)\le0$，故 $f'(x_0)=0$。<span class="qed">∎</span></p>
+      <p>注意两个方向的不等号方向相反，这是本证明的关键。</p>
+    </div></details>
+  </div>
+
+  <div class="box thm" data-k="定理"><div class="tag">Rolle 中值定理</div>
+    <p>若 $f\in C[a,b]$，在 $(a,b)$ 内可导，且 $f(a)=f(b)$，则存在 $\xi\in(a,b)$ 使 $f'(\xi)=0$。</p>
+    <details class="proof"><summary>证明</summary><div class="body">
+      <p>由最值定理，$f$ 在 $[a,b]$ 上取到最大 $M$ 与最小 $m$。</p>
+      <p>若 $M=m$，则 $f$ 为常数，任取 $\xi$ 都有 $f'(\xi)=0$。若 $M&gt;m$，由于 $f(a)=f(b)$，$M$ 与 $m$ 中至少有一个在<b>内部</b>某点 $\xi$ 取到，由 Fermat 引理 $f'(\xi)=0$。<span class="qed">∎</span></p>
+    </div></details>
+  </div>
+
+  <div class="box thm" data-k="定理"><div class="tag">Lagrange 中值定理</div>
+    <p>若 $f\in C[a,b]$，在 $(a,b)$ 内可导，则存在 $\xi\in(a,b)$ 使</p>
+    <p>$$f(b)-f(a)=f'(\xi)(b-a).$$</p>
+    <details class="proof"><summary>证明（构造辅助函数）</summary><div class="body">
+      <p>令 $k=\dfrac{f(b)-f(a)}{b-a}$，$F(x)=f(x)-f(a)-k(x-a)$。则 $F(a)=F(b)=0$，$F$ 满足 Rolle 定理的条件，存在 $\xi$ 使 $0=F'(\xi)=f'(\xi)-k$，即得。<span class="qed">∎</span></p>
+      <p>"减去割线"是构造辅助函数的标准套路，请记住这个动作。</p>
+    </div></details>
+  </div>
+
+  <p class="plain">中值定理说的是：<b>一段路上的"平均变化率"，必然等于路上某一点的"瞬时变化率"。</b>开车两小时走了 120 公里，平均时速 60，那么这两小时里至少有一瞬间，速度表正好指着 60。就这么朴素。</p>
+
+  <div class="box thm" data-k="定理"><div class="tag">Cauchy 中值定理</div>
+    <p>若 $f,g\in C[a,b]$，在 $(a,b)$ 内可导，$g'(x)\ne0$，则存在 $\xi\in(a,b)$ 使</p>
+    <p>$$\frac{f(b)-f(a)}{g(b)-g(a)}=\frac{f'(\xi)}{g'(\xi)}.$$</p>
+    <details class="proof"><summary>证明</summary><div class="body">
+      <p>令 $F(x)=f(x)-f(a)-\dfrac{f(b)-f(a)}{g(b)-g(a)}\big(g(x)-g(a)\big)$，验证 $F(a)=F(b)=0$ 后用 Rolle 定理。<span class="qed">∎</span></p>
+      <p><b>它不是 Lagrange 的推广，而是 L'Hospital 法则的发动机。</b></p>
+    </div></details>
+  </div>
+
+  <div class="box tip"><div class="tag">方法 · 中值定理的三个用法</div>
+    <p><b>① 证明不等式：</b>把 $f(b)-f(a)$ 换成 $f'(\xi)(b-a)$，再估计 $f'(\xi)$ 的范围。<br>
+       <b>② 证明导数为零/存在性：</b>构造辅助函数，凑出 $F(a)=F(b)$。<br>
+       <b>③ 证明恒等式：</b>若 $f'\equiv0$ 则 $f$ 为常数（由 Lagrange 定理）。</p>
+  </div>
+
+  <div class="box ex"><div class="tag">用中值定理证不等式</div>
+    <p>证明：当 $x&gt;0$ 时，$\dfrac{x}{1+x}&lt;\ln(1+x)&lt;x$。</p>
+    <details class="ans"><summary>解答</summary><div class="body">
+      <p>令 $f(t)=\ln(1+t)$，在 $[0,x]$ 上用 Lagrange 中值定理：存在 $\xi\in(0,x)$ 使</p>
+      <p>$$\ln(1+x)-\ln1=\frac{1}{1+\xi}\cdot x.$$</p>
+      <p>由 $0&lt;\xi&lt;x$ 得 $\dfrac{1}{1+x}&lt;\dfrac{1}{1+\xi}&lt;1$，两边乘 $x&gt;0$ 即得。</p>
+      <p>这个不等式在估计对数、证明调和级数发散时天天用。</p>
+    </div></details>
+  </div>
+
+  <h3>6.2 Taylor 公式</h3>
+
+  <div class="box thm" data-k="定理"><div class="tag">Taylor 公式（带 Peano 余项）</div>
+    <p>若 $f$ 在 $x_0$ 处有 $n$ 阶导数，则当 $x\to x_0$ 时</p>
+    <p>$$f(x)=\sum_{k=0}^{n}\frac{f^{(k)}(x_0)}{k!}(x-x_0)^k+o\big((x-x_0)^n\big).$$</p>
+    <p>它描述的是<b>局部</b>行为，用于求极限、判断极值。</p>
+  </div>
+
+  <div class="box thm" data-k="定理"><div class="tag">Taylor 公式（带 Lagrange 余项）</div>
+    <p>若 $f$ 在 $[a,b]$ 上有 $n+1$ 阶导数，则对任意 $x,x_0\in[a,b]$，存在 $\xi$ 介于 $x$ 与 $x_0$ 之间，使</p>
+    <p>$$f(x)=\sum_{k=0}^{n}\frac{f^{(k)}(x_0)}{k!}(x-x_0)^k+\frac{f^{(n+1)}(\xi)}{(n+1)!}(x-x_0)^{n+1}.$$</p>
+    <p>它给出<b>误差的定量估计</b>，用于近似计算与证明不等式。</p>
+  </div>
+
+  <div class="lab" data-lab="taylor"></div>
+
+  <div class="box ex"><div class="tag">两种余项各用一次</div>
+    <p>(1) 求 $\lim\limits_{x\to0}\dfrac{e^x-1-x}{x^2}$；(2) 估计 $e\approx 1+1+\frac1{2!}+\cdots+\frac1{n!}$ 的误差。</p>
+    <details class="ans"><summary>解答</summary><div class="body">
+      <p><b>(1)</b> 用 Peano：$e^x=1+x+\frac{x^2}{2}+o(x^2)$，故原式 $=\frac{x^2/2+o(x^2)}{x^2}\to\frac12$。</p>
+      <p><b>(2)</b> 用 Lagrange：$e=e^1$ 在 $x_0=0$ 处展开 $n$ 阶，余项 $\dfrac{e^{\xi}}{(n+1)!}$，$\xi\in(0,1)$，故误差 $&lt;\dfrac{3}{(n+1)!}$。</p>
+      <p>同一函数、两个公式，<b>要极限用 Peano，要误差用 Lagrange</b>。</p>
+    </div></details>
+  </div>
+
+  <h3>6.3 L'Hospital 法则</h3>
+
+  <div class="box thm" data-k="定理"><div class="tag">L'Hospital 法则（$\frac00$ 型）</div>
+    <p>设 $f,g$ 在 $x_0$ 的某去心邻域内可导，$g'(x)\ne0$，且</p>
+    <p>$$\lim_{x\to x_0}f(x)=\lim_{x\to x_0}g(x)=0,\qquad \lim_{x\to x_0}\frac{f'(x)}{g'(x)}=A\ (\text{或}\ \infty),$$</p>
+    <p>则 $\lim\limits_{x\to x_0}\dfrac{f(x)}{g(x)}=A$。</p>
+    <p>$\frac{\infty}{\infty}$ 型有对应的版本。$0\cdot\infty$、$\infty-\infty$、$1^\infty$ 等要<b>先化成</b>这两种型。</p>
+  </div>
+
+  <div class="box warn"><div class="tag">易错 · 三个典型陷阱</div>
+    <p><b>① 不是 $\frac00$ 或 $\frac\infty\infty$ 就乱用：</b>$\lim_{x\to0}\frac{x+1}{x+2}=\frac12$，若上下求导得 $\frac11=1$，大错。</p>
+    <p><b>② 求导后极限不存在，不等于原极限不存在：</b>$f(x)=x^2\sin\frac1x$，$g(x)=x$，$x\to0$ 时 $\frac{f}{g}=x\sin\frac1x\to0$，但 $\frac{f'}{g'}=2x\sin\frac1x-\cos\frac1x$ <b>没有极限</b>。此时法则失效，要用别的方法。</p>
+    <p><b>③ 别循环：</b>用 L'Hospital 证 $\lim\frac{\sin x}{x}=1$ 会用到 $(\sin x)'=\cos x$，而这个导数公式本身就要用 $\lim\frac{\sin x}{x}=1$ 才能推出——循环论证。</p>
+  </div>
+
+  <h3>6.4 导数的形状信息</h3>
+
+  <table class="tbl">
+    <caption>把导数当"探测器"</caption>
+    <tr><th style="width:150px">看什么</th><th>结论</th></tr>
+    <tr><td>$f'&gt;0$ 于 $(a,b)$</td><td>$f$ 在 $[a,b]$ 上严格递增</td></tr>
+    <tr><td>$f''&gt;0$ 于 $(a,b)$</td><td>$f$ 是<b>凸函数</b>（下凸，图形在切线上方）</td></tr>
+    <tr><td>$f'(x_0)=0$ 且 $f''(x_0)&lt;0$</td><td>$x_0$ 是极大值点</td></tr>
+    <tr><td>$f'(x_0)=0$ 且 $f''(x_0)&gt;0$</td><td>$x_0$ 是极小值点</td></tr>
+    <tr><td>$f''$ 在 $x_0$ 两侧变号</td><td>$x_0$ 是拐点</td></tr>
+  </table>
+
+  <div class="box note"><div class="tag">读法</div>
+    <p>凸函数的定义不依赖导数：$f(\lambda x_1+(1-\lambda)x_2)\le\lambda f(x_1)+(1-\lambda)f(x_2)$，$\lambda\in[0,1]$。它说的是"<b>两点连线在图形上方</b>"。$f''&gt;0$ 只是它的一个充分条件（要求二阶导存在）。</p>
+  </div>
+
+  <div class="box warn"><div class="tag">易错</div>
+    <p>$f'(x_0)=0$ 只是极值的<b>必要</b>条件。$f(x)=x^3$ 在 $0$ 处 $f'(0)=0$，但 $0$ 不是极值点（是拐点）。<b>"驻点"≠"极值点"。</b></p>
+  </div>
+
+  <div class="quiz">
+    <div class="tag">预 习 自 测</div>
+    <ol>
+      <li>验证 $f(x)=x^3-3x$ 在 $[-\sqrt3,\sqrt3]$ 上满足 Rolle 定理，并求出定理中的 $\xi$。</li>
+      <li>证明：若 $f$ 在 $(a,b)$ 内可导且 $f'\equiv0$，则 $f$ 在 $(a,b)$ 内为常数。</li>
+      <li>求 $\lim\limits_{x\to0}\left(\dfrac{1}{x}-\dfrac{1}{e^x-1}\right)$。</li>
+      <li>用 Taylor 公式证明 $e^x&gt;1+x+\frac{x^2}{2}$（$x&gt;0$）。</li>
+    </ol>
+    <details class="ans"><summary>答案与提示</summary><div class="body">
+      <p><b>1.</b> $f(\pm\sqrt3)=(\pm\sqrt3)^3-3(\pm\sqrt3)=\pm3\sqrt3\mp3\sqrt3=0$，端点值相等，满足条件。$f'(x)=3x^2-3=0$ 得 $x=\pm1$，两个都在 $(-\sqrt3,\sqrt3)$ 内，故 $\xi=\pm1$ 都可以。<br><b>提醒：</b>若误取 $[-1,1]$，则 $f(-1)=2$，$f(1)=-2$，条件并不满足——做题先<b>验证条件</b>。</p>
+      <p><b>2.</b> 任取 $x_1&lt;x_2$，由 Lagrange 定理 $f(x_2)-f(x_1)=f'(\xi)(x_2-x_1)=0$。</p>
+      <p><b>3.</b> 通分得 $\frac{e^x-1-x}{x(e^x-1)}$。分子 $\sim\frac{x^2}{2}$，分母 $\sim x^2$，极限 $\frac12$。（也可直接用 Taylor。）</p>
+      <p><b>4.</b> $e^x=1+x+\frac{x^2}{2}+\frac{e^\xi}{6}x^3$，$\xi\in(0,x)$，末项 $&gt;0$，故不等式成立。</p>
+    </div></details>
+  </div>
+</section>
+
+<section class="chap" id="ch7" data-no="07" data-title="实数的完备性" style="--ch:7">
+  <div class="chap-head">
+    <div class="chap-no">07</div>
+    <h2>实数的完备性<small class="en">Completeness of $\R$</small></h2>
+  </div>
+
+  <p class="src">教材对应：第七章 实数的完备性 · §1 完备性的基本定理　§2 上极限和下极限</p>
+<div class="ask"><b>课 前 3 问</b>
+    <ol><li>实数比有理数多出来的，到底是什么东西？</li><li>六条看起来完全不同的定理，为什么会是同一件事？</li><li>“数轴没有洞”这句大白话，能写成一条可证明的命题吗？</li></ol>
+    <span class="ask-hint">读完本章约 20 分钟 · 答不出没关系，把问题带进课堂</span>
+  </div>
+
+  <div class="roadmap"><b>本章地图</b>
+    <ul>
+      <li>六条命题，其实是同一件事的六种说法</li>
+      <li>看它们如何互相推出（循环证明图）</li>
+      <li>用途：给"存在性"提供地基</li>
+    </ul>
+  </div>
+
+  <p>前六章用到的很多结论——最值定理、一致连续、收敛子列——背后站着同一个东西：<b>实数系是完备的</b>。这一章把它拆成六种等价表述，让你看清"地基"长什么样。</p>
+
+  <p class="plain">完备性翻译成人话就是"<b>数轴上没有洞</b>"：任何看起来该有个极限的东西，确实有一个实数当它的极限。这条性质不能从加减乘除推出来，它是实数的"出厂设置"。</p>
+
+  <div class="box thm" data-k="定理"><div class="tag">完备性的六种等价表述</div>
+    <p>下列命题两两等价：</p>
+    <ol>
+      <li><b>确界原理</b>：非空有上界的数集必有上确界。</li>
+      <li><b>单调有界定理</b>：单调有界数列必收敛。</li>
+      <li><b>区间套定理</b>：若 $[a_n,b_n]$ 满足 $[a_{n+1},b_{n+1}]\subseteq[a_n,b_n]$ 且 $b_n-a_n\to0$，则存在唯一的 $\xi$ 属于所有区间。</li>
+      <li><b>Bolzano–Weierstrass 定理</b>：有界数列必有收敛子列。</li>
+      <li><b>Cauchy 收敛准则</b>：Cauchy 列必收敛。</li>
+      <li><b>Heine–Borel 有限覆盖定理</b>：闭区间的任何开覆盖都有有限子覆盖。</li>
+    </ol>
+  </div>
+
+  <div class="box note"><div class="tag">读法 · 循环图</div>
+    <p>一个常用的证明回路（顺着箭头就能串起全部）：</p>
+    <p style="text-align:center;font-family:var(--mono);font-size:14px;line-height:2">确界原理 → 单调有界 → 区间套 → 聚点/列紧 → 有限覆盖 → Cauchy</p>
+    <p>考试若要求"用 A 证 B"，只要沿图上找一条路即可。真正需要记住的细节只有两三个（比如区间套如何由单调有界造出来），其余都是"取端点/取子列"的机械操作。</p>
+  </div>
+
+  <div class="lab" data-lab="bisect"></div>
+
+  <div class="box tip"><div class="tag">方法 · 有限覆盖怎么用</div>
+    <p>典型场景：要证一个"整体"性质（如一致连续），先对每点证"局部"性质，得到一个开覆盖，再用有限覆盖把无穷多个局部条件压成<b>有限个</b>，取 $\min$ 就得到统一的 $\delta$。这正是 Cantor 定理的证明骨架。</p>
+  </div>
+
+  <div class="box warn"><div class="tag">易错</div>
+    <p>有限覆盖定理要求区间<b>闭</b>、覆盖是<b>开</b>的。$(0,1)$ 被 $\{(0,1-\frac1n)\}$ 覆盖却没有有限子覆盖——开区间会"漏掉端点"。这两个条件都在承重。</p>
+  </div>
+
+  <div class="quiz">
+    <div class="tag">预 习 自 测</div>
+    <ol>
+      <li>用区间套定理证明：有界数列必有收敛子列。</li>
+      <li>举一个反例说明"开区间的开覆盖不一定有有限子覆盖"。</li>
+      <li>为什么说"连续函数在闭区间上一致连续"本质上用的是完备性？</li>
+    </ol>
+    <details class="ans"><summary>答案与提示</summary><div class="body">
+      <p><b>1.</b> 设 $\{x_n\}\subseteq[a_1,b_1]$。二分 $[a_1,b_1]$，必有一半含无穷多项，记为 $[a_2,b_2]$，取其中一项 $x_{n_1}$。如此得区间套与子列 $\{x_{n_k}\}$，$|x_{n_k}-\xi|\le b_k-a_k\to0$。</p>
+      <p><b>2.</b> $(0,1)$ 被 $\left\{\left(0,1-\frac1n\right)\right\}_{n\ge2}$ 覆盖，任何有限个的并都是 $(0,1-\frac1{N})$，盖不住靠近 $1$ 的点。</p>
+      <p><b>3.</b> 因为证明的关键是"有限覆盖定理"，而它等价于确界原理——即实数没有洞。</p>
+    </div></details>
+  </div>
+</section>
