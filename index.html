@@ -197,26 +197,6 @@ details.ans .body p{margin-bottom:9px}
 .fig figcaption{font-family:var(--sans);font-size:12.5px;color:var(--ink-3);margin-top:6px;line-height:1.7}
 
 
-/* ============ 交互实验 ============ */
-.lab{margin:28px 0;border:1px solid var(--line-2);border-radius:12px;overflow:hidden;
-  background:var(--paper-2);box-shadow:var(--shadow)}
-.lab-bar{display:flex;justify-content:space-between;align-items:center;gap:10px;
-  padding:10px 16px;background:var(--paper-3);font-family:var(--sans);font-size:11.5px;letter-spacing:.06em}
-.lab-tag{color:var(--red);font-weight:700}
-.lab-tip{color:var(--ink-3);font-size:11px}
-.lab canvas{display:block;width:100%;height:282px;background:var(--paper);touch-action:pan-y}
-.lab-ctrl{display:flex;flex-wrap:wrap;gap:10px 24px;padding:12px 16px;border-top:1px solid var(--line);
-  font-family:var(--sans);font-size:12.5px;color:var(--ink-2)}
-.lab-ctrl label{display:flex;align-items:center;gap:9px}
-.lab-ctrl input[type=range]{width:132px;accent-color:var(--red);cursor:pointer}
-.lab-ctrl output{font-family:var(--mono);font-size:12px;color:var(--red);min-width:46px;
-  font-feature-settings:"tnum"}
-.lab-foot{padding:10px 16px 14px;font-family:var(--sans);font-size:12.5px;color:var(--ink-2);
-  border-top:1px dashed var(--line);line-height:1.8}
-.lab-foot b{color:var(--red);font-feature-settings:"tnum"}
-.lab-foot .ok{color:var(--green);font-weight:700}
-.lab-foot .no{color:var(--red);font-weight:700}
-
 /* 教材对应 */
 .src{font-family:var(--sans);font-size:11.5px;color:var(--ink-3);margin:-6px 0 20px 60px;letter-spacing:.02em}
 /* 说人话 */
@@ -242,14 +222,6 @@ body.preview .mode-note{display:block}
   background:var(--paper-3);border-radius:8px;padding:10px 14px;margin:16px 0;line-height:1.75}
 
 
-
-.lab-tools{display:flex;gap:6px;align-items:center}
-.lab-btn{font-family:var(--sans);font-size:11px;color:var(--ink-2);background:var(--paper);
-  border:1px solid var(--line-2);border-radius:99px;padding:3px 10px;cursor:pointer;transition:.15s}
-.lab-btn:hover{border-color:var(--red);color:var(--red)}
-.lab:fullscreen{display:flex;flex-direction:column;background:var(--paper);border-radius:0}
-.lab:fullscreen canvas{flex:1;height:auto;min-height:0}
-.lab:fullscreen .lab-ctrl,.lab:fullscreen .lab-foot{flex:0 0 auto}
 
 /* 速览表 */
 .tbl.quick td{font-family:var(--sans);font-size:13.6px;line-height:1.75}
@@ -297,6 +269,44 @@ body.preview .mode-note{display:block}
   details .body{display:block!important}
   a{color:#000;text-decoration:none}
 }
+</style>
+<style>
+/* ============================================================
+   MathLab · 实验外观  v1.0
+   与 engine/mathlab.js 配套；构建时内联进单文件 HTML。
+   只在本工作区使用。
+   ============================================================ */
+
+.lab{margin:28px 0;border:1px solid var(--line-2);border-radius:12px;overflow:hidden;
+  background:var(--paper-2);box-shadow:var(--shadow)}
+.lab-bar{display:flex;justify-content:space-between;align-items:center;gap:10px;
+  padding:10px 16px;background:var(--paper-3);font-family:var(--sans);font-size:11.5px;letter-spacing:.06em}
+.lab-tag{color:var(--red);font-weight:700}
+.lab-tip{color:var(--ink-3);font-size:11px}
+.lab canvas{display:block;width:100%;height:282px;background:var(--paper);touch-action:pan-y}
+.lab-ctrl{display:flex;flex-wrap:wrap;gap:10px 24px;padding:12px 16px;border-top:1px solid var(--line);
+  font-family:var(--sans);font-size:12.5px;color:var(--ink-2)}
+.lab-ctrl label{display:flex;align-items:center;gap:9px}
+.lab-ctrl input[type=range]{width:132px;accent-color:var(--red);cursor:pointer}
+.lab-ctrl output{font-family:var(--mono);font-size:12px;color:var(--red);min-width:46px;
+  font-feature-settings:"tnum"}
+.lab-foot{padding:10px 16px 14px;font-family:var(--sans);font-size:12.5px;color:var(--ink-2);
+  border-top:1px dashed var(--line);line-height:1.8}
+.lab-foot b{color:var(--red);font-feature-settings:"tnum"}
+.lab-foot .ok{color:var(--green);font-weight:700}
+.lab-foot .no{color:var(--red);font-weight:700}
+
+.lab-tools{display:flex;gap:6px;align-items:center}
+.lab-btn{font-family:var(--sans);font-size:11px;color:var(--ink-2);background:var(--paper);
+  border:1px solid var(--line-2);border-radius:99px;padding:3px 10px;cursor:pointer;transition:.15s}
+.lab-btn:hover{border-color:var(--red);color:var(--red)}
+.lab:fullscreen{display:flex;flex-direction:column;background:var(--paper);border-radius:0}
+.lab:fullscreen canvas{flex:1;height:auto;min-height:0}
+.lab:fullscreen .lab-ctrl,.lab:fullscreen .lab-foot{flex:0 0 auto}
+
+/* 打印：隐藏控件，保留画面 */
+@media print{.lab-ctrl,.lab-bar,.lab-tools{display:none}.lab canvas{height:220px}}
+
 </style>
 </head>
 <body>
@@ -2393,10 +2403,22 @@ window.MathJax = {
 </script>
 
 <script>
-/* ============ 交互实验引擎（纯 Canvas，无外部依赖） ============ */
-(function(){
+/* ============================================================
+   MathLab · 数学交互实验引擎  v1.0
+   ------------------------------------------------------------
+   只在本工作区使用：源码在 数学语言/数学分析预习/engine/，
+   构建时由 buildlib.py 内联进单文件 HTML；不装全局、不对外发布。
+
+   用法
+     HTML:  <div class="lab" data-lab="seq-eps"></div>
+     JS  :  MathLab.absorb({ "seq-eps": { name, ctrls, anim, draw, foot } });
+   引擎在 DOMContentLoaded 自动扫描 .lab[data-lab] 并初始化。
+
+   API：absorb(obj) / boot() / axes / line / dot / tag / fmt / FONT / pal
+   ============================================================ */
+(function(global){
   "use strict";
-  var V=function(n){return getComputedStyle(document.documentElement).getPropertyValue(n).trim();};
+var V=function(n){return getComputedStyle(document.documentElement).getPropertyValue(n).trim();};
   function pal(){return {ink:V("--ink"),ink2:V("--ink-2"),ink3:V("--ink-3"),line:V("--line-2"),
     red:V("--red"),blue:V("--blue"),green:V("--green"),amber:V("--amber")};}
   var FONT='11px "Noto Sans CJK SC","PingFang SC",system-ui,sans-serif';
@@ -2443,7 +2465,126 @@ window.MathJax = {
     ctx.fillText(text,m.X(x)+(dx||6),m.Y(y)+(dy||-10));ctx.restore();
   }
 
-  var LABS={
+
+
+  var labs = {};
+  var redraws=[];
+  function build(root){
+    var id=root.getAttribute("data-lab"), cfg=labs[id];
+    if(!cfg) return;
+    root.innerHTML='<div class="lab-bar"><span class="lab-tag">交互实验 · '+cfg.name+
+      '</span><span class="lab-tools"></span></div>'+
+      '<canvas></canvas><div class="lab-ctrl"></div><div class="lab-foot"></div>';
+    var bar=root.querySelector(".lab-bar"), tools=root.querySelector(".lab-tools"),
+        cv=root.querySelector("canvas"), ctrl=root.querySelector(".lab-ctrl"), foot=root.querySelector(".lab-foot");
+    var st={}, inputs={}, outs={}, metas={};
+    cfg.ctrls.forEach(function(c){
+      var l=document.createElement("label");
+      l.innerHTML='<span>'+c.label+'</span><input type="range" min="'+c.min+'" max="'+c.max+
+        '" step="'+c.step+'" value="'+c.val+'"><output></output>';
+      var inp=l.querySelector("input"), out=l.querySelector("output");
+      st[c.k]=c.val; inputs[c.k]=inp; outs[c.k]=out; metas[c.k]=c;
+      var show=function(){out.textContent=(c.fmt!==undefined&&c.fmt>0)?(+inp.value).toFixed(c.fmt):String(inp.value);};
+      inp.addEventListener("input",function(){stopAnim();st[c.k]=+inp.value;show();draw();});
+      show();ctrl.appendChild(l);
+    });
+
+    function setVal(k,v){
+      st[k]=v;
+      var inp=inputs[k]; if(inp) inp.value=v;
+      var o=outs[k], c=metas[k];
+      if(o) o.textContent=(c.fmt!==undefined&&c.fmt>0)?(+v).toFixed(c.fmt):String(Math.round(v));
+    }
+    function draw(){
+      var w=cv.clientWidth||600,hh=cv.clientHeight||282;
+      var dpr=Math.min(window.devicePixelRatio||1,2);
+      if(cv.width!==Math.round(w*dpr)||cv.height!==Math.round(hh*dpr)){
+        cv.width=Math.round(w*dpr);cv.height=Math.round(hh*dpr);
+      }
+      var ctx=cv.getContext("2d");
+      ctx.setTransform(dpr,0,0,dpr,0,0);ctx.clearRect(0,0,w,hh);
+      cfg.draw(ctx,w,hh,pal(),st);
+      foot.innerHTML=cfg.foot(st);
+    }
+
+    /* ---- 自动演示 ---- */
+    var raf=null, t0=0, playing=false, animBtn=null;
+    function stopAnim(){
+      if(!playing&&!raf) return;
+      playing=false; if(raf) cancelAnimationFrame(raf); raf=null; t0=0;
+      if(animBtn) animBtn.textContent="▶ 自动演示";
+    }
+    function tick(ts){
+      if(!playing) return;
+      if(!t0) t0=ts;
+      var dur=cfg.anim.ms||4800;
+      var ph=((ts-t0)%(dur*2))/dur;
+      var u=ph<=1?ph:2-ph;
+      var e=u<0.5?2*u*u:1-Math.pow(-2*u+2,2)/2;
+      setVal(cfg.anim.k, cfg.anim.from+(cfg.anim.to-cfg.anim.from)*e);
+      draw();
+      raf=requestAnimationFrame(tick);
+    }
+    if(cfg.anim){
+      animBtn=document.createElement("button");
+      animBtn.type="button"; animBtn.className="lab-btn"; animBtn.textContent="▶ 自动演示";
+      animBtn.addEventListener("click",function(){
+        if(playing){stopAnim();return;}
+        playing=true; animBtn.textContent="⏸ 暂停"; t0=0; raf=requestAnimationFrame(tick);
+      });
+      tools.appendChild(animBtn);
+    }
+
+    /* ---- 全屏 ---- */
+    if(document.fullscreenEnabled){
+      var fsBtn=document.createElement("button");
+      fsBtn.type="button"; fsBtn.className="lab-btn"; fsBtn.textContent="全屏";
+      fsBtn.addEventListener("click",function(){
+        if(document.fullscreenElement) document.exitFullscreen();
+        else if(root.requestFullscreen) root.requestFullscreen();
+      });
+      document.addEventListener("fullscreenchange",function(){
+        fsBtn.textContent = document.fullscreenElement ? "退出全屏" : "全屏";
+        setTimeout(draw,80);
+      });
+      tools.appendChild(fsBtn);
+    }
+
+    redraws.push(draw);
+    if(window.ResizeObserver) new ResizeObserver(function(){draw();}).observe(cv);
+    else window.addEventListener("resize",draw);
+    draw();
+  }
+  function boot(){Array.prototype.forEach.call(document.querySelectorAll(".lab[data-lab]"),build);}
+  if(document.readyState==="loading") document.addEventListener("DOMContentLoaded",boot); else boot();
+  document.addEventListener("themechange",function(){redraws.forEach(function(f){f();});});
+
+  function absorb(obj){
+    for(var k in obj){ if(Object.prototype.hasOwnProperty.call(obj,k)) labs[k]=obj[k]; }
+  }
+
+  global.MathLab = {
+    version: "1.0",
+    absorb: absorb, boot: boot, labs: labs,
+    axes: axes, line: line, dot: dot, tag: tag, fmt: fmt, FONT: FONT, pal: pal
+  };
+
+})(window);
+
+</script>
+<script>
+/* ============================================================
+   《数学分析》上册预习讲义 · 实验定义（11 个）
+   依赖 engine/mathlab.js；只在本工作区使用。
+   每个实验：name / ctrls / anim? / draw(ctx,w,h,p,st) / foot(st)
+   ============================================================ */
+(function(){
+  "use strict";
+  var ML = window.MathLab;
+  if(!ML){ console.warn("[labs] MathLab 未加载"); return; }
+  var axes = ML.axes, line = ML.line, dot = ML.dot, tag = ML.tag, fmt = ML.fmt, FONT = ML.FONT;
+
+  ML.absorb({
     "sup":{
       anim:{k:"beta",from:1.28,to:0.55,ms:5200},
       name:"上确界 · β 能不能再压低？",
@@ -2787,99 +2928,9 @@ window.MathJax = {
         return "<b>第二类（振荡型）</b>：sin(1/x) 在 0 附近无限次穿过每一个值，既不趋于数，也不趋于无穷——它只是不肯安定。";
       }
     },
-  };
-
-  var redraws=[];
-  function build(root){
-    var id=root.getAttribute("data-lab"), cfg=LABS[id];
-    if(!cfg) return;
-    root.innerHTML='<div class="lab-bar"><span class="lab-tag">交互实验 · '+cfg.name+
-      '</span><span class="lab-tools"></span></div>'+
-      '<canvas></canvas><div class="lab-ctrl"></div><div class="lab-foot"></div>';
-    var bar=root.querySelector(".lab-bar"), tools=root.querySelector(".lab-tools"),
-        cv=root.querySelector("canvas"), ctrl=root.querySelector(".lab-ctrl"), foot=root.querySelector(".lab-foot");
-    var st={}, inputs={}, outs={}, metas={};
-    cfg.ctrls.forEach(function(c){
-      var l=document.createElement("label");
-      l.innerHTML='<span>'+c.label+'</span><input type="range" min="'+c.min+'" max="'+c.max+
-        '" step="'+c.step+'" value="'+c.val+'"><output></output>';
-      var inp=l.querySelector("input"), out=l.querySelector("output");
-      st[c.k]=c.val; inputs[c.k]=inp; outs[c.k]=out; metas[c.k]=c;
-      var show=function(){out.textContent=(c.fmt!==undefined&&c.fmt>0)?(+inp.value).toFixed(c.fmt):String(inp.value);};
-      inp.addEventListener("input",function(){stopAnim();st[c.k]=+inp.value;show();draw();});
-      show();ctrl.appendChild(l);
-    });
-
-    function setVal(k,v){
-      st[k]=v;
-      var inp=inputs[k]; if(inp) inp.value=v;
-      var o=outs[k], c=metas[k];
-      if(o) o.textContent=(c.fmt!==undefined&&c.fmt>0)?(+v).toFixed(c.fmt):String(Math.round(v));
-    }
-    function draw(){
-      var w=cv.clientWidth||600,hh=cv.clientHeight||282;
-      var dpr=Math.min(window.devicePixelRatio||1,2);
-      if(cv.width!==Math.round(w*dpr)||cv.height!==Math.round(hh*dpr)){
-        cv.width=Math.round(w*dpr);cv.height=Math.round(hh*dpr);
-      }
-      var ctx=cv.getContext("2d");
-      ctx.setTransform(dpr,0,0,dpr,0,0);ctx.clearRect(0,0,w,hh);
-      cfg.draw(ctx,w,hh,pal(),st);
-      foot.innerHTML=cfg.foot(st);
-    }
-
-    /* ---- 自动演示 ---- */
-    var raf=null, t0=0, playing=false, animBtn=null;
-    function stopAnim(){
-      if(!playing&&!raf) return;
-      playing=false; if(raf) cancelAnimationFrame(raf); raf=null; t0=0;
-      if(animBtn) animBtn.textContent="▶ 自动演示";
-    }
-    function tick(ts){
-      if(!playing) return;
-      if(!t0) t0=ts;
-      var dur=cfg.anim.ms||4800;
-      var ph=((ts-t0)%(dur*2))/dur;
-      var u=ph<=1?ph:2-ph;
-      var e=u<0.5?2*u*u:1-Math.pow(-2*u+2,2)/2;
-      setVal(cfg.anim.k, cfg.anim.from+(cfg.anim.to-cfg.anim.from)*e);
-      draw();
-      raf=requestAnimationFrame(tick);
-    }
-    if(cfg.anim){
-      animBtn=document.createElement("button");
-      animBtn.type="button"; animBtn.className="lab-btn"; animBtn.textContent="▶ 自动演示";
-      animBtn.addEventListener("click",function(){
-        if(playing){stopAnim();return;}
-        playing=true; animBtn.textContent="⏸ 暂停"; t0=0; raf=requestAnimationFrame(tick);
-      });
-      tools.appendChild(animBtn);
-    }
-
-    /* ---- 全屏 ---- */
-    if(document.fullscreenEnabled){
-      var fsBtn=document.createElement("button");
-      fsBtn.type="button"; fsBtn.className="lab-btn"; fsBtn.textContent="全屏";
-      fsBtn.addEventListener("click",function(){
-        if(document.fullscreenElement) document.exitFullscreen();
-        else if(root.requestFullscreen) root.requestFullscreen();
-      });
-      document.addEventListener("fullscreenchange",function(){
-        fsBtn.textContent = document.fullscreenElement ? "退出全屏" : "全屏";
-        setTimeout(draw,80);
-      });
-      tools.appendChild(fsBtn);
-    }
-
-    redraws.push(draw);
-    if(window.ResizeObserver) new ResizeObserver(function(){draw();}).observe(cv);
-    else window.addEventListener("resize",draw);
-    draw();
-  }
-  function boot(){Array.prototype.forEach.call(document.querySelectorAll(".lab[data-lab]"),build);}
-  if(document.readyState==="loading") document.addEventListener("DOMContentLoaded",boot); else boot();
-  document.addEventListener("themechange",function(){redraws.forEach(function(f){f();});});
+  });
 })();
+
 </script>
 
 

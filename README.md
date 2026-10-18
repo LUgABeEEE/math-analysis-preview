@@ -33,15 +33,28 @@
 | 11 | 反常积分 |
 | A / B / C | 公式速查 / 综合自测 / 学习路线 |
 
+## 目录结构
+
+```
+engine/mathlab.js    交互实验引擎（框架层，与内容无关，可搬到别的页面）
+engine/mathlab.css   实验外观
+src/labs.js          本书 11 个实验定义（MathLab.absorb）
+src/shell.html       页面模板：{{CONTENT}} {{ENGINE_CSS}} {{ENGINE_JS}} {{LABS_JS}}
+src/*.html           各章节与附录
+buildlib.py          组装 + 构建期编号
+build.py             生成 index.html
+make_sample.py       抽出单章样张
+```
+
 ## 重新构建
 
 ```bash
-# 依赖：Python 3；MathJax 已放在 assets/tex-svg.js（如需更新，从 cdn.jsdelivr.net 下载 tex-svg.js）
-python3 build.py        # 生成 index.html
-python3 make_sample.py ch2   # 可选：抽出单章样张
+# 依赖：Python 3；MathJax 在 assets/tex-svg.js（如需更新，从 cdn.jsdelivr.net 下载）
+python3 build.py             # 生成 index.html（约 2.1 MB）
+python3 make_sample.py ch2   # 可选：单章样张
 ```
 
-源文件在 `src/`：`shell.html` 是模板（样式 + 交互引擎），其余按章节拆分，`zz-appendix.html` 是附录。编号在构建期写入，不依赖 CSS counter。
+编号在构建期写入，不依赖 CSS counter；引擎与实验定义分别内联，最终仍是单文件。
 
 ## 说明
 
