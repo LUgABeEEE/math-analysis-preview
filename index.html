@@ -329,6 +329,38 @@ body.preview .mode-note{display:block}
 
 <div class="mode-note"><b>怎么用最快</b>：先翻「一页速览」建立全局（5 分钟）→ 每章读「课前 3 问」→「本章地图」→ 定义与人话 → 拖两下实验 → 课上解决剩下的一半。全书默认显示<b>完整内容</b>（含例题、证明、章末自测、附录），左下角可切「只看预习线」。</div>
 
+<section class="chap" id="quick" data-no="★" data-title="一页速览" style="--ch:1">
+  <div class="chap-head">
+    <div class="chap-no star">★</div>
+    <h2>一页速览 · 全书骨架<small class="en">One-Page Overview</small></h2>
+  </div>
+
+  <p class="plain">五分钟把这张表读完，你就知道这学期要学的十二件事各自在解决什么问题。卡住的时候，回到这张表定位，再点章节进去看细节。</p>
+
+  <table class="tbl quick">
+    <caption>点章号可直接跳转 · 「必须带走」是可以写在笔记本第一页的东西</caption>
+    <tr><th style="width:78px">章</th><th style="width:31%">一句话核心</th><th style="width:33%">必须带走</th><th>最常见坑</th></tr>
+    <tr><td><a href="#ch0">导言</a></td><td>分析课不教你算，教你"为什么可以这么算"</td><td>量词顺序决定意思；定义 = 可逐字验证的合同</td><td>把 $\forall\eps$ 换成某个具体的 $\eps$</td></tr>
+    <tr><td><a href="#ch1">一 · 实数</a></td><td>实数比有理数多的不是"数"，是"没有洞"</td><td>确界原理；$\sup$ 的两个条件</td><td>以为 $\sup$ 一定属于集合</td></tr>
+    <tr><td><a href="#ch2">二 · 数列极限</a></td><td>收敛 = 尾巴全进带子，只有有限个例外</td><td>$\eps$-$N$ 定义；单调有界必收敛</td><td>有界 ⇒ 收敛</td></tr>
+    <tr><td><a href="#ch3">三 · 函数极限</a></td><td>极限与 $f(x_0)$ 取什么值完全无关</td><td>$\eps$-$\delta$；两个重要极限；等价替换</td><td>等价替换用在加减里</td></tr>
+    <tr><td><a href="#ch4">四 · 连续</a></td><td>连续 = 极限值等于函数值</td><td>闭区间三定理；Cantor 定理</td><td>开区间照搬最值定理</td></tr>
+    <tr><td><a href="#ch5">五 · 导数</a></td><td>导数 = 割线斜率的极限</td><td>可导 ⇒ 连续；链式法则</td><td>以为导数一定连续</td></tr>
+    <tr><td><a href="#ch6">六 · 中值定理</a></td><td>平均变化率 = 某一点的瞬时变化率</td><td>Lagrange；Taylor 两种余项</td><td>$f'=0$ 就当极值点</td></tr>
+    <tr><td><a href="#ch7">七 · 完备性</a></td><td>六条定理说的是同一件事：数轴没有洞</td><td>确界 ⇔ 区间套 ⇔ 有限覆盖</td><td>忘了有限覆盖要求<b>开</b>覆盖</td></tr>
+    <tr><td><a href="#ch8">八 · 不定积分</a></td><td>不定积分 = 求导反过来</td><td>凑微分、换元、分部</td><td>漏 $+C$、换元不回代</td></tr>
+    <tr><td><a href="#ch9">九 · 定积分</a></td><td>定积分 = 细长条凑面积的极限</td><td>Newton–Leibniz；变上限积分求导</td><td>换元不换上下限</td></tr>
+    <tr><td><a href="#ch10">十 · 应用</a></td><td>微元法：先小块近似，再积分</td><td>面积 / 体积 / 弧长 / 侧面积</td><td>侧面积误用 $\dd x$</td></tr>
+    <tr><td><a href="#ch11">十一 · 反常积分</a></td><td>问的是"面积到底有没有限"</td><td>$p$ 判别；比较法</td><td>发散积分用奇偶性得 $0$</td></tr>
+  </table>
+
+  <div class="cards">
+    <div class="card"><b>只有 30 分钟</b>读这张表 → 第 2 章拖 ε 滑块 → 第 6 章拖 Taylor 阶数。三件事就能建立"分析在干什么"的直觉。</div>
+    <div class="card"><b>只有 3 小时</b>这张表 + 每章「课前 3 问」+ 第 2、5、6 三章通读。开学第一周够用了。</div>
+    <div class="card"><b>有整整一天</b>从头通读，证明先别看，只看定义、人话、实验；把不懂的抄成问题清单。</div>
+  </div>
+</section>
+
 <section class="chap" id="ch0" data-no="00" data-title="导言 · 数学的语言" style="--ch:0">
   <div class="chap-head">
     <div class="chap-no">00</div>
@@ -498,38 +530,6 @@ body.preview .mode-note{display:block}
       <p><b>2.</b> $\forall x_1,x_2\in I,\ x_1&lt;x_2 \Rightarrow f(x_1)\le f(x_2)$。否定：$\exists x_1,x_2\in I,\ x_1&lt;x_2$ 且 $f(x_1)&gt;f(x_2)$。注意否定里是"存在一对"，不是"对任意一对"。</p>
       <p><b>3.</b> 取 $f(x)=x^2,\ A=\R,\ B_0=\{4\}$，则 $f^{-1}(B_0)=\{-2,2\}$，有两个元素；而"反函数的像"要求 $f$ 本身可逆，此时 $f$ 在 $\R$ 上不可逆。原像对<b>任何</b>映射都有定义，这正是它好用的原因。</p>
     </div></details>
-  </div>
-</section>
-
-<section class="chap" id="quick" data-no="★" data-title="一页速览" style="--ch:1">
-  <div class="chap-head">
-    <div class="chap-no star">★</div>
-    <h2>一页速览 · 全书骨架<small class="en">One-Page Overview</small></h2>
-  </div>
-
-  <p class="plain">五分钟把这张表读完，你就知道这学期要学的十二件事各自在解决什么问题。卡住的时候，回到这张表定位，再点章节进去看细节。</p>
-
-  <table class="tbl quick">
-    <caption>点章号可直接跳转 · 「必须带走」是可以写在笔记本第一页的东西</caption>
-    <tr><th style="width:78px">章</th><th style="width:31%">一句话核心</th><th style="width:33%">必须带走</th><th>最常见坑</th></tr>
-    <tr><td><a href="#ch0">导言</a></td><td>分析课不教你算，教你"为什么可以这么算"</td><td>量词顺序决定意思；定义 = 可逐字验证的合同</td><td>把 $\forall\eps$ 换成某个具体的 $\eps$</td></tr>
-    <tr><td><a href="#ch1">一 · 实数</a></td><td>实数比有理数多的不是"数"，是"没有洞"</td><td>确界原理；$\sup$ 的两个条件</td><td>以为 $\sup$ 一定属于集合</td></tr>
-    <tr><td><a href="#ch2">二 · 数列极限</a></td><td>收敛 = 尾巴全进带子，只有有限个例外</td><td>$\eps$-$N$ 定义；单调有界必收敛</td><td>有界 ⇒ 收敛</td></tr>
-    <tr><td><a href="#ch3">三 · 函数极限</a></td><td>极限与 $f(x_0)$ 取什么值完全无关</td><td>$\eps$-$\delta$；两个重要极限；等价替换</td><td>等价替换用在加减里</td></tr>
-    <tr><td><a href="#ch4">四 · 连续</a></td><td>连续 = 极限值等于函数值</td><td>闭区间三定理；Cantor 定理</td><td>开区间照搬最值定理</td></tr>
-    <tr><td><a href="#ch5">五 · 导数</a></td><td>导数 = 割线斜率的极限</td><td>可导 ⇒ 连续；链式法则</td><td>以为导数一定连续</td></tr>
-    <tr><td><a href="#ch6">六 · 中值定理</a></td><td>平均变化率 = 某一点的瞬时变化率</td><td>Lagrange；Taylor 两种余项</td><td>$f'=0$ 就当极值点</td></tr>
-    <tr><td><a href="#ch7">七 · 完备性</a></td><td>六条定理说的是同一件事：数轴没有洞</td><td>确界 ⇔ 区间套 ⇔ 有限覆盖</td><td>忘了有限覆盖要求<b>开</b>覆盖</td></tr>
-    <tr><td><a href="#ch8">八 · 不定积分</a></td><td>不定积分 = 求导反过来</td><td>凑微分、换元、分部</td><td>漏 $+C$、换元不回代</td></tr>
-    <tr><td><a href="#ch9">九 · 定积分</a></td><td>定积分 = 细长条凑面积的极限</td><td>Newton–Leibniz；变上限积分求导</td><td>换元不换上下限</td></tr>
-    <tr><td><a href="#ch10">十 · 应用</a></td><td>微元法：先小块近似，再积分</td><td>面积 / 体积 / 弧长 / 侧面积</td><td>侧面积误用 $\dd x$</td></tr>
-    <tr><td><a href="#ch11">十一 · 反常积分</a></td><td>问的是"面积到底有没有限"</td><td>$p$ 判别；比较法</td><td>发散积分用奇偶性得 $0$</td></tr>
-  </table>
-
-  <div class="cards">
-    <div class="card"><b>只有 30 分钟</b>读这张表 → 第 2 章拖 ε 滑块 → 第 6 章拖 Taylor 阶数。三件事就能建立"分析在干什么"的直觉。</div>
-    <div class="card"><b>只有 3 小时</b>这张表 + 每章「课前 3 问」+ 第 2、5、6 三章通读。开学第一周够用了。</div>
-    <div class="card"><b>有整整一天</b>从头通读，证明先别看，只看定义、人话、实验；把不懂的抄成问题清单。</div>
   </div>
 </section>
 

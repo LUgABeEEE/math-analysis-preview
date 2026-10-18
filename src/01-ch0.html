@@ -1,0 +1,171 @@
+<section class="chap" id="ch0" data-no="00" data-title="导言 · 数学的语言" style="--ch:0">
+  <div class="chap-head">
+    <div class="chap-no">00</div>
+    <h2>导言 · 数学的语言<small class="en">Prologue · The Language of Mathematics</small></h2>
+  </div>
+
+  <div class="roadmap"><b>本章地图</b>
+    <ul>
+      <li>量词 $\forall$ 与 $\exists$：一句话的意思由它们的<b>顺序</b>决定</li>
+      <li>定义、定理、证明的三层结构，以及"逐字翻译"的读法</li>
+      <li>集合、映射、邻域的记号（全书的通用语言）</li>
+      <li>这本讲义怎么用：三轮预习法</li>
+    </ul>
+  </div>
+
+  <p>你即将开始的第一门专业课，和高中最大的不同不在难度，而在<b>说话的方式</b>。高中你被要求"求出答案"，大学你被要求"论证答案"。同一个命题，高中写三行，分析课上要写半页——多出来的部分，就是这门课真正教的东西。</p>
+
+  <div class="box key">
+    <div class="tag">要点</div>
+    <p>数学分析的第一课不是极限，是<b>检查每一步的依据</b>。任何一步只要你说不出"为什么可以这样做"，它就是错的——哪怕结果是对的。</p>
+  </div>
+
+  <h3>0.1 从"会算"到"会证"：一个例子</h3>
+
+  <p>高中学过 $\lim_{x\to 0}\dfrac{\sin x}{x}=1$。当时的"证明"通常是这样：画一个单位圆，用面积夹逼，得到 $\sin x &lt; x &lt; \tan x$，再夹一下。</p>
+
+  <p>这个证明在高中是合格的，但在分析课上会被追问三个问题：</p>
+
+  <ul>
+    <li><b>$x$ 是什么？</b> 弧度制下，$x$ 是一个实数——但"角的大小"和"实数"为什么能等同？这需要先<b>定义</b> $\sin$。</li>
+    <li><b>面积是什么？</b> 用面积夹逼，前提是"扇形面积"有定义。而面积的严格定义要等到<b>定积分</b>那一章。</li>
+    <li><b>$\sin x &lt; x$ 对哪些 $x$ 成立？</b> 只对 $0&lt;x&lt;\frac{\pi}{2}$ 成立。换一个范围，不等式方向可能反了。</li>
+  </ul>
+
+  <p>三个问题都指向同一件事：<b>你不能用后面才建立的东西，去证明前面的结论。</b>这就是"循环论证"，是分析里最常见的失分点，也是最难自己发现的错误。</p>
+
+  <div class="box hist">
+    <div class="tag">背景</div>
+    <p>十九世纪之前，数学家算极限靠"直觉 + 无穷小"。Berkeley 主教曾嘲笑无穷小是"已死量的幽灵"。直到 Cauchy、Weierstrass 把 $\varepsilon$-$\delta$ 语言写出来，分析才有了今天的地基。你这一年要学的，就是这套语言的读写。</p>
+  </div>
+
+  <h3>0.2 量词：一句话的意思由顺序决定</h3>
+
+  <p>分析里几乎每个定义都是量词串。读它们的方法只有一个：<b>从外往里，一个一个念出来。</b></p>
+
+  <table class="tbl">
+    <caption>三个符号，全书的骨架</caption>
+    <tr><th style="width:70px">符号</th><th style="width:130px">读作</th><th>含义</th></tr>
+    <tr><td>$\forall$</td><td>对任意 / 对所有</td><td>后面跟的每个对象都满足</td></tr>
+    <tr><td>$\exists$</td><td>存在（至少一个）</td><td>能找到至少一个对象满足</td></tr>
+    <tr><td>$\exists!$</td><td>存在唯一</td><td>恰好一个，不多不少</td></tr>
+  </table>
+
+  <p>看下面两句话，它们只差一个顺序：</p>
+
+  <p>$$(\mathrm{A})\quad \forall x\in\R,\ \exists y\in\R,\ x&lt;y \qquad (\mathrm{B})\quad \exists y\in\R,\ \forall x\in\R,\ x&lt;y$$</p>
+
+  <p>(A) 说：随便给一个数，我总能找到比它大的数。这是<b>真的</b>——你给 $y=x+1$ 就行，$y$ 可以依赖 $x$。</p>
+
+  <p>(B) 说：存在一个数，它比所有实数都大。这是<b>假的</b>——实数没有最大值。</p>
+
+  <div class="box note">
+    <div class="tag">读法</div>
+    <p>量词从左到右念，<b>后面的量词可以依赖前面已经出现的对象，反过来不行。</b>"$\forall x\,\exists y$"里的 $y$ 是 $x$ 的函数；"$\exists y\,\forall x$"里的 $y$ 必须先定下来，不能看 $x$ 的脸色。</p>
+  </div>
+
+  <p>这正是"数列收敛"定义的精华所在：</p>
+
+  <p>$$\lim_{n\to\infty}a_n=a \iff \forall\varepsilon&gt;0,\ \exists N\in\N,\ \forall n&gt;N:\ |a_n-a|&lt;\varepsilon$$</p>
+
+  <p>$N$ <b>可以依赖</b> $\varepsilon$（$\varepsilon$ 越小，$N$ 通常越大），但 $N$ <b>不能依赖</b> $n$（否则就是循环）。把这个依赖关系想清楚，第二章就过了一半。</p>
+
+  <h4>否定：把整句话翻过来</h4>
+
+  <p>否定量词只有两条规则，但要背到条件反射：</p>
+
+  <p>$$\lnot(\forall x,\ P(x)) \iff \exists x,\ \lnot P(x), \qquad \lnot(\exists x,\ P(x)) \iff \forall x,\ \lnot P(x)$$</p>
+
+  <p>否定时，<b>量词逐个翻转，最后把谓词取反</b>。取反时最容易漏的是不等号方向。例如"$a_n$ 有界"：</p>
+
+  <p>$$\exists M&gt;0,\ \forall n\in\N:\ |a_n|\le M \quad\Longleftrightarrow\quad \lnot:\ \forall M&gt;0,\ \exists n\in\N:\ |a_n|&gt;M$$</p>
+
+  <p>"有界"的否定不是"有界且反过来"，而是<b>"无论给多大的界，都能挑出一项冲出去"</b>——也就是无界。这句话在证明"数列无界"时天天用。</p>
+
+  <div class="box warn">
+    <div class="tag">易错</div>
+    <p>$\lnot(|a_n|\le M)$ 是 $|a_n|&gt;M$，不是 $|a_n|\ge M$。开闭的差别在极限里会真的影响真假（虽然多数时候不影响结论，但阅卷会扣分，而且你自己会因此漏掉边界情形）。</p>
+  </div>
+
+  <h3>0.3 定义是什么：一份可以逐字翻译的合同</h3>
+
+  <p>数学定义不是"描述感觉"，而是<b>给一组条件起个名字</b>。它有两个方向，考试和证明里都要用：</p>
+
+  <div class="cards">
+    <div class="card"><b>正用（判定）</b>要证"$X$ 是 $P$"，就去验证定义里那一串条件。定义就是你<b>要写的证明目标</b>。</div>
+    <div class="card"><b>反用（使用）</b>已知"$X$ 是 $P$"，就可以把定义里的结论直接拿来用。这是你<b>能调用的武器</b>。</div>
+  </div>
+
+  <p>所以读一个新定义时，请做三件事：</p>
+
+  <ol>
+    <li><b>翻译成量词串。</b>每个定义都能写成 $\forall/\exists$ 的句子，写不出来说明没读懂。</li>
+    <li><b>找一个满足它的例子。</b>越具体越好，最好能画出来。</li>
+    <li><b>找一个"几乎满足但不满足"的例子。</b>去掉某个条件会怎样？这一步决定你以后会不会用错定理。</li>
+  </ol>
+
+  <p>举个例子："$M$ 是集合 $S$ 的上界"定义为 $\forall x\in S,\ x\le M$。只改一个字，变成 $\exists x\in S,\ x\le M$，就几乎总是真的、毫无用处。<b>定义里每个量词都在承重。</b></p>
+
+  <h3>0.4 三种证明动作与一种更重要的动作</h3>
+
+  <div class="cards">
+    <div class="card"><b>直接证明</b>从已知条件出发，顺着推。分析里大量"取 $N=[1/\varepsilon]+1$"属于此类：你不是在推理，是在<b>构造</b>。</div>
+    <div class="card"><b>反证法</b>假设结论不成立，推出矛盾。$\sqrt2$ 无理、Cantor 定理、Rolle 定理的证明都靠它。</div>
+    <div class="card"><b>构造法</b>直接把对象造出来（造一个 $N$、一个 $\delta$、一个辅助函数）。这是分析最核心的手艺。</div>
+  </div>
+
+  <p>但比这三种更重要的是第四种：<b>举反例</b>。一个反例可以推翻一整节课的猜想，而且是检验自己是否真懂的唯一标准。请养成习惯——每学一个定理，问一句：<em>"如果把'闭区间'换成'开区间'，还成立吗？"</em>这一年的很多考点，答案都是"不成立"，反例就藏在课后习题里。</p>
+
+  <h3>0.5 记号：全书通用语言</h3>
+
+  <table class="tbl">
+    <caption>先混个眼熟，用到时回来查</caption>
+    <tr><th style="width:150px">记号</th><th>含义</th></tr>
+    <tr><td>$x\in A,\ A\subseteq B$</td><td>属于；包含于（$A$ 的每个元素都在 $B$ 里）</td></tr>
+    <tr><td>$A\cup B,\ A\cap B,\ A\setminus B$</td><td>并、交、差（$A$ 中不在 $B$ 里的元素）</td></tr>
+    <tr><td>$\N,\ \Z,\ \Q,\ \R$</td><td>自然数、整数、有理数、实数</td></tr>
+    <tr><td>$f:A\to B$</td><td>从 $A$ 到 $B$ 的映射（$A$ 中每个元素都有唯一像）</td></tr>
+    <tr><td>$f(A_0)=\{f(x):x\in A_0\}$</td><td>集合 $A_0$ 的像</td></tr>
+    <tr><td>$f^{-1}(B_0)=\{x\in A:f(x)\in B_0\}$</td><td>集合 $B_0$ 的原像（<b>不需要</b> $f$ 可逆）</td></tr>
+    <tr><td>$U(x_0,\delta)=(x_0-\delta,x_0+\delta)$</td><td>$x_0$ 的 $\delta$ 邻域</td></tr>
+    <tr><td>$\mathring U(x_0,\delta)=U(x_0,\delta)\setminus\{x_0\}$</td><td>去心邻域（极限只关心"靠近"，不关心"该点"）</td></tr>
+    <tr><td>$[a,b],\ (a,b),\ [a,b)$</td><td>闭区间、开区间、半开区间</td></tr>
+  </table>
+
+  <div class="box note">
+    <div class="tag">读法</div>
+    <p>"去心邻域"这个记号是第三章的关键。<b>函数在 $x_0$ 处有没有极限，与 $f(x_0)$ 取什么值完全无关</b>——甚至 $f$ 在 $x_0$ 处可以没有定义。记号 $\mathring U$ 就是在提醒你这一点。</p>
+  </div>
+
+  <h3>0.6 这本讲义怎么用</h3>
+
+  <p>预习的目标不是"提前学会"，而是<b>带着问题进课堂</b>。建议每次课前三十分钟，按三轮走：</p>
+
+  <table class="tbl">
+    <tr><th style="width:70px">轮次</th><th style="width:90px">时间</th><th>做什么</th></tr>
+    <tr><td>第一轮</td><td>5 分钟</td><td>只看每章的"地图"和标题层级，知道这节课要解决什么问题。看不懂没关系。</td></tr>
+    <tr><td>第二轮</td><td>20 分钟</td><td>读定义与例题。定义逐字念，例题先遮住解答自己写三行。遇到"证明"先别展开。</td></tr>
+    <tr><td>第三轮</td><td>5 分钟</td><td>做章末自测的前两题。做不出是正常的，把它抄在笔记本上，就是你的听课目标。</td></tr>
+  </table>
+
+  <p>书中的灰色"证明"块默认折叠，<b>请务必先自己写</b>。看别人写证明会产生"我懂了"的错觉，这种错觉在考场上会被无情击穿。</p>
+
+  <div class="box tip">
+    <div class="tag">方法</div>
+    <p>准备一本"反例本"：每学一个定理，记一条"条件去掉后不成立的例子"。期末复习时，这本书比笔记有用十倍。</p>
+  </div>
+
+  <div class="quiz">
+    <div class="tag">预 习 自 测</div>
+    <ol>
+      <li>写出"数列 $\{a_n\}$ 无界"的量词式，并说明它和"$\{a_n\}$ 不收敛"是不是一回事。</li>
+      <li>把"$f$ 在区间 $I$ 上单调递增"翻译成量词式，并写出它的否定。</li>
+      <li>举例说明 $f^{-1}(B_0)$ 与"反函数的像"不是同一个东西。</li>
+    </ol>
+    <details class="ans"><summary>答案与提示</summary><div class="body">
+      <p><b>1.</b> 无界：$\forall M&gt;0,\ \exists n\in\N,\ |a_n|&gt;M$。它与"不收敛"<b>不是</b>一回事：$a_n=(-1)^n$ 有界但不收敛。收敛必有界（逆否：无界必发散），但发散不一定无界。</p>
+      <p><b>2.</b> $\forall x_1,x_2\in I,\ x_1&lt;x_2 \Rightarrow f(x_1)\le f(x_2)$。否定：$\exists x_1,x_2\in I,\ x_1&lt;x_2$ 且 $f(x_1)&gt;f(x_2)$。注意否定里是"存在一对"，不是"对任意一对"。</p>
+      <p><b>3.</b> 取 $f(x)=x^2,\ A=\R,\ B_0=\{4\}$，则 $f^{-1}(B_0)=\{-2,2\}$，有两个元素；而"反函数的像"要求 $f$ 本身可逆，此时 $f$ 在 $\R$ 上不可逆。原像对<b>任何</b>映射都有定义，这正是它好用的原因。</p>
+    </div></details>
+  </div>
+</section>
