@@ -56,6 +56,11 @@ python3 make_sample.py ch2   # 可选：单章样张
 
 编号在构建期写入，不依赖 CSS counter；引擎与实验定义分别内联，最终仍是单文件。
 
+## 抓取与隐私
+
+页面带 `<meta name="robots" content="noindex, nofollow, noarchive">`，仓库根目录有 `robots.txt`（`Disallow: /`）：
+链接可以正常分享和访问，但主流搜索引擎不会收录。若要彻底下线，删掉 GitHub Pages 的发布源即可。
+
 ## 说明
 
 内容为个人预习整理，不替代教材、课堂与老师讲义。若有笔误欢迎提 issue。
