@@ -62,6 +62,78 @@ var V=function(n){return getComputedStyle(document.documentElement).getPropertyV
 
 
 
+  /* ---- 高层绘图助手 ---- */
+  function plot(ctx, m, fn, opt){
+    opt = opt || {};
+    var from = opt.from !== undefined ? opt.from : m.rx[0];
+    var to   = opt.to   !== undefined ? opt.to   : m.rx[1];
+    var steps = opt.steps || Math.max(160, Math.round(m.iw));
+    var lo = m.ry[0], hi = m.ry[1], started = false;
+    ctx.save();
+    ctx.strokeStyle = opt.color || "currentColor";
+    ctx.lineWidth = opt.width || 2.2;
+    ctx.setLineDash(opt.dash || []);
+    ctx.beginPath();
+    for(var i=0;i<=steps;i++){
+      var x = from + (to-from)*i/steps, y = fn(x);
+      if(!isFinite(y) || y > hi || y < lo){ started = false; continue; }
+      if(!started){ ctx.moveTo(m.X(x), m.Y(y)); started = true; }
+      else ctx.lineTo(m.X(x), m.Y(y));
+    }
+    ctx.stroke(); ctx.restore();
+  }
+
+  function band(ctx, m, a, b, color, alpha){
+    var lo = Math.min(a,b), hi = Math.max(a,b);
+    var yt = Math.max(m.Y(hi), m.pad.t), yb = Math.min(m.Y(lo), m.pad.t + m.ih);
+    if(yb <= yt) return;
+    ctx.save();
+    ctx.globalAlpha = alpha === undefined ? 0.12 : alpha;
+    ctx.fillStyle = color;
+    ctx.fillRect(m.pad.l, yt, m.iw, yb - yt);
+    ctx.restore();
+  }
+
+  function vband(ctx, m, a, b, color, alpha){
+    var lo = Math.min(a,b), hi = Math.max(a,b);
+    var xl = Math.max(m.X(lo), m.pad.l), xr = Math.min(m.X(hi), m.pad.l + m.iw);
+    if(xr <= xl) return;
+    ctx.save();
+    ctx.globalAlpha = alpha === undefined ? 0.12 : alpha;
+    ctx.fillStyle = color;
+    ctx.fillRect(xl, m.pad.t, xr - xl, m.ih);
+    ctx.restore();
+  }
+
+  function area(ctx, m, fn, from, to, color, alpha){
+    ctx.save();
+    ctx.globalAlpha = alpha === undefined ? 0.16 : alpha;
+    ctx.fillStyle = color;
+    ctx.beginPath();
+    ctx.moveTo(m.X(from), m.Y(0));
+    var steps = 240;
+    for(var i=0;i<=steps;i++){
+      var x = from + (to-from)*i/steps;
+      ctx.lineTo(m.X(x), m.Y(fn(x)));
+    }
+    ctx.lineTo(m.X(to), m.Y(0));
+    ctx.closePath(); ctx.fill(); ctx.restore();
+  }
+
+  function legend(ctx, m, items, opt){
+    opt = opt || {};
+    var x = m.pad.l + (opt.dx === undefined ? 10 : opt.dx);
+    var y = m.pad.t + (opt.dy === undefined ? 10 : opt.dy);
+    ctx.save();
+    ctx.font = FONT; ctx.textAlign = "left"; ctx.textBaseline = "middle";
+    items.forEach(function(it, i){
+      ctx.fillStyle = it.color;
+      ctx.fillRect(x, y + i*16, 12, 3);
+      ctx.fillText(it.label, x + 18, y + i*16 + 1);
+    });
+    ctx.restore();
+  }
+
   var labs = {};
   var redraws=[];
   function build(root){
@@ -161,7 +233,8 @@ var V=function(n){return getComputedStyle(document.documentElement).getPropertyV
   global.MathLab = {
     version: "1.0",
     absorb: absorb, boot: boot, labs: labs,
-    axes: axes, line: line, dot: dot, tag: tag, fmt: fmt, FONT: FONT, pal: pal
+    axes: axes, line: line, dot: dot, tag: tag, fmt: fmt, FONT: FONT, pal: pal,
+    plot: plot, band: band, vband: vband, area: area, legend: legend
   };
 
 })(window);

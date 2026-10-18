@@ -7,7 +7,8 @@
   "use strict";
   var ML = window.MathLab;
   if(!ML){ console.warn("[labs] MathLab 未加载"); return; }
-  var axes = ML.axes, line = ML.line, dot = ML.dot, tag = ML.tag, fmt = ML.fmt, FONT = ML.FONT;
+  var axes = ML.axes, line = ML.line, dot = ML.dot, tag = ML.tag, fmt = ML.fmt, FONT = ML.FONT,
+      plot = ML.plot, band = ML.band, vband = ML.vband, area = ML.area;
 
   ML.absorb({
     "sup":{
@@ -77,14 +78,10 @@
       draw:function(ctx,w,h,p,st){
         var m=axes(ctx,w,h,p,[0,3.2],[0,10],{l:50,r:20,t:18,b:30});
         var d=st.delta,e=st.eps,x0=2,A=4;
-        ctx.save();ctx.fillStyle=p.blue;ctx.globalAlpha=.12;
-        ctx.fillRect(m.pad.l,m.Y(A+e),m.iw,m.Y(A-e)-m.Y(A+e));ctx.restore();
+        band(ctx,m,A-e,A+e,p.blue,.12);
         var worst=4*d+d*d;
-        ctx.save();ctx.fillStyle=(worst<e?p.green:p.red);ctx.globalAlpha=.13;
-        ctx.fillRect(m.X(x0-d),m.pad.t,m.X(x0+d)-m.X(x0-d),m.ih);ctx.restore();
-        ctx.save();ctx.strokeStyle=p.ink;ctx.lineWidth=2.2;ctx.beginPath();
-        for(var i=0;i<=200;i++){var x=3.2*i/200,y=x*x;if(i===0)ctx.moveTo(m.X(x),m.Y(y));else ctx.lineTo(m.X(x),m.Y(y));}
-        ctx.stroke();ctx.restore();
+        vband(ctx,m,x0-d,x0+d,(worst<e?p.green:p.red),.13);
+        plot(ctx,m,function(x){return x*x;},{from:0,to:3.2,color:p.ink});
         line(ctx,m,x0-d,A+e,x0+d,A+e,p.blue,[4,4],1);
         line(ctx,m,x0-d,A-e,x0+d,A-e,p.blue,[4,4],1);
         line(ctx,m,x0,0,x0,10,p.ink3,[2,3],1);
@@ -106,9 +103,7 @@
       draw:function(ctx,w,h,p,st){
         var m=axes(ctx,w,h,p,[0,2.8],[0,8],{l:50,r:20,t:18,b:30});
         var hh=st.h,x0=1,y0=1;
-        ctx.save();ctx.strokeStyle=p.ink;ctx.lineWidth=2.2;ctx.beginPath();
-        for(var i=0;i<=200;i++){var x=2.8*i/200,y=x*x;if(i===0)ctx.moveTo(m.X(x),m.Y(y));else ctx.lineTo(m.X(x),m.Y(y));}
-        ctx.stroke();ctx.restore();
+        plot(ctx,m,function(x){return x*x;},{from:0,to:2.8,color:p.ink});
         var x1=x0+hh,y1=x1*x1,k=(y1-y0)/(x1-x0);
         line(ctx,m,0.05,y0+k*(0.05-x0),2.7,y0+k*(2.7-x0),p.red,[],1.8);
         line(ctx,m,0.05,y0+2*(0.05-x0),2.7,y0+2*(2.7-x0),p.green,[5,4],1.2);
@@ -159,21 +154,9 @@
         var m=axes(ctx,w,h,p,[-4,4],[-2.2,2.2],{l:50,r:20,t:18,b:30});
         var mm=Math.round(st.m);
         function P(x){var s=0,t=x;for(var k=0;k<mm;k++){s+=t;t*=-x*x/((2*k+2)*(2*k+3));}return s;}
-        ctx.save();ctx.strokeStyle=p.blue;ctx.lineWidth=2.4;ctx.beginPath();
-        for(var i=0;i<=300;i++){var x=-4+8*i/300;if(Math.abs(x)>3.9)continue;
-          if(i===0)ctx.moveTo(m.X(x),m.Y(Math.sin(x)));else ctx.lineTo(m.X(x),m.Y(Math.sin(x)));}
-        ctx.stroke();ctx.restore();
-        ctx.save();ctx.strokeStyle=p.red;ctx.lineWidth=1.8;ctx.setLineDash([6,4]);ctx.beginPath();
-        for(var j=0;j<=300;j++){var x2=-4+8*j/300,vy=P(x2);if(Math.abs(vy)>3)continue;
-          if(j===0)ctx.moveTo(m.X(x2),m.Y(vy));else ctx.lineTo(m.X(x2),m.Y(vy));}
-        ctx.stroke();ctx.restore();
-        ctx.save();
-        ctx.fillStyle=p.blue;ctx.fillRect(m.pad.l+12,m.pad.t+8,16,3);
-        ctx.font=FONT;ctx.textAlign="left";ctx.textBaseline="middle";
-        ctx.fillText("sin x",m.pad.l+34,m.pad.t+10);
-        ctx.fillStyle=p.red;ctx.fillRect(m.pad.l+12,m.pad.t+26,16,3);
-        ctx.fillText("P"+(2*mm-1)+"(x)",m.pad.l+34,m.pad.t+28);
-        ctx.restore();
+        plot(ctx,m,function(x){return Math.sin(x);},{from:-4,to:4,color:p.blue,width:2.4});
+        plot(ctx,m,P,{from:-4,to:4,color:p.red,width:1.8,dash:[6,4]});
+        ML.legend(ctx,m,[{label:"sin x",color:p.blue},{label:"P"+(2*mm-1)+"(x)",color:p.red}]);
       },
       foot:function(st){
         var mm=Math.round(st.m),mx=0;
@@ -195,10 +178,7 @@
         ctx.fillRect(m.pad.l,m.Y(y0+e),m.iw,m.Y(y0-e)-m.Y(y0+e));ctx.restore();
         ctx.save();ctx.fillStyle=p.green;ctx.globalAlpha=.14;
         ctx.fillRect(m.X(left),m.pad.t,m.X(right)-m.X(left),m.ih);ctx.restore();
-        ctx.save();ctx.strokeStyle=p.ink;ctx.lineWidth=2.2;ctx.beginPath();
-        for(var i=0;i<=260;i++){var x=0.14+0.9*i/260,y=1/x;if(y>7)continue;
-          if(i===0)ctx.moveTo(m.X(x),m.Y(y));else ctx.lineTo(m.X(x),m.Y(y));}
-        ctx.stroke();ctx.restore();
+        plot(ctx,m,function(x){return 1/x;},{from:0.14,to:1.04,color:p.ink,steps:320});
         dot(ctx,m,x0,y0,p.red,4.2);
         ctx.save();ctx.fillStyle=p.red;ctx.font=FONT;ctx.textAlign="center";
         ctx.fillText("x₀",m.X(x0),m.Y(y0)-12);ctx.restore();
@@ -247,14 +227,8 @@
       draw:function(ctx,w,h,p,st){
         var m=axes(ctx,w,h,p,[0,20.5],[0,1.6],{l:50,r:20,t:18,b:30});
         var pp=st.p,R=st.R;
-        ctx.save();ctx.fillStyle=p.blue;ctx.globalAlpha=.16;
-        ctx.beginPath();ctx.moveTo(m.X(1),m.Y(0));
-        for(var i=0;i<=200;i++){var x=1+(R-1)*i/200;ctx.lineTo(m.X(x),m.Y(Math.pow(x,-pp)));}
-        ctx.lineTo(m.X(R),m.Y(0));ctx.closePath();ctx.fill();ctx.restore();
-        ctx.save();ctx.strokeStyle=p.ink;ctx.lineWidth=2.2;ctx.beginPath();
-        for(var j=0;j<=300;j++){var x2=1+19.5*j/300,y=Math.pow(x2,-pp);if(y>1.6)continue;
-          if(j===0)ctx.moveTo(m.X(x2),m.Y(y));else ctx.lineTo(m.X(x2),m.Y(y));}
-        ctx.stroke();ctx.restore();
+        area(ctx,m,function(x){return Math.pow(x,-pp);},1,R,p.blue,.16);
+        plot(ctx,m,function(x){return Math.pow(x,-pp);},{from:1,to:20.5,color:p.ink,steps:320});
         line(ctx,m,R,0,R,1.6,p.red,[4,4],1.1);
       },
       foot:function(st){
