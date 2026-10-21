@@ -48,11 +48,20 @@ build.py             生成 index.html
 make_sample.py       抽出单章样张
 ```
 
+## 两个产物
+
+| 文件 | 大小 | 视频 | 用途 |
+|---|---|---|---|
+| `index.html` | 2.2 MB | `videos/` 外链，即点即播 | 在线版 / GitHub Pages |
+| `index-offline.html` | 2.6 MB | base64 内联 | 断网、U 盘、单文件传阅 |
+
+视频默认折叠成一行「▶ 看动画」，不占版面。
+
 ## 重新构建
 
 ```bash
 # 依赖：Python 3；MathJax 在 assets/tex-svg.js（如需更新，从 cdn.jsdelivr.net 下载）
-python3 build.py             # 生成 index.html（约 2.1 MB）
+python3 build.py             # 同时生成 index.html 与 index-offline.html
 python3 make_sample.py ch2   # 可选：单章样张
 
 # 动画（在工作区根目录，需 .runtime/venv）

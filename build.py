@@ -12,12 +12,14 @@ import buildlib
 parts = buildlib.content_parts()
 raw = "\n".join(buildlib.read(p) for p in parts)
 body = buildlib.prepare_body(raw)
-html = buildlib.assemble(body)
+online = buildlib.assemble(body, video_mode="link")
+offline = buildlib.assemble(body, video_mode="inline")
 
-dst = os.path.join(buildlib.ROOT, "index.html")
-with open(dst, "w", encoding="utf-8") as f:
-    f.write(html)
+for name, html in (("index.html", online), ("index-offline.html", offline)):
+    dst = os.path.join(buildlib.ROOT, name)
+    with open(dst, "w", encoding="utf-8") as f:
+        f.write(html)
+    print(f"built {name}  ({len(html)/1048576:.2f} MB)")
 
-nums = re.findall(r'<span class="num">([^<]+)</span>', html)
-print(f"built {dst}  ({len(html)/1048576:.2f} MB)  from {len(parts)} parts")
-print("编号:", " | ".join(nums) if nums else "none")
+nums = re.findall(r'<span class="num">([^<]+)</span>', online)
+print(f"from {len(parts)} parts · 编号 {len(nums)} 组")

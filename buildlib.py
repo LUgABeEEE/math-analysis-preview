@@ -85,34 +85,41 @@ def _b64(path: str) -> str:
         return base64.b64encode(f.read()).decode("ascii")
 
 
-def inline_videos(html: str) -> str:
-    """把 <div class="vid" data-video="key" data-title="..."></div> 换成内联视频。
+def embed_videos(html: str, mode: str = "link") -> str:
+    """把 <div class="vid" data-video="key" data-title="..."></div> 换成视频。
 
-    视频与封面都 base64 内嵌，保证单文件离线可播；缺文件时退化为纯文字提示。
+    mode="link"   : 视频走 videos/ 相对路径（页面小，即点即播；GitHub Pages 用这个）
+    mode="inline" : 视频与封面 base64 内嵌（单文件离线版）
+    两种模式都把视频收进 <details>，默认折叠，避免连排两屏。
     """
     def repl(m):
-        key = m.group(1)
-        title = m.group(2) or ""
+        key, title = m.group(1), m.group(2) or ""
         mp4 = os.path.join(VIDEO_DIR, f"{key}.mp4")
         jpg = os.path.join(VIDEO_DIR, f"poster-{key}.jpg")
         if not os.path.exists(mp4):
             return f'<p class="vid-missing">（视频 {key} 尚未生成）</p>'
-        poster = ""
-        if os.path.exists(jpg):
-            poster = f' poster="data:image/jpeg;base64,{_b64(jpg)}"'
+
+        if mode == "inline":
+            poster = f' poster="data:image/jpeg;base64,{_b64(jpg)}"' if os.path.exists(jpg) else ""
+            src = f"data:video/mp4;base64,{_b64(mp4)}"
+        else:
+            poster = f' poster="videos/poster-{key}.jpg"' if os.path.exists(jpg) else ""
+            src = f"videos/{key}.mp4"
+
         cap = f"<figcaption>{title}</figcaption>" if title else ""
+        label = ("▶ 看动画 · " + title) if title else "▶ 看动画"
         return (
+            f'<details class="vid-wrap"><summary>{label}</summary>'
             '<figure class="vid">'
-            f'<video controls muted loop playsinline preload="metadata"{poster}>'
-            f'<source src="data:video/mp4;base64,{_b64(mp4)}" type="video/mp4">'
-            '你的浏览器不支持内嵌视频。</video>'
-            f"{cap}</figure>"
+            f'<video controls muted loop playsinline preload="none"{poster}>'
+            f'<source src="{src}" type="video/mp4">你的浏览器不支持内嵌视频。</video>'
+            f"{cap}</figure></details>"
         )
 
     return re.sub(r'<div class="vid" data-video="([^"]+)"(?: data-title="([^"]*)")?></div>',
                   repl, html)
 
-def assemble(content_html: str, with_mathjax: bool = True) -> str:
+def assemble(content_html: str, with_mathjax: bool = True, video_mode: str = "link") -> str:
     shell = read(os.path.join(SRC, "shell.html"))
     css = safe_js("\n".join(read(p) for p in ENGINE_CSS_FILES), "engine css")
     js = safe_js(read(ENGINE_JS), "engine js")
@@ -123,7 +130,7 @@ def assemble(content_html: str, with_mathjax: bool = True) -> str:
     else:
         mathjax = "/* mathjax omitted */"
 
-    content_html = inline_videos(content_html)
+    content_html = embed_videos(content_html, video_mode)
     return (
         shell.replace("{{CONTENT}}", content_html)
         .replace("{{ENGINE_CSS}}", css)
