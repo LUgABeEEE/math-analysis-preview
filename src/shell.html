@@ -273,6 +273,29 @@ details.vid-wrap>summary:hover{color:var(--red)}
 details.vid-wrap[open]>summary{border-bottom:1px solid var(--line)}
 details.vid-wrap .vid{margin:0;border:0;border-radius:0;box-shadow:none}
 
+
+/* ============ 搜索 ============ */
+#searchbtn{margin-top:8px}
+#sbmask{position:fixed;inset:0;background:rgba(20,15,5,.45);z-index:120;display:none}
+#sbmask.on{display:block}
+#sbbox{position:fixed;left:50%;top:12vh;transform:translateX(-50%);width:min(640px,92vw);
+  background:var(--paper);border:1px solid var(--line-2);border-radius:14px;box-shadow:0 24px 60px -20px rgba(0,0,0,.45);
+  z-index:121;display:none;overflow:hidden}
+#sbbox.on{display:block}
+#sbinput{width:100%;border:0;border-bottom:1px solid var(--line);background:transparent;
+  padding:16px 18px;font-family:var(--sans);font-size:16px;color:var(--ink);outline:none}
+#sblist{max-height:52vh;overflow-y:auto}
+.sb-item{display:block;padding:10px 18px;border-bottom:1px solid var(--line);cursor:pointer;
+  font-family:var(--sans);font-size:13.5px;color:var(--ink-2);text-decoration:none}
+.sb-item:hover,.sb-item.sel{background:var(--paper-3);color:var(--ink)}
+.sb-item b{color:var(--red);font-weight:600}
+.sb-item .ch{font-size:11px;color:var(--ink-3);margin-left:8px}
+.sb-empty{padding:16px 18px;font-family:var(--sans);font-size:13px;color:var(--ink-3)}
+.sb-hint{padding:9px 18px;font-family:var(--sans);font-size:11.5px;color:var(--ink-3);
+  border-top:1px solid var(--line);background:var(--paper-2)}
+.flash{animation:flash 1.4s ease}
+@keyframes flash{0%,100%{background:transparent}30%{background:rgba(200,150,60,.22)}}
+
 /* 速览表 */
 .tbl.quick td{font-family:var(--sans);font-size:13.6px;line-height:1.75}
 .tbl.quick td:first-child{white-space:nowrap;font-weight:600}
@@ -337,6 +360,7 @@ details.vid-wrap .vid{margin:0;border:0;border-radius:0;box-shadow:none}
     <!-- TOC -->
   </ul>
   <div class="sidebar-foot">
+    <button class="btn" id="searchbtn">🔍 搜索（Ctrl+K）</button>
     <button class="btn" id="modeBtn">预习模式</button>
     <div id="readbox">已读 <b id="readcount">0</b> / <span id="readtotal">0</span></div>
     <button class="btn" id="themeBtn" style="margin-top:10px">切换深色 / 浅色</button>
@@ -549,6 +573,89 @@ window.MathJax = {
     score();
   }
   if(document.readyState==="loading") document.addEventListener("DOMContentLoaded",boot); else boot();
+})();
+</script>
+
+
+<div id="sbmask"></div>
+<div id="sbbox">
+  <input id="sbinput" type="text" placeholder="搜索定义、定理、小节…" autocomplete="off" spellcheck="false">
+  <div id="sblist"></div>
+  <div class="sb-hint">↑↓ 选择 · Enter 跳转 · Esc 关闭</div>
+</div>
+<script>
+(function(){
+  "use strict";
+  var mask=document.getElementById("sbmask"), box=document.getElementById("sbbox"),
+      input=document.getElementById("sbinput"), list=document.getElementById("sblist");
+  var INDEX=null, sel=0, results=[];
+
+  function build(){
+    var items=[];
+    document.querySelectorAll(".chap").forEach(function(ch){
+      var chTitle=ch.getAttribute("data-title")||"";
+      ch.querySelectorAll("h3").forEach(function(h){
+        items.push({el:h, text:h.textContent.trim(), ch:chTitle});
+      });
+      ch.querySelectorAll(".box>.tag").forEach(function(t){
+        var el=t.closest(".box");
+        items.push({el:el, text:t.textContent.trim(), ch:chTitle});
+      });
+      ch.querySelectorAll(".q .q-text").forEach(function(p){
+        items.push({el:p.closest(".q"), text:p.textContent.trim(), ch:chTitle});
+      });
+    });
+    return items;
+  }
+
+  function render(){
+    if(!results.length){ list.innerHTML='<div class="sb-empty">没有匹配。试试“确界”“L’Hospital”“反常”。</div>'; return; }
+    list.innerHTML=results.map(function(r,i){
+      var t=r.text.replace(/[<>&]/g,function(c){return {"<":"&lt;",">":"&gt;","&":"&amp;"}[c]});
+      if(t.length>64) t=t.slice(0,64)+"…";
+      return '<a class="sb-item'+(i===sel?" sel":"")+'" data-i="'+i+'">'+t+
+             '<span class="ch">'+r.ch+'</span></a>';
+    }).join("");
+  }
+
+  function search(q){
+    if(!INDEX) INDEX=build();
+    q=q.trim().toLowerCase();
+    if(!q){ results=[]; render(); return; }
+    results=INDEX.filter(function(it){ return it.text.toLowerCase().indexOf(q)>=0; }).slice(0,14);
+    sel=0; render();
+  }
+
+  function open(){
+    mask.classList.add("on"); box.classList.add("on");
+    input.value=""; results=[]; render(); input.focus();
+  }
+  function close(){ mask.classList.remove("on"); box.classList.remove("on"); }
+
+  function go(i){
+    var r=results[i]; if(!r) return;
+    close();
+    r.el.scrollIntoView({behavior:"smooth", block:"center"});
+    r.el.classList.remove("flash"); void r.el.offsetWidth; r.el.classList.add("flash");
+  }
+
+  document.getElementById("searchbtn").addEventListener("click", open);
+  mask.addEventListener("click", close);
+  input.addEventListener("input", function(){ search(input.value); });
+  input.addEventListener("keydown", function(e){
+    if(e.key==="ArrowDown"){ e.preventDefault(); if(results.length){ sel=Math.min(sel+1,results.length-1); render(); } }
+    else if(e.key==="ArrowUp"){ e.preventDefault(); if(results.length){ sel=Math.max(sel-1,0); render(); } }
+    else if(e.key==="Enter"){ e.preventDefault(); go(sel); }
+    else if(e.key==="Escape"){ close(); }
+  });
+  list.addEventListener("click", function(e){
+    var a=e.target.closest(".sb-item"); if(!a) return;
+    go(parseInt(a.getAttribute("data-i"),10));
+  });
+  document.addEventListener("keydown", function(e){
+    if((e.ctrlKey||e.metaKey) && (e.key==="k"||e.key==="K")){ e.preventDefault(); box.classList.contains("on")?close():open(); }
+    else if(e.key==="Escape" && box.classList.contains("on")) close();
+  });
 })();
 </script>
 
