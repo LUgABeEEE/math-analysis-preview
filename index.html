@@ -236,6 +236,17 @@ body.preview .mode-note{display:block}
   border:1px dashed var(--line-2);border-radius:10px;padding:14px 16px;margin:20px 0}
 @media print{.vid{display:none}}
 
+
+/* ============ 小结 ============ */
+.sumup{margin:26px 0 8px;border:1px solid var(--line);border-left:3px solid var(--green);
+  border-radius:2px 10px 10px 2px;background:var(--green-bg);padding:13px 18px;font-size:15.4px}
+.sumup>b{display:block;font-family:var(--sans);font-size:11px;letter-spacing:.18em;
+  color:var(--green);margin-bottom:6px}
+.sumup p{margin:4px 0}
+.take{font-family:var(--sans);font-size:13.5px;color:var(--ink-3);border-left:2px solid var(--line-2);
+  padding:2px 0 2px 12px;margin:14px 0 20px;line-height:1.8}
+.take b{color:var(--ink-2)}
+
 /* 速览表 */
 .tbl.quick td{font-family:var(--sans);font-size:13.6px;line-height:1.75}
 .tbl.quick td:first-child{white-space:nowrap;font-weight:600}
@@ -434,6 +445,8 @@ body.preview .mode-note{display:block}
     <p>十九世纪之前，数学家算极限靠"直觉 + 无穷小"。Berkeley 主教曾嘲笑无穷小是"已死量的幽灵"。直到 Cauchy、Weierstrass 把 $\varepsilon$-$\delta$ 语言写出来，分析才有了今天的地基。你这一年要学的，就是这套语言的读写。</p>
   </div>
 
+  <p class="take"><b>本节带走</b>：分析不是把微积分算得更难，而是把“为什么可以”写成别人无法反驳的文字。</p>
+
   <h3>0.2 量词：一句话的意思由顺序决定</h3>
 
   <p>分析里几乎每个定义都是量词串。读它们的方法只有一个：<b>从外往里，一个一个念出来。</b></p>
@@ -482,6 +495,8 @@ body.preview .mode-note{display:block}
     <p>$\lnot(|a_n|\le M)$ 是 $|a_n|&gt;M$，不是 $|a_n|\ge M$。开闭的差别在极限里会真的影响真假（虽然多数时候不影响结论，但阅卷会扣分，而且你自己会因此漏掉边界情形）。</p>
   </div>
 
+  <p class="take"><b>本节带走</b>：量词从左往右念：后面的可以依赖前面的，反过来不行。</p>
+
   <h3>0.3 定义是什么：一份可以逐字翻译的合同</h3>
 
   <p>数学定义不是"描述感觉"，而是<b>给一组条件起个名字</b>。它有两个方向，考试和证明里都要用：</p>
@@ -501,6 +516,8 @@ body.preview .mode-note{display:block}
 
   <p>举个例子："$M$ 是集合 $S$ 的上界"定义为 $\forall x\in S,\ x\le M$。只改一个字，变成 $\exists x\in S,\ x\le M$，就几乎总是真的、毫无用处。<b>定义里每个量词都在承重。</b></p>
 
+  <p class="take"><b>本节带走</b>：定义是双向的合同：判定时是目标，使用时是武器。</p>
+
   <h3>0.4 三种证明动作与一种更重要的动作</h3>
 
   <div class="cards">
@@ -510,6 +527,8 @@ body.preview .mode-note{display:block}
   </div>
 
   <p>但比这三种更重要的是第四种：<b>举反例</b>。一个反例可以推翻一整节课的猜想，而且是检验自己是否真懂的唯一标准。请养成习惯——每学一个定理，问一句：<em>"如果把'闭区间'换成'开区间'，还成立吗？"</em>这一年的很多考点，答案都是"不成立"，反例就藏在课后习题里。</p>
+
+  <p class="take"><b>本节带走</b>：直接证、反证、构造之外，最有价值的动作是举反例。</p>
 
   <h3>0.5 记号：全书通用语言</h3>
 
@@ -532,6 +551,8 @@ body.preview .mode-note{display:block}
     <p>"去心邻域"这个记号是第三章的关键。<b>函数在 $x_0$ 处有没有极限，与 $f(x_0)$ 取什么值完全无关</b>——甚至 $f$ 在 $x_0$ 处可以没有定义。记号 $\mathring U$ 就是在提醒你这一点。</p>
   </div>
 
+  <p class="take"><b>本节带走</b>：去心邻域提醒你：极限与那一点取什么值无关。</p>
+
   <h3>0.6 这本讲义怎么用</h3>
 
   <p>预习的目标不是"提前学会"，而是<b>带着问题进课堂</b>。建议每次课前三十分钟，按三轮走：</p>
@@ -549,6 +570,8 @@ body.preview .mode-note{display:block}
     <div class="tag">方法</div>
     <p>准备一本"反例本"：每学一个定理，记一条"条件去掉后不成立的例子"。期末复习时，这本书比笔记有用十倍。</p>
   </div>
+
+  <p class="take"><b>本节带走</b>：预习只做三件事：看地图、读定义、带着问题进课堂。</p>
 
   <div class="quiz">
     <div class="tag">预 习 自 测</div>
@@ -609,6 +632,8 @@ body.preview .mode-note{display:block}
   <div class="box key"><div class="tag">要点</div>
     <p>数学分析里的很多定理，证到最后都要说"取极限，得到一个实数 $x$"。<b>如果数轴上有洞，这一步就断了。</b>所以第一章先花力气把"洞被补上"这件事说清楚，后面才敢放心地取极限。</p>
   </div>
+
+  <p class="take"><b>本节带走</b>：有理数有洞、实数没有——这是后面敢“取极限”的底气。</p>
 
   <h3>1.2 上确界：用一个数概括一整片</h3>
 
@@ -707,6 +732,8 @@ body.preview .mode-note{display:block}
     </div></details>
   </div>
 
+  <p class="take"><b>本节带走</b>：证 $\sup S=\beta$ 分两步：先说是上界，再对任意 $\eps$ 抓一个点。</p>
+
   <h3>1.3 不等式工具箱</h3>
 
   <p>分析里"证不等式"和"做估计"是同一件事。下面几条要熟到不用想，正文明天就要用。</p>
@@ -729,6 +756,8 @@ body.preview .mode-note{display:block}
   <div class="box warn"><div class="tag">易错</div>
     <p>$\sqrt{ab}\le\frac{a+b}{2}$ 要求 $a,b\ge0$。$a=b=-1$ 时左边 $\sqrt{1}=1$，右边 $-1$，方向反了。写不等式前先看清每个量是不是非负。</p>
   </div>
+
+  <p class="take"><b>本节带走</b>：放大法只能把式子变大；方向反了，逻辑就断了。</p>
 
   <h3>1.4 函数：就是带名字的映射</h3>
 
@@ -761,6 +790,8 @@ body.preview .mode-note{display:block}
     <p>"函数有反函数"不是函数本身的性质，而是<b>函数 + 定义域</b>的性质。$y=x^2$ 在 $\R$ 上没有反函数，在 $[0,+\infty)$ 上反函数是 $\sqrt x$，在 $(-\infty,0]$ 上反函数是 $-\sqrt x$。<b>同一个解析式，换定义域就是另一个函数。</b></p>
   </div>
 
+  <p class="take"><b>本节带走</b>：有界是“存在”，不必知道界具体是多少。</p>
+
   <h3>1.5 初等函数：先会用，后面再严格化</h3>
 
   <table class="tbl">
@@ -777,6 +808,8 @@ body.preview .mode-note{display:block}
   <div class="box note"><div class="tag">读法</div>
     <p>高中用"直角三角形边长比"定义 $\sin$，这在分析里不够用——它只对锐角有效，而且依赖"角"与"实数"的对应。严格的做法是用<b>幂级数</b>或<b>单位圆上匀速运动的坐标</b>重新定义 $\sin,\cos$，那一套要等到级数章。现在你只需要知道：<b>暂时借用高中的结论是可以的，但要知道哪一步是借的。</b></p>
   </div>
+
+  <p class="take"><b>本节带走</b>：高中借来的结论可以用，但要记得哪一步是借的。</p>
 
   <div class="quiz">
     <div class="tag">预 习 自 测</div>
@@ -876,6 +909,8 @@ body.preview .mode-note{display:block}
        ③ 不等式是严格小于 $&lt;$，取 $N=\left[\frac1\eps\right]$ 可能不够（$\eps=1$ 时 $n&gt;1$ 就要求 $1/n&lt;1$，$n=2$ 时 $1/2&lt;1$ 成立，侥幸对了；但 $\eps=1/2$ 时会出问题）。<b>稳妥做法：取 $N=[\cdot]+1$。</b></p>
   </div>
 
+  <p class="take"><b>本节带走</b>：$\eps$ 是对方给的精度，$N$ 是你的回应：可以依赖 $\eps$，不能依赖 $n$。</p>
+
   <h3>2.2 收敛数列的四条性质</h3>
 
   <div class="box thm"><div class="tag" data-k="定理"><span class="num">定理 2.1</span>　极限唯一</div>
@@ -923,6 +958,8 @@ body.preview .mode-note{display:block}
     </div></details>
   </div>
 
+  <p class="take"><b>本节带走</b>：收敛必有界，有界未必收敛；严格不等号取极限会退化。</p>
+
   <h3>2.3 夹逼准则：从两边挤</h3>
 
   <div class="box thm"><div class="tag" data-k="定理"><span class="num">定理 2.5</span>　夹逼准则</div>
@@ -949,6 +986,8 @@ body.preview .mode-note{display:block}
   <div class="box tip"><div class="tag">方法 · 二项式展开是分析里的"不等式工厂"</div>
     <p>想证 $\sqrt[n]{n}\to1$、$(1+\frac1n)^n$ 有上界、$n^k q^n\to0$，都用同一个动作：把 $(1+h)^n$ 展开，<b>只保留你需要的项</b>，其余全扔（因为它们非负）。扔掉是合法的，因为你在放大。</p>
   </div>
+
+  <p class="take"><b>本节带走</b>：夹逼：两端同极限，中间没有别的去处。</p>
 
   <h3>2.4 存在性：不用先知道极限是多少</h3>
 
@@ -993,6 +1032,8 @@ body.preview .mode-note{display:block}
     <p>"$|a_{n+1}-a_n|\to0$"<b>不能</b>推出收敛。反例：$a_n=\ln n$，相邻差 $\ln(1+\frac1n)\to0$，但 $a_n\to+\infty$。Cauchy 准则要求的是<b>任意两项</b>都靠近，而不是相邻两项。</p>
   </div>
 
+  <p class="take"><b>本节带走</b>：存在性定理让你不必先知道极限值：有界 + 单调就够了。</p>
+
   <h3>2.5 子列：证明发散的最快方式</h3>
 
   <div class="box thm"><div class="tag" data-k="定理"><span class="num">定理 2.9</span>　子列的性质</div>
@@ -1008,6 +1049,8 @@ body.preview .mode-note{display:block}
   </div>
 
   <p>顺带一提：有界数列必有收敛子列（Bolzano–Weierstrass 定理），这条在第七章会用有限覆盖定理证明。它说明"有界"虽然不足以保证收敛，但至少保证"某一部分收敛"。</p>
+
+  <p class="take"><b>本节带走</b>：找两个子列不同极限，比正面证明发散省力得多。</p>
 
   <div class="quiz">
     <div class="tag">预 习 自 测</div>
@@ -1088,6 +1131,8 @@ body.preview .mode-note{display:block}
     <p>$f(x)=\operatorname{sgn}x$ 在 $x=0$ 处：左极限 $-1$，右极限 $1$，<b>极限不存在</b>。</p>
   </div>
 
+  <p class="take"><b>本节带走</b>：$\delta$ 是 $\eps$ 的函数；极限与 $f(x_0)$ 的取值无关。</p>
+
   <h3>3.2 Heine 定理：把函数问题变成数列问题</h3>
 
   <div class="box thm"><div class="tag" data-k="定理"><span class="num">定理 3.2</span>　Heine 定理（归结原则）</div>
@@ -1104,6 +1149,8 @@ body.preview .mode-note{display:block}
     <p>找两条数列 $x_n,y_n\to x_0$，使 $f(x_n)$ 与 $f(y_n)$ 趋于不同的值。例：$f(x)=\sin\frac1x$，取 $x_n=\frac{1}{2n\pi}$ 得 $f(x_n)=0$；取 $y_n=\frac{1}{2n\pi+\pi/2}$ 得 $f(y_n)=1$。故 $x\to0$ 时极限不存在。</p>
     <p>另一条常用的路：$f(x)=\frac{|x|}{x}$（$x\to0$）左右极限为 $\pm1$。</p>
   </div>
+
+  <p class="take"><b>本节带走</b>：Heine 把函数极限翻译成数列极限，第二章的定理整包搬来。</p>
 
   <h3>3.3 两个重要极限</h3>
 
@@ -1125,6 +1172,8 @@ body.preview .mode-note{display:block}
       <p><b>(3)</b> $\left(1+\frac2x\right)^x=\left[\left(1+\frac{2}{x}\right)^{x/2}\right]^2\to e^2$。</p>
     </div></details>
   </div>
+
+  <p class="take"><b>本节带走</b>：两个重要极限要背，但要知道它们各自依赖什么前提。</p>
 
   <h3>3.4 无穷小、阶与等价替换</h3>
 
@@ -1155,6 +1204,8 @@ body.preview .mode-note{display:block}
     <p>$$\tan x-\sin x=\tan x(1-\cos x)\sim x\cdot\frac{x^2}{2}=\frac{x^3}{2},$$</p>
     <p>故极限为 $\frac12$。原因：两个等价量相减时，低阶部分正好抵消，剩下的高阶项才是主角——而"等价"只保留了低阶信息。</p>
   </div>
+
+  <p class="take"><b>本节带走</b>：等价替换只对乘除因子有效，加减要提主部。</p>
 
   <div class="quiz">
     <div class="tag">预 习 自 测</div>
@@ -1220,6 +1271,8 @@ body.preview .mode-note{display:block}
     <p>前两类统称<b>第一类间断点</b>（左右极限都存在），后两类称<b>第二类</b>。这个分类不是考试装饰：第九章会证明"闭区间上只有有限个第一类间断点的有界函数可积"，间断点的类型直接决定能不能积分。</p>
   </div>
 
+  <p class="take"><b>本节带走</b>：连续 = 极限值等于函数值；间断点按左右极限分四类。</p>
+
   <h3>4.2 局部性质</h3>
 
   <div class="box thm"><div class="tag" data-k="定理"><span class="num">定理 4.1</span>　局部有界与局部保号</div>
@@ -1232,6 +1285,8 @@ body.preview .mode-note{display:block}
   <div class="box warn"><div class="tag">易错</div>
     <p>"局部"两个字不能丢。$f(x)=\frac1x$ 在 $(0,1)$ 上处处连续，但在整个区间上<b>无界</b>——局部有界推不出整体有界。需要"闭区间 + 连续"才行（见下节）。</p>
   </div>
+
+  <p class="take"><b>本节带走</b>：“局部有界”“局部保号”都别丢掉“局部”二字。</p>
 
   <h3>4.3 闭区间上连续函数的三大定理</h3>
 
@@ -1272,6 +1327,8 @@ body.preview .mode-note{display:block}
     </div></details>
   </div>
 
+  <p class="take"><b>本节带走</b>：闭区间 + 连续：有界、最值、介值，一个条件都不能少。</p>
+
   <h3>4.4 一致连续：整个区间用同一个 $\delta$</h3>
 
   <div class="box def"><div class="tag"><span class="num">定义 4.2</span>　一致连续</div>
@@ -1311,6 +1368,8 @@ body.preview .mode-note{display:block}
   <div class="box warn"><div class="tag">易错</div>
     <p>"闭区间"不能换成开区间：$\frac1x$ 在 $(0,1)$ 上连续但非一致连续。"连续"也不能去掉：$\operatorname{sgn}x$ 在 $[-1,1]$ 上不一致连续。<b>两个条件都在承重。</b></p>
   </div>
+
+  <p class="take"><b>本节带走</b>：一致连续是全区间共用一个 $\delta$；换成开区间就会失效。</p>
 
   <div class="quiz">
     <div class="tag">预 习 自 测</div>
@@ -1390,6 +1449,8 @@ body.preview .mode-note{display:block}
     </div></details>
   </div>
 
+  <p class="take"><b>本节带走</b>：导数是割线斜率的极限：可导必连续，反之不然。</p>
+
   <h3>5.2 求导法则</h3>
 
   <div class="box thm"><div class="tag" data-k="定理"><span class="num">定理 5.2</span>　四则与复合</div>
@@ -1407,6 +1468,8 @@ body.preview .mode-note{display:block}
     <p>链式法则的"物理"解释：$y$ 随 $u$ 的变化率 × $u$ 随 $x$ 的变化率 = $y$ 随 $x$ 的变化率。写成 $\frac{dy}{dx}=\frac{dy}{du}\cdot\frac{du}{dx}$ 时，$du$ 好像可以约掉——这是<b>巧合</b>，不是证明。真正让它成立的是上面那个 $o$ 估计。</p>
   </div>
 
+  <p class="take"><b>本节带走</b>：链式法则的本质是“增量 = 线性主部 + 高阶小量”。</p>
+
   <h3>5.3 高阶导数与 Leibniz 公式</h3>
 
   <p>把 $f'$ 再求导得 $f''$，一般地记 $f^{(n)}$。乘积的高阶导数有公式：</p>
@@ -1422,6 +1485,8 @@ body.preview .mode-note{display:block}
       <p>$$y^{(n)}=e^x\left[x^2+n\cdot2x+\frac{n(n-1)}{2}\cdot2\right]=e^x\big(x^2+2nx+n(n-1)\big).$$</p>
     </div></details>
   </div>
+
+  <p class="take"><b>本节带走</b>：高阶导数用 Leibniz 公式，形式与二项式展开一样。</p>
 
   <h3>5.4 微分：线性主部</h3>
 
@@ -1445,6 +1510,8 @@ body.preview .mode-note{display:block}
   <div class="box warn"><div class="tag">易错（拓展）</div>
     <p>一元情形"可微 = 可导"太顺了，容易让人以为多元也这样。<b>多元函数里可微是比"偏导数存在"更强的条件</b>。现在只需记住：一元是特例，别把直觉带错。</p>
   </div>
+
+  <p class="take"><b>本节带走</b>：微分是线性主部；一元函数里可微 $\iff$ 可导。</p>
 
   <div class="quiz">
     <div class="tag">预 习 自 测</div>
@@ -1543,6 +1610,8 @@ body.preview .mode-note{display:block}
     </div></details>
   </div>
 
+  <p class="take"><b>本节带走</b>：中值定理：平均变化率必在某一点被瞬时变化率取到。</p>
+
   <h3>6.2 Taylor 公式</h3>
 
   <div class="box thm"><div class="tag" data-k="定理"><span class="num">定理 6.5</span>　Taylor 公式（带 Peano 余项）</div>
@@ -1568,6 +1637,8 @@ body.preview .mode-note{display:block}
     </div></details>
   </div>
 
+  <p class="take"><b>本节带走</b>：要极限用 Peano 余项，要误差用 Lagrange 余项。</p>
+
   <h3>6.3 L'Hospital 法则</h3>
 
   <div class="box thm"><div class="tag" data-k="定理"><span class="num">定理 6.7</span>　L'Hospital 法则（$\frac00$ 型）</div>
@@ -1582,6 +1653,8 @@ body.preview .mode-note{display:block}
     <p><b>② 求导后极限不存在，不等于原极限不存在：</b>$f(x)=x^2\sin\frac1x$，$g(x)=x$，$x\to0$ 时 $\frac{f}{g}=x\sin\frac1x\to0$，但 $\frac{f'}{g'}=2x\sin\frac1x-\cos\frac1x$ <b>没有极限</b>。此时法则失效，要用别的方法。</p>
     <p><b>③ 别循环：</b>用 L'Hospital 证 $\lim\frac{\sin x}{x}=1$ 会用到 $(\sin x)'=\cos x$，而这个导数公式本身就要用 $\lim\frac{\sin x}{x}=1$ 才能推出——循环论证。</p>
   </div>
+
+  <p class="take"><b>本节带走</b>：L'Hospital 三查：是不是 $\frac00$ 或 $\frac\infty\infty$、条件够不够、有没有循环。</p>
 
   <h3>6.4 导数的形状信息</h3>
 
@@ -1602,6 +1675,8 @@ body.preview .mode-note{display:block}
   <div class="box warn"><div class="tag">易错</div>
     <p>$f'(x_0)=0$ 只是极值的<b>必要</b>条件。$f(x)=x^3$ 在 $0$ 处 $f'(0)=0$，但 $0$ 不是极值点（是拐点）。<b>"驻点"≠"极值点"。</b></p>
   </div>
+
+  <p class="take"><b>本节带走</b>：导数当探测器：单调看一阶，凹凸看二阶。</p>
 
   <div class="quiz">
     <div class="tag">预 习 自 测</div>
@@ -1644,6 +1719,8 @@ body.preview .mode-note{display:block}
 
   <p class="plain">完备性翻译成人话就是"<b>数轴上没有洞</b>"：任何看起来该有个极限的东西，确实有一个实数当它的极限。这条性质不能从加减乘除推出来，它是实数的"出厂设置"。</p>
 
+  <h3>7.1 完备性的六种表述</h3>
+
   <div class="box thm"><div class="tag" data-k="定理"><span class="num">定理 7.1</span>　完备性的六种等价表述</div>
     <p>下列命题两两等价：</p>
     <ol>
@@ -1655,6 +1732,10 @@ body.preview .mode-note{display:block}
       <li><b>Heine–Borel 有限覆盖定理</b>：闭区间的任何开覆盖都有有限子覆盖。</li>
     </ol>
   </div>
+
+  <p class="take"><b>本节带走</b>：六条定理是同一件事的六种说法，记住一条就能推出其余。</p>
+
+  <h3>7.2 循环证明图</h3>
 
   <div class="box note"><div class="tag">读法 · 循环图</div>
     <p>一个常用的证明回路（顺着箭头就能串起全部）：</p>
@@ -1670,6 +1751,56 @@ body.preview .mode-note{display:block}
 
   <div class="box warn"><div class="tag">易错</div>
     <p>有限覆盖定理要求区间<b>闭</b>、覆盖是<b>开</b>的。$(0,1)$ 被 $\{(0,1-\frac1n)\}$ 覆盖却没有有限子覆盖——开区间会"漏掉端点"。这两个条件都在承重。</p>
+  </div>
+
+  <p class="take"><b>本节带走</b>：循环图里找一条路，就能“用 A 证 B”。</p>
+
+  
+  <h3>7.3 区间套：怎么造，怎么用</h3>
+
+  <p>区间套定理本身只有一句话，真正要练的是<b>怎么把一个"想要的数"套出来</b>：先造一列不断缩小的区间，让目标数始终被夹在中间，再让长度趋于零。</p>
+
+  <div class="box ex"><div class="tag"><span class="num">例 7.1</span>　用区间套造出 $\sqrt2$</div>
+    <p>取 $a_1=1,b_1=2$。每一步取中点 $c$：若 $c^2&lt;2$ 则令 $a_{n+1}=c,\ b_{n+1}=b_n$，否则令 $a_{n+1}=a_n,\ b_{n+1}=c$。</p>
+    <p>于是 $[a_n,b_n]$ 是区间套，$b_n-a_n=2^{1-n}\to0$，设公共点为 $\xi$。由 $a_n^2&lt;2&lt;b_n^2$ 两边取极限得 $\xi^2=2$。</p>
+    <p>这同时说明：<b>$\sqrt2$ 的存在性不是"算"出来的，是从完备性里取出来的。</b></p>
+  </div>
+
+  <p class="take"><b>本节带走</b>：区间套负责造数：$\sqrt2$ 的存在性就是套出来的。</p>
+
+  <h3>7.4 有限覆盖：把无穷多个局部条件压成有限个</h3>
+
+  <p>典型套路：先对<b>每一点</b>证一个局部性质，得到开覆盖；再用有限覆盖把无穷多条并成有限条；最后取 $\min$（或 $\max$）得到统一常数。</p>
+
+  <div class="box ex"><div class="tag"><span class="num">例 7.2</span>　用有限覆盖证有界性</div>
+    <p>设 $f\in C[a,b]$。对每个 $x$，由连续存在 $\delta_x&gt;0$ 使 $t\in U(x,\delta_x)$ 时 $|f(t)|&lt;|f(x)|+1$。</p>
+    <p>$\{U(x,\delta_x)\}$ 覆盖 $[a,b]$，取出有限个 $x_1,\dots,x_m$ 仍覆盖。令 $M=\max_i\big(|f(x_i)|+1\big)$，则 $[a,b]$ 上 $|f|\le M$。</p>
+    <p>注意最后一步：有限个 $M_i$ 才取得到 $\max$；无穷多个是取不到的——这就是有限覆盖的价值。</p>
+  </div>
+
+  <p class="take"><b>本节带走</b>：有限覆盖把无穷个局部条件压成有限个，才能取 $\max/\min$。</p>
+
+  <h3>7.5 上极限与下极限</h3>
+
+  <div class="box def"><div class="tag"><span class="num">定义 7.1</span>　上、下极限</div>
+    <p>令 $M_n=\sup\limits_{k\ge n}a_k$，$m_n=\inf\limits_{k\ge n}a_k$（都是单调数列），定义</p>
+    <p>$$\limsup_{n\to\infty}a_n=\lim_{n\to\infty}M_n,\qquad \liminf_{n\to\infty}a_n=\lim_{n\to\infty}m_n.$$</p>
+    <p>无上界时记 $\limsup=+\infty$，无下界时记 $\liminf=-\infty$。</p>
+  </div>
+
+  <p>三条性质：$\liminf\le\limsup$；<b>数列收敛 $\iff$ 两者相等</b>（此时等于极限）；有界时 $\limsup$ 恰是全体子列极限中的最大者，$\liminf$ 是最小者。</p>
+
+  <div class="box ex"><div class="tag"><span class="num">例 7.3</span>　两个例子</div>
+    <p>$a_n=(-1)^n\left(1+\dfrac1n\right)$：偶子列 $\to1$，奇子列 $\to-1$，故 $\limsup=1$，$\liminf=-1$。</p>
+    <p>$a_n=\sin n$：$\limsup=1$，$\liminf=-1$（需要 $\{n\bmod 2\pi\}$ 在 $[0,2\pi)$ 中稠密，这里只记结论）。</p>
+  </div>
+
+  <p class="take"><b>本节带走</b>：上下极限是不收敛数列的替身：两者相等 $\iff$ 收敛。</p>
+
+  <div class="sumup"><b>本 章 小 结</b>
+    <p>① 六条定理是同一件事的六种说法；考试要"用 A 证 B"，沿循环图找一条路。</p>
+    <p>② 区间套负责<b>造数</b>，有限覆盖负责<b>把局部性质变成整体性质</b>。</p>
+    <p>③ 上下极限是不收敛数列的"极限替身"：收敛 $\iff$ 两者相等。</p>
   </div>
 
   <div class="quiz">
@@ -1759,6 +1890,8 @@ body.preview .mode-note{display:block}
     <p>第二类换元做完必须<b>回代</b>（把 $t$ 换回 $x$），或者改成定积分并换上下限。<b>漏回代是这类题最常见的失分点</b>，而且从答案形态上一眼能看出来。</p>
   </div>
 
+  <p class="take"><b>本节带走</b>：凑微分就是认出一个 $\varphi'(x)$，把陌生的凑成熟人。</p>
+
   <h3>8.2 分部积分</h3>
 
   <div class="box thm"><div class="tag" data-k="定理"><span class="num">定理 8.3</span>　分部积分公式</div>
@@ -1779,6 +1912,8 @@ body.preview .mode-note{display:block}
     </div></details>
   </div>
 
+  <p class="take"><b>本节带走</b>：分部积分的口诀：反对幂指三。</p>
+
   <h3>8.3 有理函数：有算法，不靠灵感</h3>
 
   <p>对 $\dfrac{P(x)}{Q(x)}$（$P,Q$ 为多项式，$P$ 次数低于 $Q$）：</p>
@@ -1796,6 +1931,53 @@ body.preview .mode-note{display:block}
       <p>$\dfrac{1}{x^2-1}=\dfrac{1}{(x-1)(x+1)}=\dfrac12\left(\dfrac{1}{x-1}-\dfrac{1}{x+1}\right)$，故</p>
       <p>$$\int\frac{\dd x}{x^2-1}=\frac12\ln\left|\frac{x-1}{x+1}\right|+C.$$</p>
     </div></details>
+  </div>
+
+  <p class="take"><b>本节带走</b>：有理函数有固定算法，不靠灵感。</p>
+
+  
+  <h3>8.4 有理函数：把算法走完</h3>
+
+  <p>真分式 $\dfrac{P(x)}{Q(x)}$ 的积分一定有初等解，步骤固定：长除法（假分式）→ 因式分解 → 部分分式 → 逐项积分。真正花时间的只有第三步的系数。</p>
+
+  <div class="box ex"><div class="tag"><span class="num">例 8.4</span>　不可约二次：配方</div>
+    <p>$$\int\frac{\dd x}{x^2+2x+2}=\int\frac{\dd(x+1)}{(x+1)^2+1}=\arctan(x+1)+C.$$</p>
+    <p>遇到二次式先看判别式：$\Delta&lt;0$ 配方成 $\arctan$，$\Delta&gt;0$ 拆成两个一次因式。</p>
+  </div>
+
+  <div class="box ex"><div class="tag"><span class="num">例 8.5</span>　两个不同的一次因式</div>
+    <p>$$\frac{2x+3}{x^2+3x+2}=\frac{2x+3}{(x+1)(x+2)}=\frac{1}{x+1}+\frac{1}{x+2},$$</p>
+    <p>故原积分为 $\ln|x+1|+\ln|x+2|+C$。系数由 $A(x+2)+B(x+1)=2x+3$ 比较两端得到 $A=B=1$。</p>
+  </div>
+
+  <div class="box tip"><div class="tag">方法 · 系数怎么求快</div>
+    <p>部分分式的系数，除了解方程组，还可以<b>代入特殊值</b>：例如求 $\frac{1}{(x-1)(x+1)}$ 的分解，令 $x=1$ 直接得 $A=\frac12$，令 $x=-1$ 得 $B=-\frac12$，比解方程快得多。</p>
+  </div>
+
+  <p class="take"><b>本节带走</b>：二次式先看判别式：配方得 $\arctan$，拆解得 $\ln$。</p>
+
+  <h3>8.5 三角有理式：万能代换</h3>
+
+  <p>遇到 $R(\sin x,\cos x)$ 的有理式，令 $t=\tan\dfrac x2$，则</p>
+
+  <p>$$\sin x=\frac{2t}{1+t^2},\qquad \cos x=\frac{1-t^2}{1+t^2},\qquad \dd x=\frac{2\,\dd t}{1+t^2},$$</p>
+
+  <p>三角函数就被翻译成了普通有理式，接下来走 8.4 的流程。</p>
+
+  <div class="box ex"><div class="tag"><span class="num">例 8.6</span>　算一个</div>
+    <p>$$\int\frac{\dd x}{2+\cos x}=\int\frac{2\,\dd t}{3+t^2}=\frac{2}{\sqrt3}\arctan\frac{t}{\sqrt3}+C,\qquad t=\tan\frac x2.$$</p>
+  </div>
+
+  <div class="box warn"><div class="tag">易错</div>
+    <p>万能代换"一定能行"，但常常把式子变复杂。见到 $\sin^2x\cos x$、$\dfrac{\cos x}{1+\sin^2x}$ 这类，先试凑微分；能凑出来就别上万能代换。</p>
+  </div>
+
+  <p class="take"><b>本节带走</b>：三角有理式：先试凑微分，不行再万能代换。</p>
+
+  <div class="sumup"><b>本 章 小 结</b>
+    <p>① 三条路：凑微分、换元、分部。先看能不能凑，再考虑换，最后才分部。</p>
+    <p>② 有理函数有固定算法，不靠灵感；三角有理式先试凑微分，不行再万能代换。</p>
+    <p>③ 两个必查：$+C$ 有没有漏、第二类换元有没有回代。</p>
   </div>
 
   <div class="quiz">
@@ -1897,6 +2079,8 @@ body.preview .mode-note{display:block}
 
   <p>这条公式把"求面积极限"降级成"求原函数再相减"，是整门课最实用的工具。但它有前提：$f$ 必须连续（或至少原函数存在且足够好）。</p>
 
+  <p class="take"><b>本节带走</b>：变上限积分给出连续函数的原函数，N–L 公式才有依据。</p>
+
   <h3>9.2 定积分的性质与计算</h3>
 
   <table class="tbl">
@@ -1922,6 +2106,8 @@ body.preview .mode-note{display:block}
       <p>记住这条：<b>对称区间上，奇函数积分为零，偶函数积分为半区间两倍。</b>能省下大量计算。</p>
     </div></details>
   </div>
+
+  <p class="take"><b>本节带走</b>：定积分换元三件套：被积式、$\dd x$、上下限，一个都不能漏。</p>
 
   <div class="quiz">
     <div class="tag">预 习 自 测</div>
@@ -1960,25 +2146,104 @@ body.preview .mode-note{display:block}
     </ul>
   </div>
 
-  <div class="box key"><div class="tag">要点 · 微元法三步</div>
-    <p>① 在 $[x,x+\dd x]$ 上把待求量 $Q$ 近似成 $\dd Q=f(x)\dd x$（要求误差是 $o(\dd x)$）；<br>
+  <p>这一章不引入新定理，只训练一件事：<b>把一个几何量写成积分</b>。会不会积分是第九章的事；这里的难点是"怎么写出来、凭什么这么写"。</p>
+
+  <h3>10.1 微元法：从"近似"到"等式"</h3>
+
+  <div class="box key"><div class="tag">微元法三步</div>
+    <p>① 在 $[x,x+\dd x]$ 上把待求量 $Q$ 的小块写成 $\dd Q=f(x)\dd x+o(\dd x)$；<br>
        ② 积分 $Q=\int_a^b f(x)\dd x$；<br>
-       ③ <b>写清楚 $\dd Q$ 为什么成立</b>——这一步才是得分点，很多人只写公式。</p>
+       ③ <b>写清楚为什么误差是 $o(\dd x)$</b>——这一步才是得分点。</p>
   </div>
 
-  <p class="plain">微元法的意思是：<b>先只看极窄的一条，把这条上的量近似成"密度 × 长度"，再把所有条加起来</b>。难点不在积分，而在"这条上的近似凭什么成立"——写清楚这一步，分数就在那里。</p>
+  <p class="plain">微元法的意思是：<b>先只看极窄的一条，把这条上的量近似成"密度 × 长度"，再把所有条加起来</b>。难点不在积分，而在"这条上的近似凭什么成立"。</p>
+
+  <div class="box warn"><div class="tag">易错 · 为什么必须"误差是 $o(\dd x)$"</div>
+    <p>要求误差是 $o(\dd x)$，是因为要把所有小块的误差加起来：分成 $n$ 段时每段误差 $o(\tfrac1n)$，总和 $n\cdot o(\tfrac1n)\to0$，误差才被"积掉"。</p>
+    <p>若误差只与 $\dd x$ <b>同阶</b>（比如把弧长写成 $\dd x$），累加后不趋于零，结论就错了——旋转体侧面积正是这样一个反例。</p>
+  </div>
+
+  <p class="take"><b>本节带走</b>：微元法的核心是误差 $o(\dd x)$，不是公式本身。</p>
+
+  <h3>10.2 面积：上减下，或右减左</h3>
+
+  <div class="box ex"><div class="tag"><span class="num">例 10.1</span>　x 型：$y=x^2$ 与 $y=2x$</div>
+    <p>交点是 $x=0,2$，且在 $(0,2)$ 上 $2x\ge x^2$，故</p>
+    <p>$$S=\int_0^2(2x-x^2)\dd x=\Big[x^2-\frac{x^3}{3}\Big]_0^2=4-\frac83=\frac43.$$</p>
+  </div>
+
+  <div class="box ex"><div class="tag"><span class="num">例 10.2</span>　y 型：$x=y^2$ 与 $x=y+2$</div>
+    <p>对 $x$ 积分要分两段（$y=\pm\sqrt x$ 有歧义），改成对 $y$ 积：交点 $y^2=y+2$ 得 $y=-1,2$，且右边界是 $y+2$：</p>
+    <p>$$S=\int_{-1}^{2}\big[(y+2)-y^2\big]\dd y=\Big[\frac{y^2}{2}+2y-\frac{y^3}{3}\Big]_{-1}^{2}=\frac{10}{3}+\frac76=\frac92.$$</p>
+    <p><b>选 $x$ 型还是 $y$ 型，看哪种不用分段。</b></p>
+  </div>
+
+  <p class="take"><b>本节带走</b>：面积：哪种积分不用分段，就用哪种。</p>
+
+  <h3>10.3 体积：切片与旋转</h3>
 
   <table class="tbl">
-    <caption>四个必背公式</caption>
-    <tr><th style="width:120px">量</th><th>公式</th><th>说明</th></tr>
-    <tr><td>面积</td><td>$S=\int_a^b|f(x)-g(x)|\dd x$</td><td>上减下（或右减左）</td></tr>
-    <tr><td>旋转体体积</td><td>$V=\pi\int_a^bf^2(x)\dd x$</td><td>绕 $x$ 轴；圆盘法</td></tr>
-    <tr><td>弧长</td><td>$L=\int_a^b\sqrt{1+f'^2(x)}\dd x$</td><td>参数式、极坐标另有公式</td></tr>
-    <tr><td>侧面积</td><td>$S=2\pi\int_a^b|f(x)|\sqrt{1+f'^2(x)}\dd x$</td><td>注意不是 $\int 2\pi f$</td></tr>
+    <caption>三种常用体积公式</caption>
+    <tr><th style="width:150px">类型</th><th>公式</th></tr>
+    <tr><td>平行截面已知</td><td>$V=\int_a^b A(x)\,\dd x$（$A(x)$ 是截面积）</td></tr>
+    <tr><td>绕 $x$ 轴（圆盘）</td><td>$V=\pi\int_a^b f^2(x)\,\dd x$</td></tr>
+    <tr><td>绕 $y$ 轴（柱壳）</td><td>$V=2\pi\int_a^b x\,|f(x)|\,\dd x$</td></tr>
   </table>
 
+  <div class="box ex"><div class="tag"><span class="num">例 10.3</span>　柱壳法</div>
+    <p>$y=x^2$（$0\le x\le1$）绕 $y$ 轴：每个柱壳半径 $x$、高 $x^2$、厚 $\dd x$，</p>
+    <p>$$V=2\pi\int_0^1 x\cdot x^2\,\dd x=2\pi\cdot\frac14=\frac{\pi}{2}.$$</p>
+  </div>
+
+  <div class="box ex"><div class="tag"><span class="num">例 10.4</span>　平行截面</div>
+    <p>底面是单位圆，垂直于 $x$ 轴的截面都是等边三角形。截面边长 $2\sqrt{1-x^2}$，面积</p>
+    <p>$$A(x)=\frac{\sqrt3}{4}\cdot4(1-x^2)=\sqrt3\,(1-x^2),\qquad V=\sqrt3\int_{-1}^{1}(1-x^2)\dd x=\frac{4\sqrt3}{3}.$$</p>
+  </div>
+
+  <p class="take"><b>本节带走</b>：体积：绕 $x$ 轴用圆盘，绕 $y$ 轴用柱壳。</p>
+
+  <h3>10.4 弧长：用弦长逼近</h3>
+
+  <p>小段弦长 $\sqrt{\Delta x^2+\Delta y^2}=\sqrt{1+f'^2}\,\Delta x+o(\Delta x)$，故</p>
+
+  <p>$$L=\int_a^b\sqrt{1+f'^2(x)}\,\dd x.$$</p>
+
+  <div class="box ex"><div class="tag"><span class="num">例 10.5</span>　抛物线弧</div>
+    <p>$y=x^{3/2}$（$0\le x\le1$）：$y'=\frac32\sqrt x$，$1+y'^2=1+\frac94x$，</p>
+    <p>$$L=\int_0^1\sqrt{1+\tfrac94x}\,\dd x=\frac{8}{27}\Big[\big(1+\tfrac94x\big)^{3/2}\Big]_0^1=\frac{13\sqrt{13}-8}{27}.$$</p>
+  </div>
+
+  <p class="take"><b>本节带走</b>：弧长里永远带着 $\sqrt{1+f'^2}$。</p>
+
+  <h3>10.5 旋转曲面面积：为什么不是 $2\pi\int f\,\dd x$</h3>
+
+  <p>侧面的那一小圈，宽不是 $\dd x$，而是<b>弧长</b> $\sqrt{1+f'^2}\,\dd x$：</p>
+
+  <p>$$S=2\pi\int_a^b|f(x)|\sqrt{1+f'^2(x)}\,\dd x.$$</p>
+
   <div class="box warn"><div class="tag">易错</div>
-    <p>旋转体<b>侧面积</b>不能简单写成 $2\pi\int f(x)\dd x$。因为小段弧长是 $\sqrt{1+f'^2}\dd x$ 而不是 $\dd x$——用 $\dd x$ 相当于把斜的小段"压平"，误差不是 $o(\dd x)$，积分出来是错的。</p>
+    <p>用 $2\pi\int f\,\dd x$ 相当于把斜的小段"压平"，误差与 $\dd x$ 同阶，累加后不消失。例：$y=\sqrt x$ 绕 $x$ 轴，正确答案</p>
+    <p>$$S=2\pi\int_0^1\sqrt x\sqrt{1+\frac1{4x}}\,\dd x=2\pi\int_0^1\sqrt{x+\tfrac14}\,\dd x=\frac{\pi(5\sqrt5-1)}{6},$$</p>
+    <p>而错误写法给出 $\pi$。两者并不相等。</p>
+  </div>
+
+  <p class="take"><b>本节带走</b>：侧面积的“宽”是弧长而不是 $\dd x$，这是最常见的错。</p>
+
+  <h3>10.6 物理应用：变力做功</h3>
+
+  <p>若力沿 $x$ 方向、大小随位置变化，则小段做功 $\dd W=F(x)\dd x$，故 $W=\int_a^bF(x)\dd x$。</p>
+
+  <div class="box ex"><div class="tag"><span class="num">例 10.6</span>　弹簧</div>
+    <p>胡克定律 $F=kx$，把弹簧从自然长度拉伸 $a$ 所做的功</p>
+    <p>$$W=\int_0^a kx\,\dd x=\frac12ka^2.$$</p>
+  </div>
+
+  <p class="take"><b>本节带走</b>：变力做功：先写微元 $\dd W=F\dd x$，再积分。</p>
+
+  <div class="sumup"><b>本 章 小 结</b>
+    <p>① 所有公式都从"小块近似 + 误差 $o(\dd x)$"推出来，背公式不如背这个动作。</p>
+    <p>② 面积看哪种积分不分段；体积分清圆盘（绕 $x$）与柱壳（绕 $y$）；弧长与侧面积都要带上 $\sqrt{1+f'^2}$。</p>
+    <p>③ 最大的坑：把侧面积的 $\sqrt{1+f'^2}\,\dd x$ 写成 $\dd x$。</p>
   </div>
 
   <div class="quiz">
@@ -1986,10 +2251,12 @@ body.preview .mode-note{display:block}
     <ol>
       <li>求由 $y=x^2$ 与 $y=x$ 围成的图形面积。</li>
       <li>求 $y=\sqrt x$（$0\le x\le1$）绕 $x$ 轴旋转所得体积。</li>
+      <li>求 $y=x^{3/2}$ 在 $[0,1]$ 上的弧长。</li>
     </ol>
     <details class="ans"><summary>答案</summary><div class="body">
       <p><b>1.</b> 交点 $x=0,1$，$S=\int_0^1(x-x^2)\dd x=\frac12-\frac13=\frac16$。</p>
       <p><b>2.</b> $V=\pi\int_0^1x\,\dd x=\frac\pi2$。</p>
+      <p><b>3.</b> $L=\int_0^1\sqrt{1+\tfrac94x}\,\dd x=\dfrac{13\sqrt{13}-8}{27}$。</p>
     </div></details>
   </div>
 </section>
@@ -2016,6 +2283,8 @@ body.preview .mode-note{display:block}
 
   <p>定积分要求区间有限、函数有界。反常积分把这两个限制放开，用极限来定义。它看起来只是"多算一步极限"，但收敛性判断常常比计算本身更重要。</p>
 
+  <h3>11.1 两类反常积分</h3>
+
   <div class="box def"><div class="tag"><span class="num">定义 11.1</span>　两类反常积分</div>
     <p>(1) <b>无穷区间</b>：$\displaystyle\int_a^{+\infty}f(x)\dd x:=\lim_{b\to+\infty}\int_a^bf(x)\dd x$，若极限存在则称<b>收敛</b>。</p>
     <p>(2) <b>瑕积分</b>：若 $f$ 在 $a$ 附近无界（$a$ 为瑕点），则 $\displaystyle\int_a^bf:=\lim_{\eta\to0^+}\int_{a+\eta}^bf$。</p>
@@ -2024,12 +2293,20 @@ body.preview .mode-note{display:block}
 
   <p class="plain">反常积分问的不是"等于几"，而是"<b>面积到底有没有限</b>"。$\frac{1}{x^{p}}$ 的尾巴衰减得快不快，全看 $p$：$p&gt;1$ 时尾巴细得能数清（收敛），$p\le1$ 时再细也攒成无穷大。</p>
 
+  <p class="take"><b>本节带走</b>：两类反常：无穷限、瑕点；拆开时两段都收敛才算收敛。</p>
+
+  <h3>11.2 $p$ 判别：一把标尺</h3>
+
   <div class="box thm"><div class="tag" data-k="定理"><span class="num">定理 11.1</span>　$p$ 判别</div>
     <p>$$\int_1^{+\infty}\frac{\dd x}{x^p}\ \text{收敛}\iff p&gt;1;\qquad \int_0^{1}\frac{\dd x}{x^p}\ \text{收敛}\iff p&lt;1.$$</p>
     <p>这两个结论要背下来，后面所有比较法都以它们为标尺。</p>
   </div>
 
   <div class="lab" data-lab="ptest"></div>
+
+  <p class="take"><b>本节带走</b>：$p$ 判别是标尺：无穷限看 $p&gt;1$，瑕点看 $p&lt;1$。</p>
+
+  <h3>11.3 比较判别法</h3>
 
   <div class="box thm"><div class="tag" data-k="定理"><span class="num">定理 11.2</span>　比较判别法</div>
     <p>设 $0\le f\le g$ 且都在 $[a,+\infty)$ 上连续。</p>
@@ -2053,6 +2330,47 @@ body.preview .mode-note{display:block}
   <div class="box def"><div class="tag"><span class="num">定义 11.2</span>　$\Gamma$ 函数</div>
     <p>$$\Gamma(s)=\int_0^{+\infty}x^{s-1}e^{-x}\dd x\quad(s&gt;0).$$</p>
     <p>它满足 $\Gamma(s+1)=s\Gamma(s)$（分部积分得到），且 $\Gamma(n+1)=n!$。它是"阶乘的连续版本"，在概率论里会再见到。</p>
+  </div>
+
+  <p class="take"><b>本节带走</b>：比较法：大的收敛则小的收敛，小的发散则大的发散。</p>
+
+  
+  <h3>11.4 绝对收敛与条件收敛</h3>
+
+  <div class="box def"><div class="tag"><span class="num">定义 11.3</span>　两类收敛</div>
+    <p>若 $\displaystyle\int_a^{+\infty}|f|$ 收敛，称 $\displaystyle\int_a^{+\infty}f$ <b>绝对收敛</b>；若 $\int f$ 收敛而 $\int|f|$ 发散，称<b>条件收敛</b>。</p>
+    <p>绝对收敛 $\Rightarrow$ 收敛；反之不然。</p>
+  </div>
+
+  <div class="box ex"><div class="tag"><span class="num">例 11.2</span>　条件收敛的典型</div>
+    <p>$\displaystyle\int_1^{+\infty}\frac{\sin x}{x}\dd x$ 收敛，但 $\displaystyle\int_1^{+\infty}\frac{|\sin x|}{x}\dd x=+\infty$。</p>
+    <p>前者靠正负振荡互相抵消，后者不抵消——<b>"收敛"不等于"面积有限"</b>。</p>
+  </div>
+
+  <p class="take"><b>本节带走</b>：绝对收敛 $\Rightarrow$ 收敛；条件收敛靠正负振荡抵消。</p>
+
+  <h3>11.5 变号时的判别：Dirichlet 与 Abel</h3>
+
+  <p>被积函数不变号时比较法就够；一旦变号，就需要"一部分有界 + 另一部分单调趋零"。</p>
+
+  <div class="box thm"><div class="tag" data-k="定理"><span class="num">定理 11.3</span>　Dirichlet 判别</div>
+    <p>若 $\int_a^A f$ 关于 $A$ 有界，$g$ 单调且 $g(x)\to0\ (x\to+\infty)$，则 $\displaystyle\int_a^{+\infty}fg$ 收敛。</p>
+    <p><b>Abel 判别</b>：把 $g\to0$ 换成"$g$ 单调有界"，并要求 $\int_a^{+\infty}f$ 本身收敛。</p>
+  </div>
+
+  <p>上面 $\int\frac{\sin x}{x}$ 正是 Dirichlet 的样板：$\int_1^A\sin x\,\dd x$ 有界，$\frac1x$ 单调趋零。</p>
+
+  <div class="box ex"><div class="tag"><span class="num">例 11.3</span>　为什么 $\int_0^{+\infty}e^{-x^2}\dd x$ 收敛</div>
+    <p>$x\ge1$ 时 $0&lt;e^{-x^2}\le e^{-x}$，而 $\int_1^{+\infty}e^{-x}\dd x=e^{-1}$ 有限，由比较法收敛；$[0,1]$ 上连续故无瑕点。</p>
+    <p>它的值是 $\frac{\sqrt\pi}{2}$，但那要用二重积分，不属于这一章。</p>
+  </div>
+
+  <p class="take"><b>本节带走</b>：变号时用 Dirichlet：一部分有界，一部分单调趋零。</p>
+
+  <div class="sumup"><b>本 章 小 结</b>
+    <p>① 先判断"属于哪一类"（无穷限 / 瑕点），两端都出现就拆开。</p>
+    <p>② 比较法的标尺永远是 $\int\frac{\dd x}{x^p}$；变号时用绝对收敛或 Dirichlet。</p>
+    <p>③ 判断敛散通常比求值重要：$p$ 判别、比较、Dirichlet，三招覆盖绝大多数题。</p>
   </div>
 
   <div class="quiz">

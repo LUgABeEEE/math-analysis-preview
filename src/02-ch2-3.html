@@ -81,6 +81,8 @@
        ③ 不等式是严格小于 $&lt;$，取 $N=\left[\frac1\eps\right]$ 可能不够（$\eps=1$ 时 $n&gt;1$ 就要求 $1/n&lt;1$，$n=2$ 时 $1/2&lt;1$ 成立，侥幸对了；但 $\eps=1/2$ 时会出问题）。<b>稳妥做法：取 $N=[\cdot]+1$。</b></p>
   </div>
 
+  <p class="take"><b>本节带走</b>：$\eps$ 是对方给的精度，$N$ 是你的回应：可以依赖 $\eps$，不能依赖 $n$。</p>
+
   <h3>2.2 收敛数列的四条性质</h3>
 
   <div class="box thm" data-k="定理"><div class="tag">极限唯一</div>
@@ -128,6 +130,8 @@
     </div></details>
   </div>
 
+  <p class="take"><b>本节带走</b>：收敛必有界，有界未必收敛；严格不等号取极限会退化。</p>
+
   <h3>2.3 夹逼准则：从两边挤</h3>
 
   <div class="box thm" data-k="定理"><div class="tag">夹逼准则</div>
@@ -154,6 +158,8 @@
   <div class="box tip"><div class="tag">方法 · 二项式展开是分析里的"不等式工厂"</div>
     <p>想证 $\sqrt[n]{n}\to1$、$(1+\frac1n)^n$ 有上界、$n^k q^n\to0$，都用同一个动作：把 $(1+h)^n$ 展开，<b>只保留你需要的项</b>，其余全扔（因为它们非负）。扔掉是合法的，因为你在放大。</p>
   </div>
+
+  <p class="take"><b>本节带走</b>：夹逼：两端同极限，中间没有别的去处。</p>
 
   <h3>2.4 存在性：不用先知道极限是多少</h3>
 
@@ -198,6 +204,8 @@
     <p>"$|a_{n+1}-a_n|\to0$"<b>不能</b>推出收敛。反例：$a_n=\ln n$，相邻差 $\ln(1+\frac1n)\to0$，但 $a_n\to+\infty$。Cauchy 准则要求的是<b>任意两项</b>都靠近，而不是相邻两项。</p>
   </div>
 
+  <p class="take"><b>本节带走</b>：存在性定理让你不必先知道极限值：有界 + 单调就够了。</p>
+
   <h3>2.5 子列：证明发散的最快方式</h3>
 
   <div class="box thm" data-k="定理"><div class="tag">子列的性质</div>
@@ -213,6 +221,8 @@
   </div>
 
   <p>顺带一提：有界数列必有收敛子列（Bolzano–Weierstrass 定理），这条在第七章会用有限覆盖定理证明。它说明"有界"虽然不足以保证收敛，但至少保证"某一部分收敛"。</p>
+
+  <p class="take"><b>本节带走</b>：找两个子列不同极限，比正面证明发散省力得多。</p>
 
   <div class="quiz">
     <div class="tag">预 习 自 测</div>
@@ -293,6 +303,8 @@
     <p>$f(x)=\operatorname{sgn}x$ 在 $x=0$ 处：左极限 $-1$，右极限 $1$，<b>极限不存在</b>。</p>
   </div>
 
+  <p class="take"><b>本节带走</b>：$\delta$ 是 $\eps$ 的函数；极限与 $f(x_0)$ 的取值无关。</p>
+
   <h3>3.2 Heine 定理：把函数问题变成数列问题</h3>
 
   <div class="box thm" data-k="定理"><div class="tag">Heine 定理（归结原则）</div>
@@ -309,6 +321,8 @@
     <p>找两条数列 $x_n,y_n\to x_0$，使 $f(x_n)$ 与 $f(y_n)$ 趋于不同的值。例：$f(x)=\sin\frac1x$，取 $x_n=\frac{1}{2n\pi}$ 得 $f(x_n)=0$；取 $y_n=\frac{1}{2n\pi+\pi/2}$ 得 $f(y_n)=1$。故 $x\to0$ 时极限不存在。</p>
     <p>另一条常用的路：$f(x)=\frac{|x|}{x}$（$x\to0$）左右极限为 $\pm1$。</p>
   </div>
+
+  <p class="take"><b>本节带走</b>：Heine 把函数极限翻译成数列极限，第二章的定理整包搬来。</p>
 
   <h3>3.3 两个重要极限</h3>
 
@@ -330,6 +344,8 @@
       <p><b>(3)</b> $\left(1+\frac2x\right)^x=\left[\left(1+\frac{2}{x}\right)^{x/2}\right]^2\to e^2$。</p>
     </div></details>
   </div>
+
+  <p class="take"><b>本节带走</b>：两个重要极限要背，但要知道它们各自依赖什么前提。</p>
 
   <h3>3.4 无穷小、阶与等价替换</h3>
 
@@ -360,6 +376,8 @@
     <p>$$\tan x-\sin x=\tan x(1-\cos x)\sim x\cdot\frac{x^2}{2}=\frac{x^3}{2},$$</p>
     <p>故极限为 $\frac12$。原因：两个等价量相减时，低阶部分正好抵消，剩下的高阶项才是主角——而"等价"只保留了低阶信息。</p>
   </div>
+
+  <p class="take"><b>本节带走</b>：等价替换只对乘除因子有效，加减要提主部。</p>
 
   <div class="quiz">
     <div class="tag">预 习 自 测</div>

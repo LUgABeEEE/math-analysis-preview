@@ -78,6 +78,8 @@
     </div></details>
   </div>
 
+  <p class="take"><b>本节带走</b>：中值定理：平均变化率必在某一点被瞬时变化率取到。</p>
+
   <h3>6.2 Taylor 公式</h3>
 
   <div class="box thm" data-k="定理"><div class="tag">Taylor 公式（带 Peano 余项）</div>
@@ -103,6 +105,8 @@
     </div></details>
   </div>
 
+  <p class="take"><b>本节带走</b>：要极限用 Peano 余项，要误差用 Lagrange 余项。</p>
+
   <h3>6.3 L'Hospital 法则</h3>
 
   <div class="box thm" data-k="定理"><div class="tag">L'Hospital 法则（$\frac00$ 型）</div>
@@ -117,6 +121,8 @@
     <p><b>② 求导后极限不存在，不等于原极限不存在：</b>$f(x)=x^2\sin\frac1x$，$g(x)=x$，$x\to0$ 时 $\frac{f}{g}=x\sin\frac1x\to0$，但 $\frac{f'}{g'}=2x\sin\frac1x-\cos\frac1x$ <b>没有极限</b>。此时法则失效，要用别的方法。</p>
     <p><b>③ 别循环：</b>用 L'Hospital 证 $\lim\frac{\sin x}{x}=1$ 会用到 $(\sin x)'=\cos x$，而这个导数公式本身就要用 $\lim\frac{\sin x}{x}=1$ 才能推出——循环论证。</p>
   </div>
+
+  <p class="take"><b>本节带走</b>：L'Hospital 三查：是不是 $\frac00$ 或 $\frac\infty\infty$、条件够不够、有没有循环。</p>
 
   <h3>6.4 导数的形状信息</h3>
 
@@ -137,6 +143,8 @@
   <div class="box warn"><div class="tag">易错</div>
     <p>$f'(x_0)=0$ 只是极值的<b>必要</b>条件。$f(x)=x^3$ 在 $0$ 处 $f'(0)=0$，但 $0$ 不是极值点（是拐点）。<b>"驻点"≠"极值点"。</b></p>
   </div>
+
+  <p class="take"><b>本节带走</b>：导数当探测器：单调看一阶，凹凸看二阶。</p>
 
   <div class="quiz">
     <div class="tag">预 习 自 测</div>
@@ -179,6 +187,8 @@
 
   <p class="plain">完备性翻译成人话就是"<b>数轴上没有洞</b>"：任何看起来该有个极限的东西，确实有一个实数当它的极限。这条性质不能从加减乘除推出来，它是实数的"出厂设置"。</p>
 
+  <h3>7.1 完备性的六种表述</h3>
+
   <div class="box thm" data-k="定理"><div class="tag">完备性的六种等价表述</div>
     <p>下列命题两两等价：</p>
     <ol>
@@ -190,6 +200,10 @@
       <li><b>Heine–Borel 有限覆盖定理</b>：闭区间的任何开覆盖都有有限子覆盖。</li>
     </ol>
   </div>
+
+  <p class="take"><b>本节带走</b>：六条定理是同一件事的六种说法，记住一条就能推出其余。</p>
+
+  <h3>7.2 循环证明图</h3>
 
   <div class="box note"><div class="tag">读法 · 循环图</div>
     <p>一个常用的证明回路（顺着箭头就能串起全部）：</p>
@@ -205,6 +219,56 @@
 
   <div class="box warn"><div class="tag">易错</div>
     <p>有限覆盖定理要求区间<b>闭</b>、覆盖是<b>开</b>的。$(0,1)$ 被 $\{(0,1-\frac1n)\}$ 覆盖却没有有限子覆盖——开区间会"漏掉端点"。这两个条件都在承重。</p>
+  </div>
+
+  <p class="take"><b>本节带走</b>：循环图里找一条路，就能“用 A 证 B”。</p>
+
+  
+  <h3>7.3 区间套：怎么造，怎么用</h3>
+
+  <p>区间套定理本身只有一句话，真正要练的是<b>怎么把一个"想要的数"套出来</b>：先造一列不断缩小的区间，让目标数始终被夹在中间，再让长度趋于零。</p>
+
+  <div class="box ex"><div class="tag">用区间套造出 $\sqrt2$</div>
+    <p>取 $a_1=1,b_1=2$。每一步取中点 $c$：若 $c^2&lt;2$ 则令 $a_{n+1}=c,\ b_{n+1}=b_n$，否则令 $a_{n+1}=a_n,\ b_{n+1}=c$。</p>
+    <p>于是 $[a_n,b_n]$ 是区间套，$b_n-a_n=2^{1-n}\to0$，设公共点为 $\xi$。由 $a_n^2&lt;2&lt;b_n^2$ 两边取极限得 $\xi^2=2$。</p>
+    <p>这同时说明：<b>$\sqrt2$ 的存在性不是"算"出来的，是从完备性里取出来的。</b></p>
+  </div>
+
+  <p class="take"><b>本节带走</b>：区间套负责造数：$\sqrt2$ 的存在性就是套出来的。</p>
+
+  <h3>7.4 有限覆盖：把无穷多个局部条件压成有限个</h3>
+
+  <p>典型套路：先对<b>每一点</b>证一个局部性质，得到开覆盖；再用有限覆盖把无穷多条并成有限条；最后取 $\min$（或 $\max$）得到统一常数。</p>
+
+  <div class="box ex"><div class="tag">用有限覆盖证有界性</div>
+    <p>设 $f\in C[a,b]$。对每个 $x$，由连续存在 $\delta_x&gt;0$ 使 $t\in U(x,\delta_x)$ 时 $|f(t)|&lt;|f(x)|+1$。</p>
+    <p>$\{U(x,\delta_x)\}$ 覆盖 $[a,b]$，取出有限个 $x_1,\dots,x_m$ 仍覆盖。令 $M=\max_i\big(|f(x_i)|+1\big)$，则 $[a,b]$ 上 $|f|\le M$。</p>
+    <p>注意最后一步：有限个 $M_i$ 才取得到 $\max$；无穷多个是取不到的——这就是有限覆盖的价值。</p>
+  </div>
+
+  <p class="take"><b>本节带走</b>：有限覆盖把无穷个局部条件压成有限个，才能取 $\max/\min$。</p>
+
+  <h3>7.5 上极限与下极限</h3>
+
+  <div class="box def"><div class="tag">上、下极限</div>
+    <p>令 $M_n=\sup\limits_{k\ge n}a_k$，$m_n=\inf\limits_{k\ge n}a_k$（都是单调数列），定义</p>
+    <p>$$\limsup_{n\to\infty}a_n=\lim_{n\to\infty}M_n,\qquad \liminf_{n\to\infty}a_n=\lim_{n\to\infty}m_n.$$</p>
+    <p>无上界时记 $\limsup=+\infty$，无下界时记 $\liminf=-\infty$。</p>
+  </div>
+
+  <p>三条性质：$\liminf\le\limsup$；<b>数列收敛 $\iff$ 两者相等</b>（此时等于极限）；有界时 $\limsup$ 恰是全体子列极限中的最大者，$\liminf$ 是最小者。</p>
+
+  <div class="box ex"><div class="tag">两个例子</div>
+    <p>$a_n=(-1)^n\left(1+\dfrac1n\right)$：偶子列 $\to1$，奇子列 $\to-1$，故 $\limsup=1$，$\liminf=-1$。</p>
+    <p>$a_n=\sin n$：$\limsup=1$，$\liminf=-1$（需要 $\{n\bmod 2\pi\}$ 在 $[0,2\pi)$ 中稠密，这里只记结论）。</p>
+  </div>
+
+  <p class="take"><b>本节带走</b>：上下极限是不收敛数列的替身：两者相等 $\iff$ 收敛。</p>
+
+  <div class="sumup"><b>本 章 小 结</b>
+    <p>① 六条定理是同一件事的六种说法；考试要"用 A 证 B"，沿循环图找一条路。</p>
+    <p>② 区间套负责<b>造数</b>，有限覆盖负责<b>把局部性质变成整体性质</b>。</p>
+    <p>③ 上下极限是不收敛数列的"极限替身"：收敛 $\iff$ 两者相等。</p>
   </div>
 
   <div class="quiz">

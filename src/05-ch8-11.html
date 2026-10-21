@@ -70,6 +70,8 @@
     <p>第二类换元做完必须<b>回代</b>（把 $t$ 换回 $x$），或者改成定积分并换上下限。<b>漏回代是这类题最常见的失分点</b>，而且从答案形态上一眼能看出来。</p>
   </div>
 
+  <p class="take"><b>本节带走</b>：凑微分就是认出一个 $\varphi'(x)$，把陌生的凑成熟人。</p>
+
   <h3>8.2 分部积分</h3>
 
   <div class="box thm" data-k="定理"><div class="tag">分部积分公式</div>
@@ -90,6 +92,8 @@
     </div></details>
   </div>
 
+  <p class="take"><b>本节带走</b>：分部积分的口诀：反对幂指三。</p>
+
   <h3>8.3 有理函数：有算法，不靠灵感</h3>
 
   <p>对 $\dfrac{P(x)}{Q(x)}$（$P,Q$ 为多项式，$P$ 次数低于 $Q$）：</p>
@@ -107,6 +111,53 @@
       <p>$\dfrac{1}{x^2-1}=\dfrac{1}{(x-1)(x+1)}=\dfrac12\left(\dfrac{1}{x-1}-\dfrac{1}{x+1}\right)$，故</p>
       <p>$$\int\frac{\dd x}{x^2-1}=\frac12\ln\left|\frac{x-1}{x+1}\right|+C.$$</p>
     </div></details>
+  </div>
+
+  <p class="take"><b>本节带走</b>：有理函数有固定算法，不靠灵感。</p>
+
+  
+  <h3>8.4 有理函数：把算法走完</h3>
+
+  <p>真分式 $\dfrac{P(x)}{Q(x)}$ 的积分一定有初等解，步骤固定：长除法（假分式）→ 因式分解 → 部分分式 → 逐项积分。真正花时间的只有第三步的系数。</p>
+
+  <div class="box ex"><div class="tag">不可约二次：配方</div>
+    <p>$$\int\frac{\dd x}{x^2+2x+2}=\int\frac{\dd(x+1)}{(x+1)^2+1}=\arctan(x+1)+C.$$</p>
+    <p>遇到二次式先看判别式：$\Delta&lt;0$ 配方成 $\arctan$，$\Delta&gt;0$ 拆成两个一次因式。</p>
+  </div>
+
+  <div class="box ex"><div class="tag">两个不同的一次因式</div>
+    <p>$$\frac{2x+3}{x^2+3x+2}=\frac{2x+3}{(x+1)(x+2)}=\frac{1}{x+1}+\frac{1}{x+2},$$</p>
+    <p>故原积分为 $\ln|x+1|+\ln|x+2|+C$。系数由 $A(x+2)+B(x+1)=2x+3$ 比较两端得到 $A=B=1$。</p>
+  </div>
+
+  <div class="box tip"><div class="tag">方法 · 系数怎么求快</div>
+    <p>部分分式的系数，除了解方程组，还可以<b>代入特殊值</b>：例如求 $\frac{1}{(x-1)(x+1)}$ 的分解，令 $x=1$ 直接得 $A=\frac12$，令 $x=-1$ 得 $B=-\frac12$，比解方程快得多。</p>
+  </div>
+
+  <p class="take"><b>本节带走</b>：二次式先看判别式：配方得 $\arctan$，拆解得 $\ln$。</p>
+
+  <h3>8.5 三角有理式：万能代换</h3>
+
+  <p>遇到 $R(\sin x,\cos x)$ 的有理式，令 $t=\tan\dfrac x2$，则</p>
+
+  <p>$$\sin x=\frac{2t}{1+t^2},\qquad \cos x=\frac{1-t^2}{1+t^2},\qquad \dd x=\frac{2\,\dd t}{1+t^2},$$</p>
+
+  <p>三角函数就被翻译成了普通有理式，接下来走 8.4 的流程。</p>
+
+  <div class="box ex"><div class="tag">算一个</div>
+    <p>$$\int\frac{\dd x}{2+\cos x}=\int\frac{2\,\dd t}{3+t^2}=\frac{2}{\sqrt3}\arctan\frac{t}{\sqrt3}+C,\qquad t=\tan\frac x2.$$</p>
+  </div>
+
+  <div class="box warn"><div class="tag">易错</div>
+    <p>万能代换"一定能行"，但常常把式子变复杂。见到 $\sin^2x\cos x$、$\dfrac{\cos x}{1+\sin^2x}$ 这类，先试凑微分；能凑出来就别上万能代换。</p>
+  </div>
+
+  <p class="take"><b>本节带走</b>：三角有理式：先试凑微分，不行再万能代换。</p>
+
+  <div class="sumup"><b>本 章 小 结</b>
+    <p>① 三条路：凑微分、换元、分部。先看能不能凑，再考虑换，最后才分部。</p>
+    <p>② 有理函数有固定算法，不靠灵感；三角有理式先试凑微分，不行再万能代换。</p>
+    <p>③ 两个必查：$+C$ 有没有漏、第二类换元有没有回代。</p>
   </div>
 
   <div class="quiz">
@@ -208,6 +259,8 @@
 
   <p>这条公式把"求面积极限"降级成"求原函数再相减"，是整门课最实用的工具。但它有前提：$f$ 必须连续（或至少原函数存在且足够好）。</p>
 
+  <p class="take"><b>本节带走</b>：变上限积分给出连续函数的原函数，N–L 公式才有依据。</p>
+
   <h3>9.2 定积分的性质与计算</h3>
 
   <table class="tbl">
@@ -233,6 +286,8 @@
       <p>记住这条：<b>对称区间上，奇函数积分为零，偶函数积分为半区间两倍。</b>能省下大量计算。</p>
     </div></details>
   </div>
+
+  <p class="take"><b>本节带走</b>：定积分换元三件套：被积式、$\dd x$、上下限，一个都不能漏。</p>
 
   <div class="quiz">
     <div class="tag">预 习 自 测</div>
@@ -271,25 +326,104 @@
     </ul>
   </div>
 
-  <div class="box key"><div class="tag">要点 · 微元法三步</div>
-    <p>① 在 $[x,x+\dd x]$ 上把待求量 $Q$ 近似成 $\dd Q=f(x)\dd x$（要求误差是 $o(\dd x)$）；<br>
+  <p>这一章不引入新定理，只训练一件事：<b>把一个几何量写成积分</b>。会不会积分是第九章的事；这里的难点是"怎么写出来、凭什么这么写"。</p>
+
+  <h3>10.1 微元法：从"近似"到"等式"</h3>
+
+  <div class="box key"><div class="tag">微元法三步</div>
+    <p>① 在 $[x,x+\dd x]$ 上把待求量 $Q$ 的小块写成 $\dd Q=f(x)\dd x+o(\dd x)$；<br>
        ② 积分 $Q=\int_a^b f(x)\dd x$；<br>
-       ③ <b>写清楚 $\dd Q$ 为什么成立</b>——这一步才是得分点，很多人只写公式。</p>
+       ③ <b>写清楚为什么误差是 $o(\dd x)$</b>——这一步才是得分点。</p>
   </div>
 
-  <p class="plain">微元法的意思是：<b>先只看极窄的一条，把这条上的量近似成"密度 × 长度"，再把所有条加起来</b>。难点不在积分，而在"这条上的近似凭什么成立"——写清楚这一步，分数就在那里。</p>
+  <p class="plain">微元法的意思是：<b>先只看极窄的一条，把这条上的量近似成"密度 × 长度"，再把所有条加起来</b>。难点不在积分，而在"这条上的近似凭什么成立"。</p>
+
+  <div class="box warn"><div class="tag">易错 · 为什么必须"误差是 $o(\dd x)$"</div>
+    <p>要求误差是 $o(\dd x)$，是因为要把所有小块的误差加起来：分成 $n$ 段时每段误差 $o(\tfrac1n)$，总和 $n\cdot o(\tfrac1n)\to0$，误差才被"积掉"。</p>
+    <p>若误差只与 $\dd x$ <b>同阶</b>（比如把弧长写成 $\dd x$），累加后不趋于零，结论就错了——旋转体侧面积正是这样一个反例。</p>
+  </div>
+
+  <p class="take"><b>本节带走</b>：微元法的核心是误差 $o(\dd x)$，不是公式本身。</p>
+
+  <h3>10.2 面积：上减下，或右减左</h3>
+
+  <div class="box ex"><div class="tag">x 型：$y=x^2$ 与 $y=2x$</div>
+    <p>交点是 $x=0,2$，且在 $(0,2)$ 上 $2x\ge x^2$，故</p>
+    <p>$$S=\int_0^2(2x-x^2)\dd x=\Big[x^2-\frac{x^3}{3}\Big]_0^2=4-\frac83=\frac43.$$</p>
+  </div>
+
+  <div class="box ex"><div class="tag">y 型：$x=y^2$ 与 $x=y+2$</div>
+    <p>对 $x$ 积分要分两段（$y=\pm\sqrt x$ 有歧义），改成对 $y$ 积：交点 $y^2=y+2$ 得 $y=-1,2$，且右边界是 $y+2$：</p>
+    <p>$$S=\int_{-1}^{2}\big[(y+2)-y^2\big]\dd y=\Big[\frac{y^2}{2}+2y-\frac{y^3}{3}\Big]_{-1}^{2}=\frac{10}{3}+\frac76=\frac92.$$</p>
+    <p><b>选 $x$ 型还是 $y$ 型，看哪种不用分段。</b></p>
+  </div>
+
+  <p class="take"><b>本节带走</b>：面积：哪种积分不用分段，就用哪种。</p>
+
+  <h3>10.3 体积：切片与旋转</h3>
 
   <table class="tbl">
-    <caption>四个必背公式</caption>
-    <tr><th style="width:120px">量</th><th>公式</th><th>说明</th></tr>
-    <tr><td>面积</td><td>$S=\int_a^b|f(x)-g(x)|\dd x$</td><td>上减下（或右减左）</td></tr>
-    <tr><td>旋转体体积</td><td>$V=\pi\int_a^bf^2(x)\dd x$</td><td>绕 $x$ 轴；圆盘法</td></tr>
-    <tr><td>弧长</td><td>$L=\int_a^b\sqrt{1+f'^2(x)}\dd x$</td><td>参数式、极坐标另有公式</td></tr>
-    <tr><td>侧面积</td><td>$S=2\pi\int_a^b|f(x)|\sqrt{1+f'^2(x)}\dd x$</td><td>注意不是 $\int 2\pi f$</td></tr>
+    <caption>三种常用体积公式</caption>
+    <tr><th style="width:150px">类型</th><th>公式</th></tr>
+    <tr><td>平行截面已知</td><td>$V=\int_a^b A(x)\,\dd x$（$A(x)$ 是截面积）</td></tr>
+    <tr><td>绕 $x$ 轴（圆盘）</td><td>$V=\pi\int_a^b f^2(x)\,\dd x$</td></tr>
+    <tr><td>绕 $y$ 轴（柱壳）</td><td>$V=2\pi\int_a^b x\,|f(x)|\,\dd x$</td></tr>
   </table>
 
+  <div class="box ex"><div class="tag">柱壳法</div>
+    <p>$y=x^2$（$0\le x\le1$）绕 $y$ 轴：每个柱壳半径 $x$、高 $x^2$、厚 $\dd x$，</p>
+    <p>$$V=2\pi\int_0^1 x\cdot x^2\,\dd x=2\pi\cdot\frac14=\frac{\pi}{2}.$$</p>
+  </div>
+
+  <div class="box ex"><div class="tag">平行截面</div>
+    <p>底面是单位圆，垂直于 $x$ 轴的截面都是等边三角形。截面边长 $2\sqrt{1-x^2}$，面积</p>
+    <p>$$A(x)=\frac{\sqrt3}{4}\cdot4(1-x^2)=\sqrt3\,(1-x^2),\qquad V=\sqrt3\int_{-1}^{1}(1-x^2)\dd x=\frac{4\sqrt3}{3}.$$</p>
+  </div>
+
+  <p class="take"><b>本节带走</b>：体积：绕 $x$ 轴用圆盘，绕 $y$ 轴用柱壳。</p>
+
+  <h3>10.4 弧长：用弦长逼近</h3>
+
+  <p>小段弦长 $\sqrt{\Delta x^2+\Delta y^2}=\sqrt{1+f'^2}\,\Delta x+o(\Delta x)$，故</p>
+
+  <p>$$L=\int_a^b\sqrt{1+f'^2(x)}\,\dd x.$$</p>
+
+  <div class="box ex"><div class="tag">抛物线弧</div>
+    <p>$y=x^{3/2}$（$0\le x\le1$）：$y'=\frac32\sqrt x$，$1+y'^2=1+\frac94x$，</p>
+    <p>$$L=\int_0^1\sqrt{1+\tfrac94x}\,\dd x=\frac{8}{27}\Big[\big(1+\tfrac94x\big)^{3/2}\Big]_0^1=\frac{13\sqrt{13}-8}{27}.$$</p>
+  </div>
+
+  <p class="take"><b>本节带走</b>：弧长里永远带着 $\sqrt{1+f'^2}$。</p>
+
+  <h3>10.5 旋转曲面面积：为什么不是 $2\pi\int f\,\dd x$</h3>
+
+  <p>侧面的那一小圈，宽不是 $\dd x$，而是<b>弧长</b> $\sqrt{1+f'^2}\,\dd x$：</p>
+
+  <p>$$S=2\pi\int_a^b|f(x)|\sqrt{1+f'^2(x)}\,\dd x.$$</p>
+
   <div class="box warn"><div class="tag">易错</div>
-    <p>旋转体<b>侧面积</b>不能简单写成 $2\pi\int f(x)\dd x$。因为小段弧长是 $\sqrt{1+f'^2}\dd x$ 而不是 $\dd x$——用 $\dd x$ 相当于把斜的小段"压平"，误差不是 $o(\dd x)$，积分出来是错的。</p>
+    <p>用 $2\pi\int f\,\dd x$ 相当于把斜的小段"压平"，误差与 $\dd x$ 同阶，累加后不消失。例：$y=\sqrt x$ 绕 $x$ 轴，正确答案</p>
+    <p>$$S=2\pi\int_0^1\sqrt x\sqrt{1+\frac1{4x}}\,\dd x=2\pi\int_0^1\sqrt{x+\tfrac14}\,\dd x=\frac{\pi(5\sqrt5-1)}{6},$$</p>
+    <p>而错误写法给出 $\pi$。两者并不相等。</p>
+  </div>
+
+  <p class="take"><b>本节带走</b>：侧面积的“宽”是弧长而不是 $\dd x$，这是最常见的错。</p>
+
+  <h3>10.6 物理应用：变力做功</h3>
+
+  <p>若力沿 $x$ 方向、大小随位置变化，则小段做功 $\dd W=F(x)\dd x$，故 $W=\int_a^bF(x)\dd x$。</p>
+
+  <div class="box ex"><div class="tag">弹簧</div>
+    <p>胡克定律 $F=kx$，把弹簧从自然长度拉伸 $a$ 所做的功</p>
+    <p>$$W=\int_0^a kx\,\dd x=\frac12ka^2.$$</p>
+  </div>
+
+  <p class="take"><b>本节带走</b>：变力做功：先写微元 $\dd W=F\dd x$，再积分。</p>
+
+  <div class="sumup"><b>本 章 小 结</b>
+    <p>① 所有公式都从"小块近似 + 误差 $o(\dd x)$"推出来，背公式不如背这个动作。</p>
+    <p>② 面积看哪种积分不分段；体积分清圆盘（绕 $x$）与柱壳（绕 $y$）；弧长与侧面积都要带上 $\sqrt{1+f'^2}$。</p>
+    <p>③ 最大的坑：把侧面积的 $\sqrt{1+f'^2}\,\dd x$ 写成 $\dd x$。</p>
   </div>
 
   <div class="quiz">
@@ -297,10 +431,12 @@
     <ol>
       <li>求由 $y=x^2$ 与 $y=x$ 围成的图形面积。</li>
       <li>求 $y=\sqrt x$（$0\le x\le1$）绕 $x$ 轴旋转所得体积。</li>
+      <li>求 $y=x^{3/2}$ 在 $[0,1]$ 上的弧长。</li>
     </ol>
     <details class="ans"><summary>答案</summary><div class="body">
       <p><b>1.</b> 交点 $x=0,1$，$S=\int_0^1(x-x^2)\dd x=\frac12-\frac13=\frac16$。</p>
       <p><b>2.</b> $V=\pi\int_0^1x\,\dd x=\frac\pi2$。</p>
+      <p><b>3.</b> $L=\int_0^1\sqrt{1+\tfrac94x}\,\dd x=\dfrac{13\sqrt{13}-8}{27}$。</p>
     </div></details>
   </div>
 </section>
@@ -327,6 +463,8 @@
 
   <p>定积分要求区间有限、函数有界。反常积分把这两个限制放开，用极限来定义。它看起来只是"多算一步极限"，但收敛性判断常常比计算本身更重要。</p>
 
+  <h3>11.1 两类反常积分</h3>
+
   <div class="box def"><div class="tag">两类反常积分</div>
     <p>(1) <b>无穷区间</b>：$\displaystyle\int_a^{+\infty}f(x)\dd x:=\lim_{b\to+\infty}\int_a^bf(x)\dd x$，若极限存在则称<b>收敛</b>。</p>
     <p>(2) <b>瑕积分</b>：若 $f$ 在 $a$ 附近无界（$a$ 为瑕点），则 $\displaystyle\int_a^bf:=\lim_{\eta\to0^+}\int_{a+\eta}^bf$。</p>
@@ -335,12 +473,20 @@
 
   <p class="plain">反常积分问的不是"等于几"，而是"<b>面积到底有没有限</b>"。$\frac{1}{x^{p}}$ 的尾巴衰减得快不快，全看 $p$：$p&gt;1$ 时尾巴细得能数清（收敛），$p\le1$ 时再细也攒成无穷大。</p>
 
+  <p class="take"><b>本节带走</b>：两类反常：无穷限、瑕点；拆开时两段都收敛才算收敛。</p>
+
+  <h3>11.2 $p$ 判别：一把标尺</h3>
+
   <div class="box thm" data-k="定理"><div class="tag">$p$ 判别</div>
     <p>$$\int_1^{+\infty}\frac{\dd x}{x^p}\ \text{收敛}\iff p&gt;1;\qquad \int_0^{1}\frac{\dd x}{x^p}\ \text{收敛}\iff p&lt;1.$$</p>
     <p>这两个结论要背下来，后面所有比较法都以它们为标尺。</p>
   </div>
 
   <div class="lab" data-lab="ptest"></div>
+
+  <p class="take"><b>本节带走</b>：$p$ 判别是标尺：无穷限看 $p&gt;1$，瑕点看 $p&lt;1$。</p>
+
+  <h3>11.3 比较判别法</h3>
 
   <div class="box thm" data-k="定理"><div class="tag">比较判别法</div>
     <p>设 $0\le f\le g$ 且都在 $[a,+\infty)$ 上连续。</p>
@@ -364,6 +510,47 @@
   <div class="box def"><div class="tag">$\Gamma$ 函数</div>
     <p>$$\Gamma(s)=\int_0^{+\infty}x^{s-1}e^{-x}\dd x\quad(s&gt;0).$$</p>
     <p>它满足 $\Gamma(s+1)=s\Gamma(s)$（分部积分得到），且 $\Gamma(n+1)=n!$。它是"阶乘的连续版本"，在概率论里会再见到。</p>
+  </div>
+
+  <p class="take"><b>本节带走</b>：比较法：大的收敛则小的收敛，小的发散则大的发散。</p>
+
+  
+  <h3>11.4 绝对收敛与条件收敛</h3>
+
+  <div class="box def"><div class="tag">两类收敛</div>
+    <p>若 $\displaystyle\int_a^{+\infty}|f|$ 收敛，称 $\displaystyle\int_a^{+\infty}f$ <b>绝对收敛</b>；若 $\int f$ 收敛而 $\int|f|$ 发散，称<b>条件收敛</b>。</p>
+    <p>绝对收敛 $\Rightarrow$ 收敛；反之不然。</p>
+  </div>
+
+  <div class="box ex"><div class="tag">条件收敛的典型</div>
+    <p>$\displaystyle\int_1^{+\infty}\frac{\sin x}{x}\dd x$ 收敛，但 $\displaystyle\int_1^{+\infty}\frac{|\sin x|}{x}\dd x=+\infty$。</p>
+    <p>前者靠正负振荡互相抵消，后者不抵消——<b>"收敛"不等于"面积有限"</b>。</p>
+  </div>
+
+  <p class="take"><b>本节带走</b>：绝对收敛 $\Rightarrow$ 收敛；条件收敛靠正负振荡抵消。</p>
+
+  <h3>11.5 变号时的判别：Dirichlet 与 Abel</h3>
+
+  <p>被积函数不变号时比较法就够；一旦变号，就需要"一部分有界 + 另一部分单调趋零"。</p>
+
+  <div class="box thm" data-k="定理"><div class="tag">Dirichlet 判别</div>
+    <p>若 $\int_a^A f$ 关于 $A$ 有界，$g$ 单调且 $g(x)\to0\ (x\to+\infty)$，则 $\displaystyle\int_a^{+\infty}fg$ 收敛。</p>
+    <p><b>Abel 判别</b>：把 $g\to0$ 换成"$g$ 单调有界"，并要求 $\int_a^{+\infty}f$ 本身收敛。</p>
+  </div>
+
+  <p>上面 $\int\frac{\sin x}{x}$ 正是 Dirichlet 的样板：$\int_1^A\sin x\,\dd x$ 有界，$\frac1x$ 单调趋零。</p>
+
+  <div class="box ex"><div class="tag">为什么 $\int_0^{+\infty}e^{-x^2}\dd x$ 收敛</div>
+    <p>$x\ge1$ 时 $0&lt;e^{-x^2}\le e^{-x}$，而 $\int_1^{+\infty}e^{-x}\dd x=e^{-1}$ 有限，由比较法收敛；$[0,1]$ 上连续故无瑕点。</p>
+    <p>它的值是 $\frac{\sqrt\pi}{2}$，但那要用二重积分，不属于这一章。</p>
+  </div>
+
+  <p class="take"><b>本节带走</b>：变号时用 Dirichlet：一部分有界，一部分单调趋零。</p>
+
+  <div class="sumup"><b>本 章 小 结</b>
+    <p>① 先判断"属于哪一类"（无穷限 / 瑕点），两端都出现就拆开。</p>
+    <p>② 比较法的标尺永远是 $\int\frac{\dd x}{x^p}$；变号时用绝对收敛或 Dirichlet。</p>
+    <p>③ 判断敛散通常比求值重要：$p$ 判别、比较、Dirichlet，三招覆盖绝大多数题。</p>
   </div>
 
   <div class="quiz">
