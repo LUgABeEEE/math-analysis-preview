@@ -247,6 +247,23 @@ body.preview .mode-note{display:block}
   padding:2px 0 2px 12px;margin:14px 0 20px;line-height:1.8}
 .take b{color:var(--ink-2)}
 
+
+/* ============ 选择题 ============ */
+.q{border:1px solid var(--line);border-radius:10px;padding:14px 16px;margin:14px 0;background:var(--paper)}
+.q-text{margin:0 0 10px;font-size:15.6px;line-height:1.85}
+.q-opts{display:flex;flex-wrap:wrap;gap:8px}
+.q-opts button{font-family:var(--sans);font-size:13.5px;color:var(--ink-2);background:var(--paper-2);
+  border:1px solid var(--line-2);border-radius:8px;padding:7px 13px;cursor:pointer;transition:.15s;
+  text-align:left;line-height:1.5}
+.q-opts button:hover{border-color:var(--red);color:var(--ink)}
+.q.done .q-opts button{cursor:default}
+.q-opts button.ok{border-color:var(--green);background:var(--green-bg);color:var(--green);font-weight:700}
+.q-opts button.no{border-color:var(--red);background:var(--red-bg);color:var(--red);font-weight:700}
+.q-exp{margin:10px 0 0;padding-top:9px;border-top:1px dashed var(--line-2);
+  font-size:14.6px;color:var(--ink-2);line-height:1.85}
+.q-score{font-family:var(--sans);font-size:12.5px;color:var(--ink-3);margin:6px 0 14px}
+.q-score b{color:var(--red)}
+
 /* 速览表 */
 .tbl.quick td{font-family:var(--sans);font-size:13.6px;line-height:1.75}
 .tbl.quick td:first-child{white-space:nowrap;font-weight:600}
@@ -469,6 +486,60 @@ window.MathJax = {
   });
   document.addEventListener("scroll",function(){setTimeout(count,0)},{passive:true});
   apply();
+})();
+</script>
+
+
+<script>
+/* 选择题：点选判分 + 本地记录 */
+(function(){
+  "use strict";
+  var KEY="ma-quiz-v1";
+  var store={}; try{store=JSON.parse(localStorage.getItem(KEY)||"{}")}catch(e){store={}}
+  function save(){try{localStorage.setItem(KEY,JSON.stringify(store))}catch(e){}}
+  function paint(box){
+    var opts=box.querySelectorAll(".q-opts button");
+    var ans=box.getAttribute("data-a");
+    var picked=store[box.id];
+    opts.forEach(function(b){
+      b.classList.remove("ok","no");
+      if(picked){
+        if(b.getAttribute("data-o")===ans) b.classList.add("ok");
+        else if(b.getAttribute("data-o")===picked) b.classList.add("no");
+      }
+    });
+    var exp=box.querySelector(".q-exp");
+    if(exp) exp.hidden=!picked;
+    box.classList.toggle("done",!!picked);
+  }
+  function score(){
+    document.querySelectorAll(".quiz").forEach(function(qz){
+      var boxes=qz.querySelectorAll(".q");
+      if(!boxes.length) return;
+      var el=qz.querySelector(".q-score"); if(!el) return;
+      var n=0,ok=0;
+      boxes.forEach(function(b){
+        if(store[b.id]){n++; if(store[b.id]===b.getAttribute("data-a")) ok++;}
+      });
+      el.innerHTML="已答 <b>"+n+"</b> / "+boxes.length+"　答对 <b>"+ok+"</b>";
+    });
+  }
+  document.addEventListener("click",function(e){
+    var btn=e.target.closest(".q-opts button"); if(!btn) return;
+    var box=btn.closest(".q"); if(!box||box.id==="") return;
+    if(store[box.id]) return;
+    store[box.id]=btn.getAttribute("data-o");
+    save(); paint(box); score();
+  });
+  function boot(){
+    var i=0;
+    document.querySelectorAll(".q").forEach(function(b){
+      if(!b.id) b.id="q"+(++i);
+      paint(b);
+    });
+    score();
+  }
+  if(document.readyState==="loading") document.addEventListener("DOMContentLoaded",boot); else boot();
 })();
 </script>
 

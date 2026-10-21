@@ -247,6 +247,23 @@ body.preview .mode-note{display:block}
   padding:2px 0 2px 12px;margin:14px 0 20px;line-height:1.8}
 .take b{color:var(--ink-2)}
 
+
+/* ============ 选择题 ============ */
+.q{border:1px solid var(--line);border-radius:10px;padding:14px 16px;margin:14px 0;background:var(--paper)}
+.q-text{margin:0 0 10px;font-size:15.6px;line-height:1.85}
+.q-opts{display:flex;flex-wrap:wrap;gap:8px}
+.q-opts button{font-family:var(--sans);font-size:13.5px;color:var(--ink-2);background:var(--paper-2);
+  border:1px solid var(--line-2);border-radius:8px;padding:7px 13px;cursor:pointer;transition:.15s;
+  text-align:left;line-height:1.5}
+.q-opts button:hover{border-color:var(--red);color:var(--ink)}
+.q.done .q-opts button{cursor:default}
+.q-opts button.ok{border-color:var(--green);background:var(--green-bg);color:var(--green);font-weight:700}
+.q-opts button.no{border-color:var(--red);background:var(--red-bg);color:var(--red);font-weight:700}
+.q-exp{margin:10px 0 0;padding-top:9px;border-top:1px dashed var(--line-2);
+  font-size:14.6px;color:var(--ink-2);line-height:1.85}
+.q-score{font-family:var(--sans);font-size:12.5px;color:var(--ink-3);margin:6px 0 14px}
+.q-score b{color:var(--red)}
+
 /* 速览表 */
 .tbl.quick td{font-family:var(--sans);font-size:13.6px;line-height:1.75}
 .tbl.quick td:first-child{white-space:nowrap;font-weight:600}
@@ -575,6 +592,12 @@ body.preview .mode-note{display:block}
 
   <div class="quiz">
     <div class="tag">预 习 自 测</div>
+    <div class="q" data-a="A">
+      <p class="q-text">下面哪一句是“数列 $\{a_n\}$ 无界”的正确定义？</p>
+      <div class="q-opts"><button data-o="A">A. $\forall M&gt;0,\ \exists n,\ |a_n|&gt;M$</button><button data-o="B">B. $\exists M&gt;0,\ \forall n,\ |a_n|&gt;M$</button><button data-o="C">C. $\forall n,\ \exists M,\ |a_n|&gt;M$</button><button data-o="D">D. $\exists M&gt;0,\ \forall n,\ |a_n|\le M$</button></div>
+      <p class="q-exp" hidden>“无界”是“不存在界”，量词要整体翻转：$\forall M\ \exists n$。B、D 说的是“有界”，C 恒真而空洞。</p>
+    </div>
+    <div class="q-score"></div>
     <ol>
       <li>写出"数列 $\{a_n\}$ 无界"的量词式，并说明它和"$\{a_n\}$ 不收敛"是不是一回事。</li>
       <li>把"$f$ 在区间 $I$ 上单调递增"翻译成量词式，并写出它的否定。</li>
@@ -813,6 +836,12 @@ body.preview .mode-note{display:block}
 
   <div class="quiz">
     <div class="tag">预 习 自 测</div>
+    <div class="q" data-a="B">
+      <p class="q-text">设 $S=\{x\in\R:x^2&lt;2\}$，则 $\sup S$ 是</p>
+      <div class="q-opts"><button data-o="A">A. $\sqrt2$，且 $\sqrt2\in S$</button><button data-o="B">B. $\sqrt2$，但 $\sqrt2\notin S$</button><button data-o="C">C. $2$</button><button data-o="D">D. 不存在</button></div>
+      <p class="q-exp" hidden>上确界可以不属于集合。$x^2&lt;2$ 把 $\sqrt2$ 排除在外，所以 $\max S$ 不存在，$\sup S=\sqrt2$。</p>
+    </div>
+    <div class="q-score"></div>
     <ol>
       <li>设 $S=\{x\in\R: x^2&lt;2\}$。求 $\sup S$，并说明为什么它不是 $\max S$。</li>
       <li>证明：若 $a&lt;b$，则存在 $n\in\N^*$ 使 $a+\frac1n&lt;b$。（用阿基米德性）</li>
@@ -1054,6 +1083,12 @@ body.preview .mode-note{display:block}
 
   <div class="quiz">
     <div class="tag">预 习 自 测</div>
+    <div class="q" data-a="C">
+      <p class="q-text">下列数列中，<b>一定收敛</b>的是</p>
+      <div class="q-opts"><button data-o="A">A. 有界数列</button><button data-o="B">B. 单调数列</button><button data-o="C">C. 单调且有界的数列</button><button data-o="D">D. 相邻两项之差趋于零的数列</button></div>
+      <p class="q-exp" hidden>单调有界定理。反例：A 取 $(-1)^n$，B 取 $n$，D 取 $\ln n$。</p>
+    </div>
+    <div class="q-score"></div>
     <ol>
       <li>用定义证明 $\lim\limits_{n\to\infty}\dfrac{n+1}{2n-1}=\dfrac12$。</li>
       <li>设 $a_n=\dfrac{1}{\sqrt{n^2+1}}+\dfrac{1}{\sqrt{n^2+2}}+\cdots+\dfrac{1}{\sqrt{n^2+n}}$。用夹逼求 $\lim a_n$。</li>
@@ -1209,6 +1244,12 @@ body.preview .mode-note{display:block}
 
   <div class="quiz">
     <div class="tag">预 习 自 测</div>
+    <div class="q" data-a="B">
+      <p class="q-text">$\lim\limits_{x\to0}\dfrac{\sin 3x}{x}=$</p>
+      <div class="q-opts"><button data-o="A">A. $1$</button><button data-o="B">B. $3$</button><button data-o="C">C. $\dfrac13$</button><button data-o="D">D. 不存在</button></div>
+      <p class="q-exp" hidden>凑成 $3\cdot\dfrac{\sin 3x}{3x}\to3\cdot1$。</p>
+    </div>
+    <div class="q-score"></div>
     <ol>
       <li>用 $\eps$-$\delta$ 证明 $\lim\limits_{x\to2}(3x-1)=5$。</li>
       <li>求 $\lim\limits_{x\to0}\dfrac{\sqrt{1+x}-1}{x}$。</li>
@@ -1373,6 +1414,12 @@ body.preview .mode-note{display:block}
 
   <div class="quiz">
     <div class="tag">预 习 自 测</div>
+    <div class="q" data-a="A">
+      <p class="q-text">若 $f\in C[a,b]$，则下列<b>一定成立</b>的是</p>
+      <div class="q-opts"><button data-o="A">A. $f$ 在 $[a,b]$ 上有界</button><button data-o="B">B. $f$ 在 $(a,b)$ 内可导</button><button data-o="C">C. $f$ 在 $[a,b]$ 上单调</button><button data-o="D">D. $f$ 在 $(a,b)$ 内严格单调</button></div>
+      <p class="q-exp" hidden>有界性定理。B、C、D 的反例：$|x|$、$x^2$、$\sin x$。</p>
+    </div>
+    <div class="q-score"></div>
     <ol>
       <li>$f(x)=\dfrac{x^2-1}{x-1}$ 在 $x=1$ 处是什么类型的间断点？怎样"补定义"使它连续？</li>
       <li>是否存在 $[0,1]$ 上的连续函数，取到最大值但不取到最小值？说明理由。</li>
@@ -1515,6 +1562,12 @@ body.preview .mode-note{display:block}
 
   <div class="quiz">
     <div class="tag">预 习 自 测</div>
+    <div class="q" data-a="C">
+      <p class="q-text">下列函数在 $x=0$ 处<b>可导</b>的是</p>
+      <div class="q-opts"><button data-o="A">A. $|x|$</button><button data-o="B">B. $x^{2/3}$</button><button data-o="C">C. $x^2\sin\dfrac1x$（补 $f(0)=0$）</button><button data-o="D">D. $\operatorname{sgn}x$</button></div>
+      <p class="q-exp" hidden>差商 $=x\sin\frac1x\to0$，故 $f'(0)=0$。$|x|$ 与 $x^{2/3}$ 在 0 处有尖点，$\operatorname{sgn}x$ 不连续。</p>
+    </div>
+    <div class="q-score"></div>
     <ol>
       <li>用定义求 $f(x)=x^2$ 在 $x=1$ 处的导数。</li>
       <li>$f(x)=|x|^3$ 在 $x=0$ 处可导吗？可导的话导数是多少？</li>
@@ -1680,6 +1733,12 @@ body.preview .mode-note{display:block}
 
   <div class="quiz">
     <div class="tag">预 习 自 测</div>
+    <div class="q" data-a="C">
+      <p class="q-text">若 $f'(x_0)=0$，则</p>
+      <div class="q-opts"><button data-o="A">A. $x_0$ 必为极大值点</button><button data-o="B">B. $x_0$ 必为极小值点</button><button data-o="C">C. $x_0$ 不一定是极值点</button><button data-o="D">D. $f$ 在 $x_0$ 处不连续</button></div>
+      <p class="q-exp" hidden>$f(x)=x^3$ 在 0 处 $f'(0)=0$，但 0 是拐点不是极值点。</p>
+    </div>
+    <div class="q-score"></div>
     <ol>
       <li>验证 $f(x)=x^3-3x$ 在 $[-\sqrt3,\sqrt3]$ 上满足 Rolle 定理，并求出定理中的 $\xi$。</li>
       <li>证明：若 $f$ 在 $(a,b)$ 内可导且 $f'\equiv0$，则 $f$ 在 $(a,b)$ 内为常数。</li>
@@ -1805,6 +1864,12 @@ body.preview .mode-note{display:block}
 
   <div class="quiz">
     <div class="tag">预 习 自 测</div>
+    <div class="q" data-a="D">
+      <p class="q-text">下列哪一条<b>不属于</b>完备性的等价表述？</p>
+      <div class="q-opts"><button data-o="A">A. 确界原理</button><button data-o="B">B. 单调有界定理</button><button data-o="C">C. 闭区间有限覆盖定理</button><button data-o="D">D. 阿基米德性</button></div>
+      <p class="q-exp" hidden>阿基米德性可以由确界原理推出，但<b>弱于</b>完备性：有序域里阿基米德性成立仍可能不完备（如 $\Q$）。</p>
+    </div>
+    <div class="q-score"></div>
     <ol>
       <li>用区间套定理证明：有界数列必有收敛子列。</li>
       <li>举一个反例说明"开区间的开覆盖不一定有有限子覆盖"。</li>
@@ -1982,6 +2047,12 @@ body.preview .mode-note{display:block}
 
   <div class="quiz">
     <div class="tag">预 习 自 测</div>
+    <div class="q" data-a="A">
+      <p class="q-text">$\displaystyle\int\frac{\dd x}{x^2+2x+2}=$</p>
+      <div class="q-opts"><button data-o="A">A. $\arctan(x+1)+C$</button><button data-o="B">B. $\ln|x^2+2x+2|+C$</button><button data-o="C">C. $\arctan x+C$</button><button data-o="D">D. $\dfrac{1}{x+1}+C$</button></div>
+      <p class="q-exp" hidden>配方：$x^2+2x+2=(x+1)^2+1$，被积式化为 $\dfrac{\dd(x+1)}{(x+1)^2+1}$。</p>
+    </div>
+    <div class="q-score"></div>
     <ol>
       <li>求 $\displaystyle\int\tan x\,\dd x$。（提示：$\tan x=\frac{\sin x}{\cos x}$）</li>
       <li>求 $\displaystyle\int\frac{\dd x}{x^2+4x+13}$。（提示：配方）</li>
@@ -2111,6 +2182,12 @@ body.preview .mode-note{display:block}
 
   <div class="quiz">
     <div class="tag">预 习 自 测</div>
+    <div class="q" data-a="B">
+      <p class="q-text">若 $f$ 在 $[a,b]$ 上可积，则<b>一定能推出</b></p>
+      <div class="q-opts"><button data-o="A">A. $f$ 在 $[a,b]$ 上连续</button><button data-o="B">B. $f$ 在 $[a,b]$ 上有界</button><button data-o="C">C. $f$ 在 $[a,b]$ 上单调</button><button data-o="D">D. $f$ 在 $[a,b]$ 上有原函数</button></div>
+      <p class="q-exp" hidden>有界是可积的必要条件；连续、单调只是充分条件，原函数存在也不由可积保证。</p>
+    </div>
+    <div class="q-score"></div>
     <ol>
       <li>求 $\displaystyle\int_0^{\pi/2}\sin^2x\,\dd x$。</li>
       <li>求 $\displaystyle\int_0^1 x\sqrt{1-x^2}\,\dd x$。</li>
@@ -2248,6 +2325,12 @@ body.preview .mode-note{display:block}
 
   <div class="quiz">
     <div class="tag">预 习 自 测</div>
+    <div class="q" data-a="A">
+      <p class="q-text">$y=x^2$（$0\le x\le1$）绕 $y$ 轴旋转所得体积为</p>
+      <div class="q-opts"><button data-o="A">A. $\dfrac\pi2$</button><button data-o="B">B. $\dfrac\pi4$</button><button data-o="C">C. $\dfrac{2\pi}3$</button><button data-o="D">D. $\pi$</button></div>
+      <p class="q-exp" hidden>柱壳法：$V=2\pi\int_0^1x\cdot x^2\dd x=2\pi\cdot\frac14=\frac\pi2$。</p>
+    </div>
+    <div class="q-score"></div>
     <ol>
       <li>求由 $y=x^2$ 与 $y=x$ 围成的图形面积。</li>
       <li>求 $y=\sqrt x$（$0\le x\le1$）绕 $x$ 轴旋转所得体积。</li>
@@ -2375,6 +2458,12 @@ body.preview .mode-note{display:block}
 
   <div class="quiz">
     <div class="tag">预 习 自 测</div>
+    <div class="q" data-a="A">
+      <p class="q-text">$\displaystyle\int_1^{+\infty}\frac{\dd x}{x^{1.5}}$</p>
+      <div class="q-opts"><button data-o="A">A. 收敛</button><button data-o="B">B. 发散</button><button data-o="C">C. 条件收敛</button><button data-o="D">D. 无法判断</button></div>
+      <p class="q-exp" hidden>$p=1.5&gt;1$，由 $p$ 判别收敛（值为 $\dfrac{1}{p-1}=2$）。</p>
+    </div>
+    <div class="q-score"></div>
     <ol>
       <li>判断 $\displaystyle\int_0^{1}\frac{\dd x}{\sqrt x}$ 是否收敛。</li>
       <li>判断 $\displaystyle\int_1^{+\infty}\frac{\ln x}{x}\dd x$ 是否收敛。</li>
@@ -2513,24 +2602,48 @@ body.preview .mode-note{display:block}
   <h3>第一组 · 判断（每题 2 分）</h3>
 
   <div class="quiz">
-    <div class="tag">判 断 对 错</div>
-    <ol>
-      <li>收敛数列必有界。</li>
-      <li>有界数列必收敛。</li>
-      <li>若 $\lim_{x\to x_0}f(x)$ 存在，则 $f$ 在 $x_0$ 连续。</li>
-      <li>闭区间上的连续函数一定一致连续。</li>
-      <li>函数在某点可导，则在该点连续。</li>
-      <li>若 $f'(x_0)=0$，则 $x_0$ 一定是极值点。</li>
-      <li>若 $f$ 在 $[a,b]$ 上可积，则 $f$ 在 $[a,b]$ 上连续。</li>
-      <li>连续函数一定有原函数。</li>
-    </ol>
-    <details class="ans"><summary>答案与理由</summary><div class="body">
-      <p><b>1 对</b>（定理 2.2）。<b>2 错</b>：$(-1)^n$ 有界但发散。</p>
-      <p><b>3 错</b>：还需 $f(x_0)$ 有定义且等于该极限。例：$f(x)=1$（$x\ne0$），$f(0)=0$。</p>
-      <p><b>4 对</b>（Cantor 定理）。<b>5 对</b>（可导必连续）。</p>
-      <p><b>6 错</b>：$f(x)=x^3$ 在 $0$ 处 $f'(0)=0$，但不是极值点。</p>
-      <p><b>7 错</b>：有界 + 有限个间断点即可积。<b>8 对</b>（变上限积分 $\Phi(x)=\int_a^xf$）。</p>
-    </div></details>
+    <div class="tag">判 断 对 错 · 点选项立刻判分</div>
+    <div class="q-score"></div>
+    <div class="q" data-a="A">
+      <p class="q-text"><b>1.</b> 收敛数列必有界。</p>
+      <div class="q-opts"><button data-o="A">A. 对</button><button data-o="B">B. 错</button></div>
+      <p class="q-exp" hidden>单调有界定理的反面不是它；收敛必有界（定理 2.2），逆命题不成立。</p>
+    </div>
+    <div class="q" data-a="B">
+      <p class="q-text"><b>2.</b> 有界数列必收敛。</p>
+      <div class="q-opts"><button data-o="A">A. 对</button><button data-o="B">B. 错</button></div>
+      <p class="q-exp" hidden>反例：$(-1)^n$ 有界但发散。</p>
+    </div>
+    <div class="q" data-a="B">
+      <p class="q-text"><b>3.</b> 若 $\lim\limits_{x\to x_0}f(x)$ 存在，则 $f$ 在 $x_0$ 连续。</p>
+      <div class="q-opts"><button data-o="A">A. 对</button><button data-o="B">B. 错</button></div>
+      <p class="q-exp" hidden>还要求 $f(x_0)$ 有定义且等于该极限。反例：$f(x)=1\ (x\ne0)$，$f(0)=0$。</p>
+    </div>
+    <div class="q" data-a="A">
+      <p class="q-text"><b>4.</b> 闭区间上的连续函数一定一致连续。</p>
+      <div class="q-opts"><button data-o="A">A. 对</button><button data-o="B">B. 错</button></div>
+      <p class="q-exp" hidden>Cantor 定理。开区间不成立，如 $1/x$ 在 $(0,1)$。</p>
+    </div>
+    <div class="q" data-a="A">
+      <p class="q-text"><b>5.</b> 函数在某点可导，则在该点连续。</p>
+      <div class="q-opts"><button data-o="A">A. 对</button><button data-o="B">B. 错</button></div>
+      <p class="q-exp" hidden>可导必连续（定理 5.1）。</p>
+    </div>
+    <div class="q" data-a="B">
+      <p class="q-text"><b>6.</b> 若 $f'(x_0)=0$，则 $x_0$ 一定是极值点。</p>
+      <div class="q-opts"><button data-o="A">A. 对</button><button data-o="B">B. 错</button></div>
+      <p class="q-exp" hidden>反例：$f(x)=x^3$ 在 0 处，驻点但不是极值点。</p>
+    </div>
+    <div class="q" data-a="B">
+      <p class="q-text"><b>7.</b> 若 $f$ 在 $[a,b]$ 上可积，则 $f$ 在 $[a,b]$ 上连续。</p>
+      <div class="q-opts"><button data-o="A">A. 对</button><button data-o="B">B. 错</button></div>
+      <p class="q-exp" hidden>可积只要求有界且间断点不多；如 $f(0)=1$、其余为 0 的函数。</p>
+    </div>
+    <div class="q" data-a="A">
+      <p class="q-text"><b>8.</b> 连续函数一定有原函数。</p>
+      <div class="q-opts"><button data-o="A">A. 对</button><button data-o="B">B. 错</button></div>
+      <p class="q-exp" hidden>变上限积分 $\Phi(x)=\int_a^xf$ 就是（定理 9.2）。</p>
+    </div>
   </div>
 
   <h3>第二组 · 计算（每题 5 分）</h3>
@@ -3363,6 +3476,60 @@ var V=function(n){return getComputedStyle(document.documentElement).getPropertyV
   });
   document.addEventListener("scroll",function(){setTimeout(count,0)},{passive:true});
   apply();
+})();
+</script>
+
+
+<script>
+/* 选择题：点选判分 + 本地记录 */
+(function(){
+  "use strict";
+  var KEY="ma-quiz-v1";
+  var store={}; try{store=JSON.parse(localStorage.getItem(KEY)||"{}")}catch(e){store={}}
+  function save(){try{localStorage.setItem(KEY,JSON.stringify(store))}catch(e){}}
+  function paint(box){
+    var opts=box.querySelectorAll(".q-opts button");
+    var ans=box.getAttribute("data-a");
+    var picked=store[box.id];
+    opts.forEach(function(b){
+      b.classList.remove("ok","no");
+      if(picked){
+        if(b.getAttribute("data-o")===ans) b.classList.add("ok");
+        else if(b.getAttribute("data-o")===picked) b.classList.add("no");
+      }
+    });
+    var exp=box.querySelector(".q-exp");
+    if(exp) exp.hidden=!picked;
+    box.classList.toggle("done",!!picked);
+  }
+  function score(){
+    document.querySelectorAll(".quiz").forEach(function(qz){
+      var boxes=qz.querySelectorAll(".q");
+      if(!boxes.length) return;
+      var el=qz.querySelector(".q-score"); if(!el) return;
+      var n=0,ok=0;
+      boxes.forEach(function(b){
+        if(store[b.id]){n++; if(store[b.id]===b.getAttribute("data-a")) ok++;}
+      });
+      el.innerHTML="已答 <b>"+n+"</b> / "+boxes.length+"　答对 <b>"+ok+"</b>";
+    });
+  }
+  document.addEventListener("click",function(e){
+    var btn=e.target.closest(".q-opts button"); if(!btn) return;
+    var box=btn.closest(".q"); if(!box||box.id==="") return;
+    if(store[box.id]) return;
+    store[box.id]=btn.getAttribute("data-o");
+    save(); paint(box); score();
+  });
+  function boot(){
+    var i=0;
+    document.querySelectorAll(".q").forEach(function(b){
+      if(!b.id) b.id="q"+(++i);
+      paint(b);
+    });
+    score();
+  }
+  if(document.readyState==="loading") document.addEventListener("DOMContentLoaded",boot); else boot();
 })();
 </script>
 

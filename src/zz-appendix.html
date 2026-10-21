@@ -123,24 +123,48 @@
   <h3>第一组 · 判断（每题 2 分）</h3>
 
   <div class="quiz">
-    <div class="tag">判 断 对 错</div>
-    <ol>
-      <li>收敛数列必有界。</li>
-      <li>有界数列必收敛。</li>
-      <li>若 $\lim_{x\to x_0}f(x)$ 存在，则 $f$ 在 $x_0$ 连续。</li>
-      <li>闭区间上的连续函数一定一致连续。</li>
-      <li>函数在某点可导，则在该点连续。</li>
-      <li>若 $f'(x_0)=0$，则 $x_0$ 一定是极值点。</li>
-      <li>若 $f$ 在 $[a,b]$ 上可积，则 $f$ 在 $[a,b]$ 上连续。</li>
-      <li>连续函数一定有原函数。</li>
-    </ol>
-    <details class="ans"><summary>答案与理由</summary><div class="body">
-      <p><b>1 对</b>（定理 2.2）。<b>2 错</b>：$(-1)^n$ 有界但发散。</p>
-      <p><b>3 错</b>：还需 $f(x_0)$ 有定义且等于该极限。例：$f(x)=1$（$x\ne0$），$f(0)=0$。</p>
-      <p><b>4 对</b>（Cantor 定理）。<b>5 对</b>（可导必连续）。</p>
-      <p><b>6 错</b>：$f(x)=x^3$ 在 $0$ 处 $f'(0)=0$，但不是极值点。</p>
-      <p><b>7 错</b>：有界 + 有限个间断点即可积。<b>8 对</b>（变上限积分 $\Phi(x)=\int_a^xf$）。</p>
-    </div></details>
+    <div class="tag">判 断 对 错 · 点选项立刻判分</div>
+    <div class="q-score"></div>
+    <div class="q" data-a="A">
+      <p class="q-text"><b>1.</b> 收敛数列必有界。</p>
+      <div class="q-opts"><button data-o="A">A. 对</button><button data-o="B">B. 错</button></div>
+      <p class="q-exp" hidden>单调有界定理的反面不是它；收敛必有界（定理 2.2），逆命题不成立。</p>
+    </div>
+    <div class="q" data-a="B">
+      <p class="q-text"><b>2.</b> 有界数列必收敛。</p>
+      <div class="q-opts"><button data-o="A">A. 对</button><button data-o="B">B. 错</button></div>
+      <p class="q-exp" hidden>反例：$(-1)^n$ 有界但发散。</p>
+    </div>
+    <div class="q" data-a="B">
+      <p class="q-text"><b>3.</b> 若 $\lim\limits_{x\to x_0}f(x)$ 存在，则 $f$ 在 $x_0$ 连续。</p>
+      <div class="q-opts"><button data-o="A">A. 对</button><button data-o="B">B. 错</button></div>
+      <p class="q-exp" hidden>还要求 $f(x_0)$ 有定义且等于该极限。反例：$f(x)=1\ (x\ne0)$，$f(0)=0$。</p>
+    </div>
+    <div class="q" data-a="A">
+      <p class="q-text"><b>4.</b> 闭区间上的连续函数一定一致连续。</p>
+      <div class="q-opts"><button data-o="A">A. 对</button><button data-o="B">B. 错</button></div>
+      <p class="q-exp" hidden>Cantor 定理。开区间不成立，如 $1/x$ 在 $(0,1)$。</p>
+    </div>
+    <div class="q" data-a="A">
+      <p class="q-text"><b>5.</b> 函数在某点可导，则在该点连续。</p>
+      <div class="q-opts"><button data-o="A">A. 对</button><button data-o="B">B. 错</button></div>
+      <p class="q-exp" hidden>可导必连续（定理 5.1）。</p>
+    </div>
+    <div class="q" data-a="B">
+      <p class="q-text"><b>6.</b> 若 $f'(x_0)=0$，则 $x_0$ 一定是极值点。</p>
+      <div class="q-opts"><button data-o="A">A. 对</button><button data-o="B">B. 错</button></div>
+      <p class="q-exp" hidden>反例：$f(x)=x^3$ 在 0 处，驻点但不是极值点。</p>
+    </div>
+    <div class="q" data-a="B">
+      <p class="q-text"><b>7.</b> 若 $f$ 在 $[a,b]$ 上可积，则 $f$ 在 $[a,b]$ 上连续。</p>
+      <div class="q-opts"><button data-o="A">A. 对</button><button data-o="B">B. 错</button></div>
+      <p class="q-exp" hidden>可积只要求有界且间断点不多；如 $f(0)=1$、其余为 0 的函数。</p>
+    </div>
+    <div class="q" data-a="A">
+      <p class="q-text"><b>8.</b> 连续函数一定有原函数。</p>
+      <div class="q-opts"><button data-o="A">A. 对</button><button data-o="B">B. 错</button></div>
+      <p class="q-exp" hidden>变上限积分 $\Phi(x)=\int_a^xf$ 就是（定理 9.2）。</p>
+    </div>
   </div>
 
   <h3>第二组 · 计算（每题 5 分）</h3>

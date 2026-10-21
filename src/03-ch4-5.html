@@ -147,6 +147,12 @@
 
   <div class="quiz">
     <div class="tag">预 习 自 测</div>
+    <div class="q" data-a="A">
+      <p class="q-text">若 $f\in C[a,b]$，则下列<b>一定成立</b>的是</p>
+      <div class="q-opts"><button data-o="A">A. $f$ 在 $[a,b]$ 上有界</button><button data-o="B">B. $f$ 在 $(a,b)$ 内可导</button><button data-o="C">C. $f$ 在 $[a,b]$ 上单调</button><button data-o="D">D. $f$ 在 $(a,b)$ 内严格单调</button></div>
+      <p class="q-exp" hidden>有界性定理。B、C、D 的反例：$|x|$、$x^2$、$\sin x$。</p>
+    </div>
+    <div class="q-score"></div>
     <ol>
       <li>$f(x)=\dfrac{x^2-1}{x-1}$ 在 $x=1$ 处是什么类型的间断点？怎样"补定义"使它连续？</li>
       <li>是否存在 $[0,1]$ 上的连续函数，取到最大值但不取到最小值？说明理由。</li>
@@ -289,6 +295,12 @@
 
   <div class="quiz">
     <div class="tag">预 习 自 测</div>
+    <div class="q" data-a="C">
+      <p class="q-text">下列函数在 $x=0$ 处<b>可导</b>的是</p>
+      <div class="q-opts"><button data-o="A">A. $|x|$</button><button data-o="B">B. $x^{2/3}$</button><button data-o="C">C. $x^2\sin\dfrac1x$（补 $f(0)=0$）</button><button data-o="D">D. $\operatorname{sgn}x$</button></div>
+      <p class="q-exp" hidden>差商 $=x\sin\frac1x\to0$，故 $f'(0)=0$。$|x|$ 与 $x^{2/3}$ 在 0 处有尖点，$\operatorname{sgn}x$ 不连续。</p>
+    </div>
+    <div class="q-score"></div>
     <ol>
       <li>用定义求 $f(x)=x^2$ 在 $x=1$ 处的导数。</li>
       <li>$f(x)=|x|^3$ 在 $x=0$ 处可导吗？可导的话导数是多少？</li>

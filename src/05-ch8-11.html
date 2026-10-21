@@ -162,6 +162,12 @@
 
   <div class="quiz">
     <div class="tag">预 习 自 测</div>
+    <div class="q" data-a="A">
+      <p class="q-text">$\displaystyle\int\frac{\dd x}{x^2+2x+2}=$</p>
+      <div class="q-opts"><button data-o="A">A. $\arctan(x+1)+C$</button><button data-o="B">B. $\ln|x^2+2x+2|+C$</button><button data-o="C">C. $\arctan x+C$</button><button data-o="D">D. $\dfrac{1}{x+1}+C$</button></div>
+      <p class="q-exp" hidden>配方：$x^2+2x+2=(x+1)^2+1$，被积式化为 $\dfrac{\dd(x+1)}{(x+1)^2+1}$。</p>
+    </div>
+    <div class="q-score"></div>
     <ol>
       <li>求 $\displaystyle\int\tan x\,\dd x$。（提示：$\tan x=\frac{\sin x}{\cos x}$）</li>
       <li>求 $\displaystyle\int\frac{\dd x}{x^2+4x+13}$。（提示：配方）</li>
@@ -291,6 +297,12 @@
 
   <div class="quiz">
     <div class="tag">预 习 自 测</div>
+    <div class="q" data-a="B">
+      <p class="q-text">若 $f$ 在 $[a,b]$ 上可积，则<b>一定能推出</b></p>
+      <div class="q-opts"><button data-o="A">A. $f$ 在 $[a,b]$ 上连续</button><button data-o="B">B. $f$ 在 $[a,b]$ 上有界</button><button data-o="C">C. $f$ 在 $[a,b]$ 上单调</button><button data-o="D">D. $f$ 在 $[a,b]$ 上有原函数</button></div>
+      <p class="q-exp" hidden>有界是可积的必要条件；连续、单调只是充分条件，原函数存在也不由可积保证。</p>
+    </div>
+    <div class="q-score"></div>
     <ol>
       <li>求 $\displaystyle\int_0^{\pi/2}\sin^2x\,\dd x$。</li>
       <li>求 $\displaystyle\int_0^1 x\sqrt{1-x^2}\,\dd x$。</li>
@@ -428,6 +440,12 @@
 
   <div class="quiz">
     <div class="tag">预 习 自 测</div>
+    <div class="q" data-a="A">
+      <p class="q-text">$y=x^2$（$0\le x\le1$）绕 $y$ 轴旋转所得体积为</p>
+      <div class="q-opts"><button data-o="A">A. $\dfrac\pi2$</button><button data-o="B">B. $\dfrac\pi4$</button><button data-o="C">C. $\dfrac{2\pi}3$</button><button data-o="D">D. $\pi$</button></div>
+      <p class="q-exp" hidden>柱壳法：$V=2\pi\int_0^1x\cdot x^2\dd x=2\pi\cdot\frac14=\frac\pi2$。</p>
+    </div>
+    <div class="q-score"></div>
     <ol>
       <li>求由 $y=x^2$ 与 $y=x$ 围成的图形面积。</li>
       <li>求 $y=\sqrt x$（$0\le x\le1$）绕 $x$ 轴旋转所得体积。</li>
@@ -555,6 +573,12 @@
 
   <div class="quiz">
     <div class="tag">预 习 自 测</div>
+    <div class="q" data-a="A">
+      <p class="q-text">$\displaystyle\int_1^{+\infty}\frac{\dd x}{x^{1.5}}$</p>
+      <div class="q-opts"><button data-o="A">A. 收敛</button><button data-o="B">B. 发散</button><button data-o="C">C. 条件收敛</button><button data-o="D">D. 无法判断</button></div>
+      <p class="q-exp" hidden>$p=1.5&gt;1$，由 $p$ 判别收敛（值为 $\dfrac{1}{p-1}=2$）。</p>
+    </div>
+    <div class="q-score"></div>
     <ol>
       <li>判断 $\displaystyle\int_0^{1}\frac{\dd x}{\sqrt x}$ 是否收敛。</li>
       <li>判断 $\displaystyle\int_1^{+\infty}\frac{\ln x}{x}\dd x$ 是否收敛。</li>
