@@ -73,6 +73,45 @@ def prepare_body(raw: str) -> str:
     return "".join(out)
 
 
+
+# ---------------- 讲解视频内联 ----------------
+import base64
+
+VIDEO_DIR = os.path.join(ROOT, "videos")
+
+
+def _b64(path: str) -> str:
+    with open(path, "rb") as f:
+        return base64.b64encode(f.read()).decode("ascii")
+
+
+def inline_videos(html: str) -> str:
+    """把 <div class="vid" data-video="key" data-title="..."></div> 换成内联视频。
+
+    视频与封面都 base64 内嵌，保证单文件离线可播；缺文件时退化为纯文字提示。
+    """
+    def repl(m):
+        key = m.group(1)
+        title = m.group(2) or ""
+        mp4 = os.path.join(VIDEO_DIR, f"{key}.mp4")
+        jpg = os.path.join(VIDEO_DIR, f"poster-{key}.jpg")
+        if not os.path.exists(mp4):
+            return f'<p class="vid-missing">（视频 {key} 尚未生成）</p>'
+        poster = ""
+        if os.path.exists(jpg):
+            poster = f' poster="data:image/jpeg;base64,{_b64(jpg)}"'
+        cap = f"<figcaption>{title}</figcaption>" if title else ""
+        return (
+            '<figure class="vid">'
+            f'<video controls muted loop playsinline preload="metadata"{poster}>'
+            f'<source src="data:video/mp4;base64,{_b64(mp4)}" type="video/mp4">'
+            '你的浏览器不支持内嵌视频。</video>'
+            f"{cap}</figure>"
+        )
+
+    return re.sub(r'<div class="vid" data-video="([^"]+)"(?: data-title="([^"]*)")?></div>',
+                  repl, html)
+
 def assemble(content_html: str, with_mathjax: bool = True) -> str:
     shell = read(os.path.join(SRC, "shell.html"))
     css = safe_js("\n".join(read(p) for p in ENGINE_CSS_FILES), "engine css")
@@ -84,6 +123,7 @@ def assemble(content_html: str, with_mathjax: bool = True) -> str:
     else:
         mathjax = "/* mathjax omitted */"
 
+    content_html = inline_videos(content_html)
     return (
         shell.replace("{{CONTENT}}", content_html)
         .replace("{{ENGINE_CSS}}", css)

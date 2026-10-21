@@ -11,6 +11,7 @@
 - **11 个可拖动交互实验**：上确界、ε-N、ε-δ、一致连续、间断点四型、夹逼、割线→切线、Taylor 逼近、二分法、Riemann 和、p 积分。纯 Canvas 手写，无外部依赖。
 - **每个实验都能「自动演示」**：点标题栏 `▶`，参数往返动画，滑块实时跟着动；支持全屏放大。
 - **跟随主题**：切换深色/浅色时所有画布自动重绘。
+- **5 段讲解动画**（ManimGX 渲染，base64 内联）：ε-N、ε-δ、割线→切线、拉格朗日中值定理、Riemann 和。同样是单文件、断网可播。
 - **一页速览**：全学期十二件事的骨架表，5 分钟建立全局。
 - **附录**：A 公式速查、B 二十题综合自测（答案折叠）、C 十六周学习路线。
 
@@ -36,6 +37,7 @@
 ## 目录结构
 
 ```
+videos/*.mp4         讲解动画（base64 内联进 index.html）
 engine/mathlab.js    交互实验引擎（框架层，与内容无关，可搬到别的页面）
 engine/mathlab.css   实验外观
 src/labs.js          本书 11 个实验定义（MathLab.absorb）
@@ -52,6 +54,10 @@ make_sample.py       抽出单章样张
 # 依赖：Python 3；MathJax 在 assets/tex-svg.js（如需更新，从 cdn.jsdelivr.net 下载）
 python3 build.py             # 生成 index.html（约 2.1 MB）
 python3 make_sample.py ch2   # 可选：单章样张
+
+# 动画（在工作区根目录，需 .runtime/venv）
+.runtime/venv/bin/python manimx/render.py            # 下册先导三片
+# 上册五片见 manimx/scenes_analysis.py，用 manimgx render 逐段出片后放进 videos/
 ```
 
 编号在构建期写入，不依赖 CSS counter；引擎与实验定义分别内联，最终仍是单文件。
