@@ -193,9 +193,11 @@ details.ans .body p{margin-bottom:9px}
 
 /* 图 */
 .fig{margin:26px 0;text-align:center}
-.fig svg{width:100%;max-width:660px;color:var(--ink-2)}
-.fig text{font-family:var(--sans);font-size:12.5px;fill:currentColor}
-.fig .hot{color:var(--red)} .fig .mute{color:var(--ink-3)} .fig .soft{color:var(--blue)}
+/* 只作用于示意图本身：MathJax 的公式也包在 <svg> 里，
+   若不限定直接子元素，图片里的手绘 svg 规则会把每个公式撑成整行 */
+.fig>svg{width:100%;max-width:660px;color:var(--ink-2)}
+.fig>svg text{font-family:var(--sans);font-size:12.5px;fill:currentColor}
+.fig>svg .hot{color:var(--red)} .fig>svg .mute{color:var(--ink-3)} .fig>svg .soft{color:var(--blue)}
 .fig figcaption{font-family:var(--sans);font-size:12.5px;color:var(--ink-3);margin-top:6px;line-height:1.7}
 
 

@@ -193,9 +193,11 @@ details.ans .body p{margin-bottom:9px}
 
 /* 图 */
 .fig{margin:26px 0;text-align:center}
-.fig svg{width:100%;max-width:660px;color:var(--ink-2)}
-.fig text{font-family:var(--sans);font-size:12.5px;fill:currentColor}
-.fig .hot{color:var(--red)} .fig .mute{color:var(--ink-3)} .fig .soft{color:var(--blue)}
+/* 只作用于示意图本身：MathJax 的公式也包在 <svg> 里，
+   若不限定直接子元素，图片里的手绘 svg 规则会把每个公式撑成整行 */
+.fig>svg{width:100%;max-width:660px;color:var(--ink-2)}
+.fig>svg text{font-family:var(--sans);font-size:12.5px;fill:currentColor}
+.fig>svg .hot{color:var(--red)} .fig>svg .mute{color:var(--ink-3)} .fig>svg .soft{color:var(--blue)}
 .fig figcaption{font-family:var(--sans);font-size:12.5px;color:var(--ink-3);margin-top:6px;line-height:1.7}
 
 
@@ -246,6 +248,55 @@ body.preview .mode-note{display:block}
 .take{font-family:var(--sans);font-size:13.5px;color:var(--ink-3);border-left:2px solid var(--line-2);
   padding:2px 0 2px 12px;margin:14px 0 20px;line-height:1.8}
 .take b{color:var(--ink-2)}
+
+
+/* ============ 选择题 ============ */
+.q{border:1px solid var(--line);border-radius:10px;padding:14px 16px;margin:14px 0;background:var(--paper)}
+.q-text{margin:0 0 10px;font-size:15.6px;line-height:1.85}
+.q-opts{display:flex;flex-wrap:wrap;gap:8px}
+.q-opts button{font-family:var(--sans);font-size:13.5px;color:var(--ink-2);background:var(--paper-2);
+  border:1px solid var(--line-2);border-radius:8px;padding:7px 13px;cursor:pointer;transition:.15s;
+  text-align:left;line-height:1.5}
+.q-opts button:hover{border-color:var(--red);color:var(--ink)}
+.q.done .q-opts button{cursor:default}
+.q-opts button.ok{border-color:var(--green);background:var(--green-bg);color:var(--green);font-weight:700}
+.q-opts button.no{border-color:var(--red);background:var(--red-bg);color:var(--red);font-weight:700}
+.q-exp{margin:10px 0 0;padding-top:9px;border-top:1px dashed var(--line-2);
+  font-size:14.6px;color:var(--ink-2);line-height:1.85}
+.q-score{font-family:var(--sans);font-size:12.5px;color:var(--ink-3);margin:6px 0 14px}
+.q-score b{color:var(--red)}
+
+
+details.vid-wrap{margin:24px 0;border:1px solid var(--line-2);border-radius:12px;background:var(--paper-2)}
+details.vid-wrap>summary{cursor:pointer;list-style:none;padding:12px 16px;font-family:var(--sans);
+  font-size:13px;color:var(--ink-2);letter-spacing:.02em}
+details.vid-wrap>summary::-webkit-details-marker{display:none}
+details.vid-wrap>summary:hover{color:var(--red)}
+details.vid-wrap[open]>summary{border-bottom:1px solid var(--line)}
+details.vid-wrap .vid{margin:0;border:0;border-radius:0;box-shadow:none}
+
+
+/* ============ 搜索 ============ */
+#searchbtn{margin-top:8px}
+#sbmask{position:fixed;inset:0;background:rgba(20,15,5,.45);z-index:120;display:none}
+#sbmask.on{display:block}
+#sbbox{position:fixed;left:50%;top:12vh;transform:translateX(-50%);width:min(640px,92vw);
+  background:var(--paper);border:1px solid var(--line-2);border-radius:14px;box-shadow:0 24px 60px -20px rgba(0,0,0,.45);
+  z-index:121;display:none;overflow:hidden}
+#sbbox.on{display:block}
+#sbinput{width:100%;border:0;border-bottom:1px solid var(--line);background:transparent;
+  padding:16px 18px;font-family:var(--sans);font-size:16px;color:var(--ink);outline:none}
+#sblist{max-height:52vh;overflow-y:auto}
+.sb-item{display:block;padding:10px 18px;border-bottom:1px solid var(--line);cursor:pointer;
+  font-family:var(--sans);font-size:13.5px;color:var(--ink-2);text-decoration:none}
+.sb-item:hover,.sb-item.sel{background:var(--paper-3);color:var(--ink)}
+.sb-item b{color:var(--red);font-weight:600}
+.sb-item .ch{font-size:11px;color:var(--ink-3);margin-left:8px}
+.sb-empty{padding:16px 18px;font-family:var(--sans);font-size:13px;color:var(--ink-3)}
+.sb-hint{padding:9px 18px;font-family:var(--sans);font-size:11.5px;color:var(--ink-3);
+  border-top:1px solid var(--line);background:var(--paper-2)}
+.flash{animation:flash 1.4s ease}
+@keyframes flash{0%,100%{background:transparent}30%{background:rgba(200,150,60,.22)}}
 
 /* 速览表 */
 .tbl.quick td{font-family:var(--sans);font-size:13.6px;line-height:1.75}
@@ -346,6 +397,7 @@ body.preview .mode-note{display:block}
     <!-- TOC -->
   </ul>
   <div class="sidebar-foot">
+    <button class="btn" id="searchbtn">🔍 搜索（Ctrl+K）</button>
     <button class="btn" id="modeBtn">预习模式</button>
     <div id="readbox">已读 <b id="readcount">0</b> / <span id="readtotal">0</span></div>
     <button class="btn" id="themeBtn" style="margin-top:10px">切换深色 / 浅色</button>
@@ -361,12 +413,20 @@ body.preview .mode-note{display:block}
   <div class="kicker">数学系 · 大一上 · 第一门专业课</div>
   <h1>数学分析<small>上 册 · 预 习 讲 义</small></h1>
   <p class="lede">这不是一本"更难的微积分"。微积分教你怎么算，数学分析要你说清楚<b>为什么可以这么算</b>，并且把这个"说清楚"写成别人无法反驳的文字。这本讲义陪你把这件事从第一周做对。</p>
+  <p>这本讲义写给两种人：高中数学不差、却一篇证明也没独立写过的人；以及想在开课前先摸到这门课骨架的人。读完它，你应该说得清每章在解决什么问题，能把一个定义逐字念成量词句。它给不了速成，不教题型套路，也替代不了教材和课堂。</p>
+  <p>它也不替你做题：全书证明块默认折叠，就是怕你顺手展开。看懂别人写的证明，和自己写出来，是两件事。第一遍读不懂某一段很正常，这门课本来就这样。</p>
+
   <div class="meta">
     <span>配套 华东师大《数学分析》第六版（上册）</span>
     <span>公式矢量渲染 · 完全离线</span>
     <span>证明可折叠 · 先自己想</span>
     <span>一页速览 · 课前 3 问</span>
-    <span>11 个交互实验 + 5 段讲解动画</span>
+    <span>11 个交互实验 + 6 段讲解动画</span>
+  </div>
+
+  <div class="box hist">
+    <div class="tag">这类讲义为什么存在</div>
+    <p>一般认为，十九世纪把分析"算术化"以后，教材越写越严格，定义也越来越不像人话。好处是每一步都能查；代价是课本必须压缩：一学期要覆盖的定理太多，作者没篇幅解释当初为什么非得这样定义。讲义不新增知识，只把被压缩掉的动机、误解和具体例子摊开。</p>
   </div>
 </header><section class="chap" id="ch10" data-no="10" data-title="定积分的应用" style="--ch:10">
   <div class="chap-head">
@@ -388,6 +448,8 @@ body.preview .mode-note{display:block}
     </ul>
   </div>
 
+  <p>这一章在故事里的位置：第九章给了两样东西——定积分的定义（分割求和的极限）和 N–L 公式（用原函数算它）。这一章的角色是"建模"：把几何量和物理量写成积分。会不会算出积分是上一章的事，这里的难点是"这个式子凭什么这么列"。列式的方法只有一个，叫微元法；它的合法性全部押在一句误差估计上。再往后，第十一章会把"区间有限、函数有界"这两个前提也拆掉。</p>
+
   <p>这一章不引入新定理，只训练一件事：<b>把一个几何量写成积分</b>。会不会积分是第九章的事；这里的难点是"怎么写出来、凭什么这么写"。</p>
 
   <h3>10.1 微元法：从"近似"到"等式"</h3>
@@ -401,10 +463,22 @@ body.preview .mode-note{display:block}
   <p class="plain">微元法的意思是：<b>先只看极窄的一条，把这条上的量近似成"密度 × 长度"，再把所有条加起来</b>。难点不在积分，而在"这条上的近似凭什么成立"。</p>
 
   <div class="box warn"><div class="tag">易错 · 为什么必须"误差是 $o(\dd x)$"</div>
-    <p>若只做到 $\dd Q=f(x)\dd x+O(\dd x^2)$ 还不够，要的是 $o(\dd x)$：把所有小块误差加起来，$n\cdot o(\tfrac1n)\to0$，误差才被积掉。若误差与 $\dd x$ 同阶，累加后<b>不会趋于零</b>，结论就错了——旋转体侧面积正是这样一个反例。</p>
+    <p>要求误差是 $o(\dd x)$，是因为要把所有小块的误差加起来：分成 $n$ 段时每段误差 $o(\tfrac1n)$，总和 $n\cdot o(\tfrac1n)\to0$，误差才被"积掉"。</p>
+    <p>若误差只与 $\dd x$ <b>同阶</b>（比如把弧长写成 $\dd x$），累加后不趋于零，结论就错了——旋转体侧面积正是这样一个反例。</p>
+  </div>
+
+  <p class="plain">再压缩一遍：<b>先看一小块，把这一小块算准到"误差比 $\dd x$ 还小"，再积分。</b>"先近似后相等"之所以合法，是因为误差按段累加时会被"摊薄"：分成 $n$ 段，第 $i$ 段误差不超过 $\eps_i\Delta x_i$，其中 $\eps_i$ 随分段变细<b>一致地</b>趋于零，于是总误差 $\le\sum\eps_i\Delta x_i\le\max\eps_i\cdot(b-a)\to0$。注意最后一步用了"一致"：$\eps_i$ 必须对所有段同时变小，不能靠"某几段特别细"来蒙混。这也解释了为什么微元法的技术核心是"$o(\dd x)$ 中的 $o$ 对 $x$ 一致"。</p>
+
+  <div class="box warn"><div class="tag">易错 · 近似不是"随便近似"</div>
+    <p>$\dd Q=f(x)\dd x+o(\dd x)$ 里的 $f(x)$ 必须取在<b>这一小段自己的位置</b>上。拿球体积试：半径 $R$ 的球，$x$ 处切片是半径 $\sqrt{R^2-x^2}$ 的圆，面积 $\pi(R^2-x^2)$，积分得 $\frac43\pi R^3$，这是对的。若图省事，每片都用最大截面 $\pi R^2$，得 $\pi R^2\cdot2R=2\pi R^3$——大了整整 $50\%$。错在哪？每片误差 $\pi x^2\dd x$ 只与 $\dd x$ 同阶，累加后是 $\frac23\pi R^3$，不会消失。</p>
   </div>
 
   <p class="take"><b>本节带走</b>：微元法的核心是误差 $o(\dd x)$，不是公式本身。</p>
+
+  <div class="box hist"><div class="tag">来龙去脉 · "先近似后相等"的两百年</div>
+    <p>十七、十八世纪的数学家一直这么干：把量切成"无穷小"的块，算出每块的主部，加起来就是答案。办法好用，但"无穷小"究竟是什么始终说不清——十八世纪三十年代，Berkeley 主教写文章讥讽它是"消失量的鬼魂"。这句批评不是刁难：如果 $\dd x$ 先是"不为零"（可以除），后来又"等于零"（可以丢），逻辑上确实站不住。</p>
+    <p>十九世纪的解决办法是<b>把无穷小换成极限</b>：不再问"$\dd x$ 是什么"，而是问"误差与 $\dd x$ 之比是否趋于零"。这就是 10.1 里那个 $o(\dd x)$ 的来历。所以微元法不是"不严谨的工程做法"：它的严谨版本就是一句误差估计，写不出这句估计，这个方法就还没证完。</p>
+  </div>
 
   <h3>10.2 面积：上减下，或右减左</h3>
 
@@ -414,9 +488,14 @@ body.preview .mode-note{display:block}
   </div>
 
   <div class="box ex"><div class="tag"><span class="num">例 10.2</span>　y 型：$x=y^2$ 与 $x=y+2$</div>
-    <p>对 $x$ 积分要分两段（$y=\pm\sqrt x$ 有歧义），改成对 $y$ 积：交点 $y^2=y+2$ 得 $y=-1,2$，且右边界是 $y+2$：</p>
+    <p>对 $x$ 积要分正负两支（$y=\pm\sqrt x$），改对 $y$ 积就一步到位：交点 $y^2=y+2$ 得 $y=-1,2$，且右边界是 $y+2$：</p>
     <p>$$S=\int_{-1}^{2}\big[(y+2)-y^2\big]\dd y=\Big[\frac{y^2}{2}+2y-\frac{y^3}{3}\Big]_{-1}^{2}=\frac{10}{3}+\frac76=\frac92.$$</p>
     <p><b>选 $x$ 型还是 $y$ 型，看哪种不用分段。</b></p>
+  </div>
+
+  <div class="box warn"><div class="tag">易错 · "上减下"要求上边真的在上</div>
+    <p>$\displaystyle\int_a^b(\text{上}-\text{下})\dd x$ 只在整段上"上边始终在上"时才对。$y=\sin x$ 与 $x$ 轴在 $[0,2\pi]$ 上围出的面积，若直接写 $\int_0^{2\pi}\sin x\,\dd x=0$ 就错了：$[0,\pi]$ 上 $\sin x\ge0$，$[\pi,2\pi]$ 上 $\sin x\le0$，后半段把前半段抵消了。正确做法是在 $\pi$ 处切开、各段取绝对值：面积 $=\int_0^\pi\sin x\dd x-\int_\pi^{2\pi}\sin x\dd x=2+2=4$。</p>
+    <p>口诀：<b>算面积先找交点，再确认每一段谁在上。</b>被积函数变号的地方，都是该切一刀的地方。</p>
   </div>
 
   <p class="take"><b>本节带走</b>：面积：哪种积分不用分段，就用哪种。</p>
@@ -430,6 +509,10 @@ body.preview .mode-note{display:block}
     <tr><td>绕 $x$ 轴（圆盘）</td><td>$V=\pi\int_a^b f^2(x)\,\dd x$</td></tr>
     <tr><td>绕 $y$ 轴（柱壳）</td><td>$V=2\pi\int_a^b x\,|f(x)|\,\dd x$</td></tr>
   </table>
+
+  <p class="plain">三行公式不必当三张表背，它们是同一个小块的三种切法。绕 $x$ 轴转，切片垂直于轴，切出来是<b>圆盘</b>：半径 $f(x)$、厚 $\dd x$，体积 $\pi f^2\dd x$。绕 $y$ 轴转，若仍沿 $x$ 切片，切出来是一圈<b>筒壁</b>：半径 $x$、高 $f(x)$、厚 $\dd x$，剪开展平成一个长方体，体积 $2\pi x\,f(x)\dd x$。选哪个只取决于"哪种切法让边界变成一条曲线"，这和 10.2 里选 $x$ 型还是 $y$ 型是同一个道理。</p>
+
+  <p>拿同一条曲线对一下：$y=x^2$（$0\le x\le1$）绕 $x$ 轴，圆盘法得 $V=\pi\int_0^1x^4\dd x=\frac\pi5$；绕 $y$ 轴，柱壳法得 $\frac\pi2$（下面例子里算）。同一条曲线、同一个区间，绕不同的轴体积差了一倍多——不是算错，是切法换了。</p>
 
   <div class="box ex"><div class="tag"><span class="num">例 10.3</span>　柱壳法</div>
     <p>$y=x^2$（$0\le x\le1$）绕 $y$ 轴：每个柱壳半径 $x$、高 $x^2$、厚 $\dd x$，</p>
@@ -449,6 +532,10 @@ body.preview .mode-note{display:block}
 
   <p>$$L=\int_a^b\sqrt{1+f'^2(x)}\,\dd x.$$</p>
 
+  <p class="plain">$\sqrt{1+f'^2}$ 是<b>弦长公式</b>化出来的。一小段的两个直角边是 $\Delta x$ 与 $\Delta y$，弦长 $\sqrt{\Delta x^2+\Delta y^2}=\sqrt{1+(\Delta y/\Delta x)^2}\,\Delta x$。再用 Lagrange 中值定理把 $\Delta y$ 换成 $f'(\xi)\Delta x$（$\xi$ 在这小段内），弦长就成了 $\sqrt{1+f'(\xi)^2}\Delta x$。分割越细，$\xi$ 越贴近这段的每一点；$f'$ 连续时 $\sqrt{1+f'(\xi)^2}$ 一致地逼近 $\sqrt{1+f'(x)^2}$，所以它确实是一个 $f(x)\dd x+o(\dd x)$，可以积分。</p>
+
+  <p>值得留意：这里<b>真的用了中值定理</b>。没有它，只能写 $\Delta y\approx f'\Delta x$，误差是多少说不清；有了它，弦长被<b>精确</b>写成某个中间点的导数，剩下的只是一致性估计。这是第十章唯一一处实质用到第七章工具的地方。</p>
+
   <div class="box ex"><div class="tag"><span class="num">例 10.5</span>　抛物线弧</div>
     <p>$y=x^{3/2}$（$0\le x\le1$）：$y'=\frac32\sqrt x$，$1+y'^2=1+\frac94x$，</p>
     <p>$$L=\int_0^1\sqrt{1+\tfrac94x}\,\dd x=\frac{8}{27}\Big[\big(1+\tfrac94x\big)^{3/2}\Big]_0^1=\frac{13\sqrt{13}-8}{27}.$$</p>
@@ -462,10 +549,19 @@ body.preview .mode-note{display:block}
 
   <p>$$S=2\pi\int_a^b|f(x)|\sqrt{1+f'^2(x)}\,\dd x.$$</p>
 
+  <p class="plain">为什么"宽"必须是弧长？把一小段放大看：绕 $x$ 轴转出来的那一圈其实是个<b>圆台</b>，不是圆柱。圆台的侧面积是 $\pi(r_1+r_2)\cdot(\text{母线长})$，母线是斜的 $\sqrt{\Delta x^2+\Delta y^2}$；而 $2\pi f\,\Delta x$ 相当于把这个圆台"拍扁"成同半径、同高的圆柱，只算了水平宽度，漏掉斜出去的那一截。</p>
+
+  <p>用数看漏多少。取 $y=x$ 上从 $x=1$ 到 $x=1.1$ 的一小段：圆台两底半径 $1$ 与 $1.1$，母线长 $0.1\sqrt2\approx0.1414$，正确侧面积 $\pi(1+1.1)(0.1\sqrt2)\approx0.933$；错写成 $2\pi\cdot1\cdot0.1\approx0.628$，小了三分之一。更关键的是这个差距<b>不会随 $\Delta x\to0$ 消失</b>：$y=x$ 时正确式与错误式之比趋于 $\sqrt2$ 而不是 $1$。误差只与 $\dd x$ 同阶，累加后当然留下一整块。</p>
+
   <div class="box warn"><div class="tag">易错</div>
     <p>用 $2\pi\int f\,\dd x$ 相当于把斜的小段"压平"，误差与 $\dd x$ 同阶，累加后不消失。例：$y=\sqrt x$ 绕 $x$ 轴，正确答案</p>
     <p>$$S=2\pi\int_0^1\sqrt x\sqrt{1+\frac1{4x}}\,\dd x=2\pi\int_0^1\sqrt{x+\tfrac14}\,\dd x=\frac{\pi(5\sqrt5-1)}{6},$$</p>
     <p>而错误写法给出 $\pi$。两者并不相等。</p>
+  </div>
+
+  <div class="box hist"><div class="tag">来龙去脉 · 侧面积的另一条路</div>
+    <p>旋转曲面面积有一个不靠微积分的说法，叫 Pappus 定理。Pappus 是公元四世纪的亚历山大里亚数学家，这条结论记在他的《数学汇编》里：一段曲线绕轴旋转，所得曲面面积等于<b>曲线长度乘以曲线重心绕轴走过的路程</b>，即 $S=2\pi\bar y\,L$。</p>
+    <p>把它和 $2\pi\int|f|\sqrt{1+f'^2}\dd x$ 对一下：$\int\sqrt{1+f'^2}\dd x$ 正是弧长 $L$，而 $\bar y=\dfrac{1}{L}\int|f|\sqrt{1+f'^2}\dd x$ 正是曲线的重心纵坐标。两条路给出同一个式子，也从侧面说明：权重必须是<b>弧长</b>，不是 $\dd x$。</p>
   </div>
 
   <p class="take"><b>本节带走</b>：侧面积的“宽”是弧长而不是 $\dd x$，这是最常见的错。</p>
@@ -474,10 +570,18 @@ body.preview .mode-note{display:block}
 
   <p>若力沿 $x$ 方向、大小随位置变化，则小段做功 $\dd W=F(x)\dd x$，故 $W=\int_a^bF(x)\dd x$。</p>
 
+  <p class="plain">变力做功的微元好理解：一小段位移 $\dd x$ 里，力几乎不变，做功就是 $F(x)\dd x$；把无数小段加起来就是积分。"力几乎不变"的误差是 $o(\dd x)$——$F$ 连续时，一小段内力最多变化一点点。这也是 10.1 那套误差估计的又一次应用。</p>
+
   <div class="box ex"><div class="tag"><span class="num">例 10.6</span>　弹簧</div>
     <p>胡克定律 $F=kx$，把弹簧从自然长度拉伸 $a$ 所做的功</p>
     <p>$$W=\int_0^a kx\,\dd x=\frac12ka^2.$$</p>
   </div>
+
+  <p>带数算一次。弹簧 $k=200\ \mathrm{N/m}$，从自然长度拉到 $x=0.3\ \mathrm{m}$：</p>
+
+  <p>$$W=\int_0^{0.3}200x\,\dd x=100x^2\Big|_0^{0.3}=100\cdot0.09=9\ \mathrm{J}.$$</p>
+
+  <p>它不等于"末端的力 × 距离"：末端力是 $200\cdot0.3=60\ \mathrm{N}$，乘 $0.3$ 得 $18\ \mathrm{J}$，正好是正确答案的两倍。全程平均力是 $30\ \mathrm{N}$，乘 $0.3$ 才是 $9\ \mathrm{J}$。对线性力，"平均力等于初末之半"成立；但这不是普遍规律——$F=x^2$ 从 $0$ 到 $3$ 时，$\int_0^3x^2\dd x=9\ \mathrm{J}$，平均力是 $3\ \mathrm{N}$，而不是 $(0+9)/2=4.5\ \mathrm{N}$。</p>
 
   <p class="take"><b>本节带走</b>：变力做功：先写微元 $\dd W=F\dd x$，再积分。</p>
 
@@ -489,6 +593,12 @@ body.preview .mode-note{display:block}
 
   <div class="quiz">
     <div class="tag">预 习 自 测</div>
+    <div class="q" data-a="A">
+      <p class="q-text">$y=x^2$（$0\le x\le1$）绕 $y$ 轴旋转所得体积为</p>
+      <div class="q-opts"><button data-o="A">A. $\dfrac\pi2$</button><button data-o="B">B. $\dfrac\pi4$</button><button data-o="C">C. $\dfrac{2\pi}3$</button><button data-o="D">D. $\pi$</button></div>
+      <p class="q-exp" hidden>柱壳法：$V=2\pi\int_0^1x\cdot x^2\dd x=2\pi\cdot\frac14=\frac\pi2$。</p>
+    </div>
+    <div class="q-score"></div>
     <ol>
       <li>求由 $y=x^2$ 与 $y=x$ 围成的图形面积。</li>
       <li>求 $y=\sqrt x$（$0\le x\le1$）绕 $x$ 轴旋转所得体积。</li>
@@ -1220,6 +1330,143 @@ var V=function(n){return getComputedStyle(document.documentElement).getPropertyV
   });
   document.addEventListener("scroll",function(){setTimeout(count,0)},{passive:true});
   apply();
+})();
+</script>
+
+
+<script>
+/* 选择题：点选判分 + 本地记录 */
+(function(){
+  "use strict";
+  var KEY="ma-quiz-v1";
+  var store={}; try{store=JSON.parse(localStorage.getItem(KEY)||"{}")}catch(e){store={}}
+  function save(){try{localStorage.setItem(KEY,JSON.stringify(store))}catch(e){}}
+  function paint(box){
+    var opts=box.querySelectorAll(".q-opts button");
+    var ans=box.getAttribute("data-a");
+    var picked=store[box.id];
+    opts.forEach(function(b){
+      b.classList.remove("ok","no");
+      if(picked){
+        if(b.getAttribute("data-o")===ans) b.classList.add("ok");
+        else if(b.getAttribute("data-o")===picked) b.classList.add("no");
+      }
+    });
+    var exp=box.querySelector(".q-exp");
+    if(exp) exp.hidden=!picked;
+    box.classList.toggle("done",!!picked);
+  }
+  function score(){
+    document.querySelectorAll(".quiz").forEach(function(qz){
+      var boxes=qz.querySelectorAll(".q");
+      if(!boxes.length) return;
+      var el=qz.querySelector(".q-score"); if(!el) return;
+      var n=0,ok=0;
+      boxes.forEach(function(b){
+        if(store[b.id]){n++; if(store[b.id]===b.getAttribute("data-a")) ok++;}
+      });
+      el.innerHTML="已答 <b>"+n+"</b> / "+boxes.length+"　答对 <b>"+ok+"</b>";
+    });
+  }
+  document.addEventListener("click",function(e){
+    var btn=e.target.closest(".q-opts button"); if(!btn) return;
+    var box=btn.closest(".q"); if(!box||box.id==="") return;
+    if(store[box.id]) return;
+    store[box.id]=btn.getAttribute("data-o");
+    save(); paint(box); score();
+  });
+  function boot(){
+    var i=0;
+    document.querySelectorAll(".q").forEach(function(b){
+      if(!b.id) b.id="q"+(++i);
+      paint(b);
+    });
+    score();
+  }
+  if(document.readyState==="loading") document.addEventListener("DOMContentLoaded",boot); else boot();
+})();
+</script>
+
+
+<div id="sbmask"></div>
+<div id="sbbox">
+  <input id="sbinput" type="text" placeholder="搜索定义、定理、小节…" autocomplete="off" spellcheck="false">
+  <div id="sblist"></div>
+  <div class="sb-hint">↑↓ 选择 · Enter 跳转 · Esc 关闭</div>
+</div>
+<script>
+(function(){
+  "use strict";
+  var mask=document.getElementById("sbmask"), box=document.getElementById("sbbox"),
+      input=document.getElementById("sbinput"), list=document.getElementById("sblist");
+  var INDEX=null, sel=0, results=[];
+
+  function build(){
+    var items=[];
+    document.querySelectorAll(".chap").forEach(function(ch){
+      var chTitle=ch.getAttribute("data-title")||"";
+      ch.querySelectorAll("h3").forEach(function(h){
+        items.push({el:h, text:h.textContent.trim(), ch:chTitle});
+      });
+      ch.querySelectorAll(".box>.tag").forEach(function(t){
+        var el=t.closest(".box");
+        items.push({el:el, text:t.textContent.trim(), ch:chTitle});
+      });
+      ch.querySelectorAll(".q .q-text").forEach(function(p){
+        items.push({el:p.closest(".q"), text:p.textContent.trim(), ch:chTitle});
+      });
+    });
+    return items;
+  }
+
+  function render(){
+    if(!results.length){ list.innerHTML='<div class="sb-empty">没有匹配。试试“确界”“L’Hospital”“反常”。</div>'; return; }
+    list.innerHTML=results.map(function(r,i){
+      var t=r.text.replace(/[<>&]/g,function(c){return {"<":"&lt;",">":"&gt;","&":"&amp;"}[c]});
+      if(t.length>64) t=t.slice(0,64)+"…";
+      return '<a class="sb-item'+(i===sel?" sel":"")+'" data-i="'+i+'">'+t+
+             '<span class="ch">'+r.ch+'</span></a>';
+    }).join("");
+  }
+
+  function search(q){
+    if(!INDEX) INDEX=build();
+    q=q.trim().toLowerCase();
+    if(!q){ results=[]; render(); return; }
+    results=INDEX.filter(function(it){ return it.text.toLowerCase().indexOf(q)>=0; }).slice(0,14);
+    sel=0; render();
+  }
+
+  function open(){
+    mask.classList.add("on"); box.classList.add("on");
+    input.value=""; results=[]; render(); input.focus();
+  }
+  function close(){ mask.classList.remove("on"); box.classList.remove("on"); }
+
+  function go(i){
+    var r=results[i]; if(!r) return;
+    close();
+    r.el.scrollIntoView({behavior:"smooth", block:"center"});
+    r.el.classList.remove("flash"); void r.el.offsetWidth; r.el.classList.add("flash");
+  }
+
+  document.getElementById("searchbtn").addEventListener("click", open);
+  mask.addEventListener("click", close);
+  input.addEventListener("input", function(){ search(input.value); });
+  input.addEventListener("keydown", function(e){
+    if(e.key==="ArrowDown"){ e.preventDefault(); if(results.length){ sel=Math.min(sel+1,results.length-1); render(); } }
+    else if(e.key==="ArrowUp"){ e.preventDefault(); if(results.length){ sel=Math.max(sel-1,0); render(); } }
+    else if(e.key==="Enter"){ e.preventDefault(); go(sel); }
+    else if(e.key==="Escape"){ close(); }
+  });
+  list.addEventListener("click", function(e){
+    var a=e.target.closest(".sb-item"); if(!a) return;
+    go(parseInt(a.getAttribute("data-i"),10));
+  });
+  document.addEventListener("keydown", function(e){
+    if((e.ctrlKey||e.metaKey) && (e.key==="k"||e.key==="K")){ e.preventDefault(); box.classList.contains("on")?close():open(); }
+    else if(e.key==="Escape" && box.classList.contains("on")) close();
+  });
 })();
 </script>
 

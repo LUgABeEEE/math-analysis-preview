@@ -193,9 +193,11 @@ details.ans .body p{margin-bottom:9px}
 
 /* 图 */
 .fig{margin:26px 0;text-align:center}
-.fig svg{width:100%;max-width:660px;color:var(--ink-2)}
-.fig text{font-family:var(--sans);font-size:12.5px;fill:currentColor}
-.fig .hot{color:var(--red)} .fig .mute{color:var(--ink-3)} .fig .soft{color:var(--blue)}
+/* 只作用于示意图本身：MathJax 的公式也包在 <svg> 里，
+   若不限定直接子元素，图片里的手绘 svg 规则会把每个公式撑成整行 */
+.fig>svg{width:100%;max-width:660px;color:var(--ink-2)}
+.fig>svg text{font-family:var(--sans);font-size:12.5px;fill:currentColor}
+.fig>svg .hot{color:var(--red)} .fig>svg .mute{color:var(--ink-3)} .fig>svg .soft{color:var(--blue)}
 .fig figcaption{font-family:var(--sans);font-size:12.5px;color:var(--ink-3);margin-top:6px;line-height:1.7}
 
 
@@ -411,12 +413,20 @@ details.vid-wrap .vid{margin:0;border:0;border-radius:0;box-shadow:none}
   <div class="kicker">数学系 · 大一上 · 第一门专业课</div>
   <h1>数学分析<small>上 册 · 预 习 讲 义</small></h1>
   <p class="lede">这不是一本"更难的微积分"。微积分教你怎么算，数学分析要你说清楚<b>为什么可以这么算</b>，并且把这个"说清楚"写成别人无法反驳的文字。这本讲义陪你把这件事从第一周做对。</p>
+  <p>这本讲义写给两种人：高中数学不差、却一篇证明也没独立写过的人；以及想在开课前先摸到这门课骨架的人。读完它，你应该说得清每章在解决什么问题，能把一个定义逐字念成量词句。它给不了速成，不教题型套路，也替代不了教材和课堂。</p>
+  <p>它也不替你做题：全书证明块默认折叠，就是怕你顺手展开。看懂别人写的证明，和自己写出来，是两件事。第一遍读不懂某一段很正常，这门课本来就这样。</p>
+
   <div class="meta">
     <span>配套 华东师大《数学分析》第六版（上册）</span>
     <span>公式矢量渲染 · 完全离线</span>
     <span>证明可折叠 · 先自己想</span>
     <span>一页速览 · 课前 3 问</span>
     <span>11 个交互实验 + 6 段讲解动画</span>
+  </div>
+
+  <div class="box hist">
+    <div class="tag">这类讲义为什么存在</div>
+    <p>一般认为，十九世纪把分析"算术化"以后，教材越写越严格，定义也越来越不像人话。好处是每一步都能查；代价是课本必须压缩：一学期要覆盖的定理太多，作者没篇幅解释当初为什么非得这样定义。讲义不新增知识，只把被压缩掉的动机、误解和具体例子摊开。</p>
   </div>
 </header><section class="chap" id="ch6" data-no="06" data-title="微分中值定理" style="--ch:6">
   <div class="chap-head">
@@ -438,9 +448,15 @@ details.vid-wrap .vid{margin:0;border:0;border-radius:0;box-shadow:none}
     </ul>
   </div>
 
+  <p>上一章把导数算了出来，回答的只是"某一点的瞬时变化率是多少"。实际问题问的却常是整段路：从 $a$ 到 $b$，函数一共变了多少？这个总量能不能由局部速率倒推？这一章的回答是：能，但要靠一条存在性定理当中间人。它也是后面"证不等式、数方程根的个数、估误差"的总入口；第九章的定积分还会回来取货。不过中值定理自己也是一条"存在性"结论——那个 $\xi$ 凭什么一定存在？这要等下一章把实数系的地基挖开，才说得清。</p>
+
   <p>这一章是整个微分学的核心。它的价值在于：<b>把"函数在一个区间上的整体信息"和"某一点的导数"连起来</b>。所有"证明不等式""证明方程有根""估计误差"的题，入口都在这里。</p>
 
   <h3>6.1 一条定理链</h3>
+
+  <p>这一节四个结论不是四座并排的碑，而是一条流水线：后一个把前一个当机器，自己只多做一件事。看清"多做的那件事"，比记住四个结论的措辞有用得多。</p>
+
+  <p class="plain">逐个数<b>多做的那件事</b>。Fermat 引理只用了极限的保号性——极值点左侧差商非负、右侧差商非正，两边取极限只好都是 $0$。Rolle 加的是最值定理：先保证"最大值真的存在"，才轮得到 Fermat 去说"那点的导数为零"。Lagrange 加的是一次构造：减去割线，把斜弦压成水平弦，问题退回 Rolle。Cauchy 加的是换视角：把 $(g(t),f(t))$ 看成平面上一条曲线，结论就是"某点的切向量与弦平行"。</p>
 
   <div class="box thm"><div class="tag" data-k="定理"><span class="num">定理 6.1</span>　Fermat 引理</div>
     <p>若 $f$ 在 $x_0$ 的某邻域内定义，在 $x_0$ 取<b>局部极值</b>，且 $f'(x_0)$ 存在，则 $f'(x_0)=0$。</p>
@@ -460,6 +476,8 @@ details.vid-wrap .vid{margin:0;border:0;border-radius:0;box-shadow:none}
     </div></details>
   </div>
 
+  <p class="plain">Rolle 定理最容易被背成"两端相等就有导数为零的点"，其实它有一句大白话：<b>开车出去又开回原地，路上总有一刻速度表指零。</b>想跑出去速度为正，想回来就得掉头、速度为负，从正变负必然经过零。前提是位置连续变化（不能瞬移）、速度表一直有读数（处处可导）。三个条件因此各管一件事：闭区间连续管"没跳过去"，开区间可导管"一直有读数"，两端相等管"回到原地"。</p>
+
   <div class="box thm"><div class="tag" data-k="定理"><span class="num">定理 6.3</span>　Lagrange 中值定理</div>
     <p>若 $f\in C[a,b]$，在 $(a,b)$ 内可导，则存在 $\xi\in(a,b)$ 使</p>
     <p>$$f(b)-f(a)=f'(\xi)(b-a).$$</p>
@@ -469,7 +487,22 @@ details.vid-wrap .vid{margin:0;border:0;border-radius:0;box-shadow:none}
     </div></details>
   </div>
 
+  <div class="box hist"><div class="tag">来龙去脉</div>
+    <p>Rolle 本人（十七世纪末）讨论的是多项式方程能有多少个根，结论形态与今天不同；把它改写成 $f(b)-f(a)=f'(\xi)(b-a)$ 这一步，一般认为属于 Lagrange（十八世纪末）。Cauchy 在十九世纪二十年代前后又推广到两个函数的情形，并第一次认真追究"导数"本身该怎么定义。这条链<b>花了一百多年才接起来</b>：不是谁一次想通，而是每代人补上一个原来说不清的地方。</p>
+  </div>
+
   <p class="plain">中值定理说的是：<b>一段路上的"平均变化率"，必然等于路上某一点的"瞬时变化率"。</b>开车两小时走了 120 公里，平均时速 60，那么这两小时里至少有一瞬间，速度表正好指着 60。就这么朴素。</p>
+
+  <p>中值定理被叫"桥梁"，是因为它把两类信息焊进一个等式：$f(b)-f(a)$ 是<b>函数</b>在整段上的信息（量两端高度即可），$f'(\xi)(b-a)$ 是<b>导数</b>在某一点的信息（知道斜率即可）。等式成立，你就能单方面使用某一边：想估函数差就去估导数，想研究函数就去看导数。</p>
+
+  <p class="plain">它的形状很怪：<b>只保证 $\xi$ 存在，绝不告诉你 $\xi$ 在哪。</b>可证不等式时，你要的从来不是 $\xi$ 的地址，而是它的取值范围。取 $f(t)=\sqrt t$，在 $[100,101]$ 上用它：</p>
+  <p>$$\sqrt{101}-10=\frac{1}{2\sqrt{\xi}},\qquad \xi\in(100,101).$$</p>
+  <p>由 $10&lt;\sqrt\xi&lt;11$ 得 $\dfrac1{22}&lt;\dfrac1{2\sqrt\xi}&lt;\dfrac1{20}$，故 $0.04545\ldots&lt;\sqrt{101}-10&lt;0.05$，即 $10.045&lt;\sqrt{101}&lt;10.05$——不用计算器就夹住了它（真值 $10.04988$）。一步代数换三位有效数字，这就是桥梁的汇率。</p>
+
+  <div class="box warn"><div class="tag">常见误解</div>
+    <p><b>① 以为 $\xi$ 是中点、而且唯一。</b>$f(x)=x^3$ 在 $[-1,1]$ 上：割线斜率 $\dfrac{1-(-1)}{1-(-1)}=1$，而 $f'(\xi)=3\xi^2$，解得 $\xi=\pm\dfrac1{\sqrt3}\approx\pm0.577$。两个都合格，还都不是中点 $0$。定理只承诺"至少一个"。</p>
+    <p><b>② 以为条件能省。</b>取 $f(x)=x$（$0\le x&lt;1$）、$f(1)=0$。端点相等，可 $f'\equiv1$，没有导数为零的点——$x=1$ 处那个跳跃把桥拆了。</p>
+  </div>
 
   <details class="vid-wrap"><summary>▶ 看动画 · 拉格朗日中值定理：把弦平移上去，总有一点相切</summary><figure class="vid"><video controls muted loop playsinline preload="none" poster="videos/poster-mvt.jpg"><source src="videos/mvt.mp4" type="video/mp4">你的浏览器不支持内嵌视频。</video><figcaption>拉格朗日中值定理：把弦平移上去，总有一点相切</figcaption></figure></details>
 
@@ -502,6 +535,10 @@ details.vid-wrap .vid{margin:0;border:0;border-radius:0;box-shadow:none}
 
   <h3>6.2 Taylor 公式</h3>
 
+  <p class="plain">Taylor 公式的本质是<b>用多项式冒充函数</b>。多项式最好算：四则运算就能出值，求导还是多项式。于是算盘是：在 $x_0$ 附近找一个多项式，让它在 $x_0$ 处的值、一阶导、二阶导……直到 $n$ 阶导都与原函数相同——两条曲线贴合到 $n$ 阶，贴得越狠，分开得越晚。</p>
+
+  <p>但"附近像"不等于"像"。$\sin x$ 与 $x-\dfrac{x^3}{6}$：在 $x=0.5$ 处，$\sin0.5\approx0.47943$，多项式给 $0.47917$，只差 $0.00026$——恰好是被丢掉的第一项 $\dfrac{0.5^5}{5!}$ 的量级，误差有了确定的量级；换到 $x=3$，$\sin3\approx0.1411$，多项式给出 $3-4.5=-1.5$——差了一个量级，连符号都错。<b>多项式只在展开点附近冒充，越远越露馅。</b></p>
+
   <div class="box thm"><div class="tag" data-k="定理"><span class="num">定理 6.5</span>　Taylor 公式（带 Peano 余项）</div>
     <p>若 $f$ 在 $x_0$ 处有 $n$ 阶导数，则当 $x\to x_0$ 时</p>
     <p>$$f(x)=\sum_{k=0}^{n}\frac{f^{(k)}(x_0)}{k!}(x-x_0)^k+o\big((x-x_0)^n\big).$$</p>
@@ -513,6 +550,10 @@ details.vid-wrap .vid{margin:0;border:0;border-radius:0;box-shadow:none}
     <p>$$f(x)=\sum_{k=0}^{n}\frac{f^{(k)}(x_0)}{k!}(x-x_0)^k+\frac{f^{(n+1)}(\xi)}{(n+1)!}(x-x_0)^{n+1}.$$</p>
     <p>它给出<b>误差的定量估计</b>，用于近似计算与证明不等式。</p>
   </div>
+
+  <p class="plain">两种余项分工明确。Peano 余项 $o\big((x-x_0)^n\big)$ 不告诉你误差<b>多大</b>，只告诉你误差<b>消失得多快</b>——它的地盘是极限：求 $\lim\frac{\cdots}{x^n}$ 时 $o(x^n)$ 一除就归零，但你要它担保小数点后四位，它一个字都不担保。</p>
+
+  <p class="plain">Lagrange 余项反过来，直接给出能算的式子 $\dfrac{f^{(n+1)}(\xi)}{(n+1)!}(x-x_0)^{n+1}$。$\xi$ 仍不知道在哪，可只要 $f^{(n+1)}$ 有上界 $M$，误差就被 $M\dfrac{|x-x_0|^{n+1}}{(n+1)!}$ 卡死。这是"能报数"的余项。一句话：<b>要极限用 Peano，要误差用 Lagrange；前者管多快，后者管多少。</b></p>
 
   <div class="lab" data-lab="taylor"></div>
 
@@ -527,6 +568,19 @@ details.vid-wrap .vid{margin:0;border:0;border-radius:0;box-shadow:none}
     </div></details>
   </div>
 
+  <div class="box hist"><div class="tag">来龙去脉</div>
+    <p>公式得名于 Brook Taylor（十八世纪初），但他写下的是一条级数，并没有处理收敛与余项——那个年代对级数还很乐观。把余项写成可估计的形式，一般认为要算到 Lagrange 与 Cauchy（十八世纪末到十九世纪）；只用 $o$ 记号的 Peano 余项出现得更晚。<b>公式和"公式能用到哪"是两件事</b>，中间隔了几十年。</p>
+  </div>
+
+  <p>把数代进去，看误差到底多大。$e^{0.1}=1+0.1+\dfrac{0.01}{2}+R_2$，前三项给 $1.105$；余项 $|R_2|\le\dfrac{e^{0.1}}{6}(0.1)^3&lt;\dfrac{3}{6}\cdot10^{-3}=5\times10^{-4}$（用了 $e^{0.1}&lt;3$）。真值 $1.1051709\ldots$，实际误差约 $1.7\times10^{-4}$，确实落在界内。</p>
+
+  <p>同一个式子估 $e$ 本身：$|R_n|&lt;\dfrac{3}{(n+1)!}$。取 $n=6$ 得界约 $6.0\times10^{-4}$，取 $n=10$ 得约 $7.5\times10^{-8}$——想多要三位小数，把 $n$ 从 $6$ 抬到 $10$ 就行。<b>误差界像价目表，一眼看出要付多少项。</b></p>
+
+  <div class="box warn"><div class="tag">常见误解</div>
+    <p><b>① 把 "$\approx$" 当结论。</b>写 $e^x\approx1+x+\frac{x^2}{2}$ 就宣布 $e^x&gt;1+x+\frac{x^2}{2}$，推理不成立——方向由<b>余项符号</b>决定。这里 $x&gt;0$ 时余项 $\frac{e^\xi}{6}x^3&gt;0$，结论才恰好成立；换成 $e^{-x}\approx1-x+\frac{x^2}{2}$，同一个动作得到的余项是 $-\frac{e^{-\xi}}{6}x^3&lt;0$，不等号立刻掉头。用 Taylor 证不等式，余项必须留下来判号。</p>
+    <p><b>② 以为阶数越高越准。</b>只在展开点附近成立。$\sin x$ 的 $15$ 阶 Taylor 多项式在 $x=0.5$ 处已精确到 $10^{-14}$，在 $x=20$ 处却算出 $10^7$ 量级的数。选阶数之前先看 $|x-x_0|$ 有多大。</p>
+  </div>
+
   <p class="take"><b>本节带走</b>：要极限用 Peano 余项，要误差用 Lagrange 余项。</p>
 
   <h3>6.3 L'Hospital 法则</h3>
@@ -538,10 +592,16 @@ details.vid-wrap .vid{margin:0;border:0;border-radius:0;box-shadow:none}
     <p>$\frac{\infty}{\infty}$ 型有对应的版本。$0\cdot\infty$、$\infty-\infty$、$1^\infty$ 等要<b>先化成</b>这两种型。</p>
   </div>
 
+  <p class="plain">这条法则不是新定理，它是 6.1 那台机器换个壳：对 $x$ 与 $x_0$ 用 Cauchy 中值定理，$\dfrac{f(x)}{g(x)}=\dfrac{f(x)-f(x_0)}{g(x)-g(x_0)}=\dfrac{f'(\xi)}{g'(\xi)}$，$\xi$ 夹在 $x$ 与 $x_0$ 之间；$x\to x_0$ 时 $\xi\to x_0$，右边趋于 $\lim\dfrac{f'}{g'}$。所以<b>法则的全部内容是把难点搬到 $\xi$ 那里</b>，而这要求 $f(x_0)=g(x_0)=0$——先验型不是形式主义。</p>
+
   <div class="box warn"><div class="tag">易错 · 三个典型陷阱</div>
     <p><b>① 不是 $\frac00$ 或 $\frac\infty\infty$ 就乱用：</b>$\lim_{x\to0}\frac{x+1}{x+2}=\frac12$，若上下求导得 $\frac11=1$，大错。</p>
     <p><b>② 求导后极限不存在，不等于原极限不存在：</b>$f(x)=x^2\sin\frac1x$，$g(x)=x$，$x\to0$ 时 $\frac{f}{g}=x\sin\frac1x\to0$，但 $\frac{f'}{g'}=2x\sin\frac1x-\cos\frac1x$ <b>没有极限</b>。此时法则失效，要用别的方法。</p>
     <p><b>③ 别循环：</b>用 L'Hospital 证 $\lim\frac{\sin x}{x}=1$ 会用到 $(\sin x)'=\cos x$，而这个导数公式本身就要用 $\lim\frac{\sin x}{x}=1$ 才能推出——循环论证。</p>
+  </div>
+
+  <div class="box hist"><div class="tag">来龙去脉</div>
+    <p>法则挂着 L'Hospital 侯爵的名字，但一般认为发现者是 Johann Bernoulli：两人有通信与雇佣关系，法则最早公开出现在 L'Hospital 十七世纪末出版的一部微积分教科书里，算是一桩"买来的定理"。正经教训是：<b>命名与发现者常常对不上</b>，定理名不能当归属证明。</p>
   </div>
 
   <p class="take"><b>本节带走</b>：L'Hospital 三查：是不是 $\frac00$ 或 $\frac\infty\infty$、条件够不够、有没有循环。</p>
@@ -557,6 +617,10 @@ details.vid-wrap .vid{margin:0;border:0;border-radius:0;box-shadow:none}
     <tr><td>$f'(x_0)=0$ 且 $f''(x_0)&gt;0$</td><td>$x_0$ 是极小值点</td></tr>
     <tr><td>$f''$ 在 $x_0$ 两侧变号</td><td>$x_0$ 是拐点</td></tr>
   </table>
+
+  <p class="plain">表格要分两层读。第一层是必要条件：$f'(x_0)=0$ 只说明切线水平，可能在峰顶、谷底，也可能只是上坡路上短暂歇脚（$x^3$ 在 $0$ 处）。第二层才是判别：决定极值的是 $f'$ 在 $x_0$ 两侧<b>是否变号</b>——正变负为极大，负变正为极小，不变号就不是极值。二阶导判据只是它的偷懒版：$f''(x_0)\ne0$ 时，由 $f'(x_0)=0$ 可知 $\dfrac{f'(x)}{x-x_0}$ 在 $x_0$ 附近保持 $f''(x_0)$ 的符号，$f'$ 两侧必然异号，于是只看一个数就够。</p>
+
+  <p class="plain">拐点同样要看变号：$f''(x_0)=0$ 不算拐点，要 $f''$ 两侧异号。<b>两个反例正好把两件事拆开：</b>$f(x)=x^4$ 在 $0$ 处 $f'(0)=f''(0)=0$，而 $f''=12x^2\ge0$ 两侧同号，故 $0$ 是极小值点而非拐点；$f(x)=x^3$ 的 $f''=6x$ 两侧异号，故 $0$ 是拐点而非极值点。</p>
 
   <div class="box note"><div class="tag">读法</div>
     <p>凸函数的定义不依赖导数：$f(\lambda x_1+(1-\lambda)x_2)\le\lambda f(x_1)+(1-\lambda)f(x_2)$，$\lambda\in[0,1]$。它说的是"<b>两点连线在图形上方</b>"。$f''&gt;0$ 只是它的一个充分条件（要求二阶导存在）。</p>

@@ -193,9 +193,11 @@ details.ans .body p{margin-bottom:9px}
 
 /* 图 */
 .fig{margin:26px 0;text-align:center}
-.fig svg{width:100%;max-width:660px;color:var(--ink-2)}
-.fig text{font-family:var(--sans);font-size:12.5px;fill:currentColor}
-.fig .hot{color:var(--red)} .fig .mute{color:var(--ink-3)} .fig .soft{color:var(--blue)}
+/* 只作用于示意图本身：MathJax 的公式也包在 <svg> 里，
+   若不限定直接子元素，图片里的手绘 svg 规则会把每个公式撑成整行 */
+.fig>svg{width:100%;max-width:660px;color:var(--ink-2)}
+.fig>svg text{font-family:var(--sans);font-size:12.5px;fill:currentColor}
+.fig>svg .hot{color:var(--red)} .fig>svg .mute{color:var(--ink-3)} .fig>svg .soft{color:var(--blue)}
 .fig figcaption{font-family:var(--sans);font-size:12.5px;color:var(--ink-3);margin-top:6px;line-height:1.7}
 
 
@@ -411,12 +413,20 @@ details.vid-wrap .vid{margin:0;border:0;border-radius:0;box-shadow:none}
   <div class="kicker">数学系 · 大一上 · 第一门专业课</div>
   <h1>数学分析<small>上 册 · 预 习 讲 义</small></h1>
   <p class="lede">这不是一本"更难的微积分"。微积分教你怎么算，数学分析要你说清楚<b>为什么可以这么算</b>，并且把这个"说清楚"写成别人无法反驳的文字。这本讲义陪你把这件事从第一周做对。</p>
+  <p>这本讲义写给两种人：高中数学不差、却一篇证明也没独立写过的人；以及想在开课前先摸到这门课骨架的人。读完它，你应该说得清每章在解决什么问题，能把一个定义逐字念成量词句。它给不了速成，不教题型套路，也替代不了教材和课堂。</p>
+  <p>它也不替你做题：全书证明块默认折叠，就是怕你顺手展开。看懂别人写的证明，和自己写出来，是两件事。第一遍读不懂某一段很正常，这门课本来就这样。</p>
+
   <div class="meta">
     <span>配套 华东师大《数学分析》第六版（上册）</span>
     <span>公式矢量渲染 · 完全离线</span>
     <span>证明可折叠 · 先自己想</span>
     <span>一页速览 · 课前 3 问</span>
-    <span>11 个交互实验 + 5 段讲解动画</span>
+    <span>11 个交互实验 + 6 段讲解动画</span>
+  </div>
+
+  <div class="box hist">
+    <div class="tag">这类讲义为什么存在</div>
+    <p>一般认为，十九世纪把分析"算术化"以后，教材越写越严格，定义也越来越不像人话。好处是每一步都能查；代价是课本必须压缩：一学期要覆盖的定理太多，作者没篇幅解释当初为什么非得这样定义。讲义不新增知识，只把被压缩掉的动机、误解和具体例子摊开。</p>
   </div>
 </header><section class="chap" id="ch2" data-no="02" data-title="数列极限" style="--ch:2">
   <div class="chap-head">
@@ -439,9 +449,27 @@ details.vid-wrap .vid{margin:0;border:0;border-radius:0;box-shadow:none}
     </ul>
   </div>
 
+  <p>上一章做了两件事：把实数补齐（确界原理），把"任意小"的说法交给 $\eps$ 去负责。这一章正式开始用它——<b>极限是全书唯一允许"做无穷多步再问结果"的操作</b>，后面每个概念都是它换了场合：连续是"函数值等于极限"，导数是"差商的极限"，定积分是"一列和式的极限"。这一章没读透，后面每一章都会跟着虚。</p>
+
+  <p>也正因为它是第一次允许无穷步，直觉在这里第一次不可靠。中学的数学每一步都有限、算完就结束；现在要问"无穷多步之后停在哪里"，就必须先把话说死：<b>什么叫"无限接近"，要写成一条可以逐项核对的不等式</b>。这就是 $\eps$-$N$ 定义的全部来由。</p>
+
+  <div class="box hist"><div class="tag">来龙去脉</div>
+    <p>极限的想法很老：Archimedes 用内接、外切正多边形夹住圆，得到 $3\frac{10}{71}&lt;\pi&lt;3\frac17$，用的正是"从两侧逼近同一个数"。</p>
+    <p>但"无穷小"作为运算对象，从 Newton、Leibniz 起就一直被追问：它到底是不是 $0$？不是 $0$，凭什么最后扔掉；是 $0$，又凭什么拿它作除数。十八世纪的 Berkeley 主教挖苦它是"消逝量的鬼魂"（大意）。</p>
+    <p>十九世纪二十年代起，Cauchy 把"极限"摆到微积分的地基上，不再谈无穷小量而谈"趋向于"；到 Weierstrass，$\eps$-$\delta$、$\eps$-$N$ 这套纯不等式语言定型。一般认为它出自 Weierstrass 在柏林大学的讲课，由学生笔记流传。</p>
+  </div>
+
   <p>这是全书的第一个硬骨头，也是最重要的一章。后面函数极限、连续、导数、积分，全是它的变体。请把这一章的每个证明都亲手写一遍——不是"看懂"，是"默写"。</p>
 
   <h3>2.1 定义：把"无限接近"写成不等式</h3>
+
+  <p>"无限接近"这四个字，日常够用，当定义用却有三处含糊。</p>
+
+  <p><b>谁在接近谁？</b>该变小的是距离 $|a_n-a|$，不是 $a_n$ 本身。$a_n=100+\frac1n$ 一直在往 $100$ 走，它既不接近 $0$ 也不接近 $1$。</p>
+
+  <p><b>"无限次接近"不等于"最终待在附近"。</b>看数列 $1,2,1,4,1,6,1,8,\dots$（奇数项全是 $1$，偶数项取 $n$）。它无限多次回到 $1$ 旁边，你却绝不会说它收敛到 $1$——它同时还在往无穷远跑。日常说法完全可以被读成"无限多次接近"，而收敛要的是<b>从某项起再也出不去</b>。</p>
+
+  <p><b>没有人负责。</b>"接近"是旁观者事后看到的现象，"对任意精度都能保证"是证明者事先签下的担保。数学要的是后者：一句能拿来核对、也能被推翻的话。</p>
 
   <div class="box def"><div class="tag"><span class="num">定义 2.1</span>　数列极限（$\eps$-$N$ 定义）</div>
     <p>设 $\{a_n\}$ 是数列，$a\in\R$。若</p>
@@ -461,6 +489,12 @@ details.vid-wrap .vid{margin:0;border:0;border-radius:0;box-shadow:none}
     <p>几何上：$a$ 的任意 $\eps$-邻域之外，最多只有 $N$ 项。<b>"有限多个例外"是关键词</b>——极限只约束尾巴，不管开头怎么乱。</p>
   </div>
 
+  <p>把定义读成一场对局，量词顺序就再也不会记错。<b>对手</b>负责刁难：他随手报一个 $\eps&gt;0$，可以是 $10^{-6}$，也可以是 $10^{-100}$。<b>你</b>负责应战：给出起点 $N$，保证第 $N$ 项之后整条尾巴落进 $(a-\eps,a+\eps)$。定义说的是：<b>无论对手怎么出招，你都有应手</b>——所以 $\eps$ 在前、$N$ 在后，对手先出，你后应。若把顺序写成"存在 $N$，对任意 $\eps$"，等于你先摊牌，对手照着你的 $N$ 报一个更小的 $\eps$，你必输。</p>
+
+  <div class="box warn"><div class="tag">常见误解</div>
+    <p>以为"收敛"意味着"$a_n$ 终究会等于 $a$"，或者"越来越接近，总有到的一天"。都不是：$\frac1n$ 永远不等于 $0$；$1+\frac{(-1)^n}{n}$ 在 $1$ 两侧来回跳（$0,\ 1.5,\ 0.667,\ 1.25,\dots$），仍然收敛于 $1$。收敛只承诺一件事：<b>任意小的窗口，尾巴整条进去、不再出来</b>。</p>
+  </div>
+
   <div class="lab" data-lab="seq-eps"></div>
 
   <details class="vid-wrap"><summary>▶ 看动画 · ε-N：ε 收小，N 就往后挪，尾巴全进带子</summary><figure class="vid"><video controls muted loop playsinline preload="none" poster="videos/poster-eps-n.jpg"><source src="videos/eps-n.mp4" type="video/mp4">你的浏览器不支持内嵌视频。</video><figcaption>ε-N：ε 收小，N 就往后挪，尾巴全进带子</figcaption></figure></details>
@@ -477,6 +511,20 @@ details.vid-wrap .vid{margin:0;border:0;border-radius:0;box-shadow:none}
     <p>① 写出 $|a_n-a|$；② <b>放大</b>成一个只含 $n$ 的简单式子 $b_n$；③ 解 $b_n&lt;\eps$ 得 $n&gt;N(\eps)$；④ 取整并声明。</p>
     <p>放大时可以用"$n\ge1$ 时 $\frac{1}{n+1}&lt;\frac1n$"这类粗糙估计——<b>粗糙没关系，只要方向对</b>。极限证明不追求最优的 $N$，只追求存在的 $N$。</p>
   </div>
+
+  <p>把 $N$ 真算一次，比读十遍定义有用。取 $a_n=\frac{1}{\sqrt n}$，要 $\frac{1}{\sqrt n}&lt;\eps$，即 $n&gt;\frac{1}{\eps^2}$，于是每个 $\eps$ 都对应一个具体的 $N$：</p>
+
+  <table class="tbl">
+    <caption>$\lim\frac{1}{\sqrt n}=0$：$\eps$ 与 $N$ 的对应</caption>
+    <tr><th>$\eps$</th><th>$1/\eps^2$</th><th>可取 $N$</th><th>核对 $n=N+1$</th></tr>
+    <tr><td>$0.1$</td><td>$100$</td><td>$100$</td><td>$1/\sqrt{101}\approx0.0995&lt;0.1$</td></tr>
+    <tr><td>$0.01$</td><td>$10^4$</td><td>$10000$</td><td>$1/\sqrt{10001}\approx0.0099995&lt;0.01$</td></tr>
+    <tr><td>$10^{-6}$</td><td>$10^{12}$</td><td>$10^{12}$</td><td>$\approx10^{-6}$</td></tr>
+  </table>
+
+  <p>精度每提高一个数量级，起点就要往后挪两个数量级——这就是"无限接近"的价码。但<b>每一行都真有一个有限的 $N$</b>，所以极限成立；这与"$\eps$ 越小 $N$ 越大、大到没有尽头"并不矛盾：定义只要求每个 $\eps$ 配一个 $N$，并不要求 $N$ 有上界。</p>
+
+  <p class="plain">再看带符号的 $a_n=\frac{(-1)^n}{n}$。此时 $|a_n-0|=\frac1n$，绝对值把符号吃掉了，算 $N$ 的过程与 $\frac1n$ 一模一样。可见振荡本身不是问题，<b>振幅</b>才是问题：只要振幅被 $\frac1n$ 压住，符号怎么跳都不影响极限。</p>
 
   <div class="box ex"><div class="tag"><span class="num">例 2.2</span>　带分式的极限</div>
     <p>证明 $\lim_{n\to\infty}\dfrac{3n+1}{2n+1}=\dfrac32$。</p>
@@ -505,6 +553,8 @@ details.vid-wrap .vid{margin:0;border:0;border-radius:0;box-shadow:none}
 
   <h3>2.2 收敛数列的四条性质</h3>
 
+  <p>四条性质各自回答一个担心：极限值会不会不止一个？收敛的数列会不会跑丢？极限的符号到了近处还作数吗？能不能像普通数那样加减乘除？每一条都在防一种"定义看着对、用起来塌"的可能。</p>
+
   <div class="box thm"><div class="tag" data-k="定理"><span class="num">定理 2.1</span>　极限唯一</div>
     <p>若 $a_n\to a$ 且 $a_n\to b$，则 $a=b$。</p>
     <details class="proof"><summary>证明</summary><div class="body">
@@ -514,6 +564,8 @@ details.vid-wrap .vid{margin:0;border:0;border-radius:0;box-shadow:none}
       <p>矛盾。这里用了三角不等式把两个邻域"接"起来。<span class="qed">∎</span></p>
     </div></details>
   </div>
+
+  <p class="plain">唯一性防的是"极限值不止一个"。若一个数列既收敛到 $2$ 又收敛到 $3$，"$a_n$ 的极限"就不再是一个数，后面所有"两边取极限"的等式都失去意义。证明只做一个动作：<b>把两个候选值的窗口取小到互不重叠</b>——取 $\eps=\frac{b-a}{2}$，$a$ 的 $\eps$-邻域与 $b$ 的 $\eps$-邻域就隔开了；而 $n$ 充分大时 $a_n$ 必须同时待在两个窗口里，一个点不可能同时在两个不相交的开区间中。这是分析里最常用的招式：<b>不去算 $a_n$ 离谁近，而是让"同时满足两个定义"在几何上不可能</b>。</p>
 
   <div class="box thm"><div class="tag" data-k="定理"><span class="num">定理 2.2</span>　收敛必有界</div>
     <p>若 $\{a_n\}$ 收敛，则 $\{a_n\}$ 有界。</p>
@@ -526,6 +578,8 @@ details.vid-wrap .vid{margin:0;border:0;border-radius:0;box-shadow:none}
 
   <p>逆命题不成立：$a_n=(-1)^n$ 有界但发散。所以"有界"是收敛的<b>必要不充分</b>条件，常用来快速判定发散。</p>
 
+  <p class="plain">"有界"是没跑丢，"收敛"是有一个确定的去处。没跑丢不等于有去处：$(-1)^n$ 一直待在 $\{-1,1\}$ 里，却没有落点。所以它只能当<b>筛查</b>用：<b>无界必定发散</b>（逆否命题），有界则什么也推不出。看到 $a_n=2^n$、$a_n=(-2)^n$ 这类明显无界的，一句"无界故发散"就结束。这是一条<b>否决权</b>，不是通行证——全书不少判据都是这个性格：必要性人人能用，充分性才是真定理。</p>
+
   <div class="box thm"><div class="tag" data-k="定理"><span class="num">定理 2.3</span>　保号性与保序性</div>
     <p>(1) 若 $a_n\to a&gt;0$，则存在 $N$，当 $n&gt;N$ 时 $a_n&gt;\dfrac a2&gt;0$。</p>
     <p>(2) 若 $a_n\to a$，$b_n\to b$ 且 $a&lt;b$，则存在 $N$，当 $n&gt;N$ 时 $a_n&lt;b_n$。</p>
@@ -534,6 +588,8 @@ details.vid-wrap .vid{margin:0;border:0;border-radius:0;box-shadow:none}
       <p>取 $\eps=\frac a2&gt;0$，存在 $N$ 使 $n&gt;N$ 时 $|a_n-a|&lt;\frac a2$，特别地 $a_n&gt;a-\frac a2=\frac a2&gt;0$。<span class="qed">∎</span></p>
     </div></details>
   </div>
+
+  <p class="plain">保号性防的是"极限的符号到了近处就失守"。极限是 $1$，则从某项起 $a_n$ 至少是 $0.5$；极限是 $0.001$，则从某项起至少是 $0.0005$。<b>牺牲一半，换一块不含 $0$ 的安全区</b>——这就是证明里取 $\eps=\frac a2$ 而不是 $\eps=a$ 的原因：取 $a$ 只能得到 $a_n&gt;0$，边界仍贴着 $0$；取一半留出 $\frac a2$ 的余量，后面做除法时"分母不靠近 $0$"才有保证。</p>
 
   <div class="box warn"><div class="tag">易错</div>
     <p>若 $a_n&gt;0$ 恒成立，只能推出 $a\ge 0$，<b>不能</b>推出 $a&gt;0$。例：$a_n=\frac1n&gt;0$，但极限是 $0$。"严格不等号在取极限时会退化"，这个现象在中值定理、积分不等式里反复出现。</p>
@@ -550,6 +606,14 @@ details.vid-wrap .vid{margin:0;border:0;border-radius:0;box-shadow:none}
     </div></details>
   </div>
 
+  <p class="plain">四则运算的难点在乘法：$|a_nb_n-ab|$ 里既有 $|a_n-a|$ 又有 $|b_n-b|$，还多出一个会变的系数 $|b_n|$。解法是<b>先把系数换成常数</b>——收敛必有界，$|b_n|\le M$，于是 $|a_nb_n-ab|\le M|a_n-a|+|a|\,|b_n-b|$，再让两项各小于 $\frac\eps2$。<b>先控系数，再控误差</b>，这两步全书通用。商法则多一步：分母可能趋于 $0$，先用保号性保证 $|b_n|&gt;\frac{|b|}{2}$。</p>
+
+  <p>用起来是这样：$\lim\limits_{n\to\infty}\dfrac{3n^2+2n}{n^2-1}$。上下同除 $n^2$，得 $\dfrac{3+2/n}{1-1/n^2}$；由 $\frac1n\to0$、$\frac1{n^2}\to0$ 及四则运算，极限为 $\dfrac{3+0}{1-0}=3$。<b>前提是每个小块都收敛、分母极限 $1\ne0$</b>——这两条每次都要过一遍。</p>
+
+  <div class="box warn"><div class="tag">常见误解</div>
+    <p>"两个数列都收敛，则和也收敛"是对的；反过来<b>"和收敛则两个都收敛"是错的</b>。取 $a_n=(-1)^n$，$b_n=-(-1)^n$，两个都发散，但 $a_n+b_n\equiv0$ 收敛。四则运算只能从部分推整体，不能从整体反推部分：想"拆开算"，必须先确认每一块都收敛。</p>
+  </div>
+
   <p class="take"><b>本节带走</b>：收敛必有界，有界未必收敛；严格不等号取极限会退化。</p>
 
   <h3>2.3 夹逼准则：从两边挤</h3>
@@ -561,6 +625,13 @@ details.vid-wrap .vid{margin:0;border:0;border-radius:0;box-shadow:none}
       <p>$$L-\eps&lt;a_n\le c_n\le b_n&lt;L+\eps,$$</p>
       <p>即 $|c_n-L|&lt;\eps$。<span class="qed">∎</span></p>
     </div></details>
+  </div>
+
+  <p class="plain">名字很形象：两条已知数列像一双筷子，把待求的那条夹在中间。左边的被压向 $L$，右边的也被压向 $L$，中间那条<b>没有别的去处</b>——想跑到 $L$ 外面，就得先穿过其中一条筷子，而两条筷子都已经进了 $L$ 的窗口。所以夹逼不要求知道 $c_n$ 长什么样，只要求知道它<b>夹在谁中间</b>。</p>
+
+  <div class="box hist"><div class="tag">来龙去脉</div>
+    <p>这个方法比"极限"这个概念古老得多：Archimedes 算圆周率，就是拿内接与外切正多边形同时逼近圆，边数越多，两个周长越挤向同一个数，圆周长被夹在中间。他没有极限的定义，却已把夹逼用到极致。</p>
+    <p>英文教材叫它 sandwich theorem（三明治定理）或 squeeze theorem（挤压定理），中文多叫夹逼准则、两边夹定理。外号不同，动作只有一个：<b>让上下界同归于一个值</b>。</p>
   </div>
 
   <div class="lab" data-lab="squeeze"></div>
@@ -575,8 +646,19 @@ details.vid-wrap .vid{margin:0;border:0;border-radius:0;box-shadow:none}
     </div></details>
   </div>
 
+  <p>再看一个不用二项式的例子。$a_n=\sqrt{n+1}-\sqrt n$，有理化得 $a_n=\dfrac{1}{\sqrt{n+1}+\sqrt n}$，分母介于 $2\sqrt n$ 与 $2\sqrt{n+1}$ 之间，于是</p>
+
+  <p>$$\frac{1}{2\sqrt{n+1}}&lt;a_n&lt;\frac{1}{2\sqrt n}.$$</p>
+
+  <p>两端都趋于 $0$，故 $a_n\to0$。代 $n=100$ 看数值：$a_{100}=\sqrt{101}-10\approx0.04988$，两端给出 $0.04975&lt;a_{100}&lt;0.05$，夹住的区间宽度只有 $0.00025$——这就是夹逼在数值上的样子。</p>
+
   <div class="box tip"><div class="tag">方法 · 二项式展开是分析里的"不等式工厂"</div>
     <p>想证 $\sqrt[n]{n}\to1$、$(1+\frac1n)^n$ 有上界、$n^k q^n\to0$，都用同一个动作：把 $(1+h)^n$ 展开，<b>只保留你需要的项</b>，其余全扔（因为它们非负）。扔掉是合法的，因为你在放大。</p>
+  </div>
+
+  <div class="box warn"><div class="tag">常见误解</div>
+    <p>夹逼的产出是<b>极限值</b>，前提是两端趋于<b>同一个数</b>。两端极限不同时，只能知道 $c_n$ 始终落在两个数之间，推不出收敛：$-1\le(-1)^n\le1$ 恒成立，两端分别是 $-1$ 和 $1$，$(-1)^n$ 照样发散。</p>
+    <p>另一个误用：上下界虽然同趋于 $L$，但只对<b>部分</b> $n$ 成立。条件里"存在 $N_0$，当 $n&gt;N_0$ 时"不能省——前面的有限项怎么越界都不影响极限，但必须<b>从某项起全部</b>被夹住。</p>
   </div>
 
   <p class="take"><b>本节带走</b>：夹逼：两端同极限，中间没有别的去处。</p>
@@ -584,6 +666,10 @@ details.vid-wrap .vid{margin:0;border:0;border-radius:0;box-shadow:none}
   <h3>2.4 存在性：不用先知道极限是多少</h3>
 
   <p>上面所有定理都需要先猜出 $a$。但很多数列的极限根本写不出（比如 $e$）。这时需要"存在性定理"。</p>
+
+  <p>"不用先知道极限是多少"比听起来重要。分析里绝大多数极限值写不出闭式：$\lim(1+\frac1n)^n$ 只能记成 $e$，$\sum\frac{1}{n^2}$ 的值要更晚才知道。若每讨论一个极限都得先报出它的值，这套语言几乎没法用。</p>
+
+  <p>存在性定理解决的正是这个分工：<b>先证明"有个数在那里"，再给它起名字，最后才慢慢算</b>。这与"先看见再相信"的日常顺序相反，也让新生最不适应。后面判断级数、反常积分收敛，用的都是同一套路。</p>
 
   <div class="box thm"><div class="tag" data-k="定理"><span class="num">定理 2.6</span>　单调有界定理</div>
     <p>单调递增且有上界的数列必收敛；单调递减且有下界的数列必收敛。</p>
@@ -593,6 +679,8 @@ details.vid-wrap .vid{margin:0;border:0;border-radius:0;box-shadow:none}
       <p>看，这里 <b>第一章的确界原理终于派上了用场</b>——"极限存在"不是凭空断言，是从完备性里取出来的。</p>
     </div></details>
   </div>
+
+  <p class="plain">单调有界定理的直觉：只会往上走、头上又有天花板，那就只能越走越慢，最后贴在天花板下面某个位置。"单调"是关键——不单调的数列能在有界范围里永远来回晃，例如 $(-1)^n$。而"最后贴住的位置"是哪个数？证明没说，也说不出来，它就是 $\sup\{a_n\}$。<b>第一章的确界原理在这里登场：它不告诉你极限怎么算，只保证那个位置作为实数确实存在。</b>若把实数换成有理数，$\sup$ 可能落在"洞"里，定理立刻崩掉——这就是第二章必须建在第一章之上的原因。</p>
 
   <div class="box ex"><div class="tag"><span class="num">例 2.5</span>　递推数列</div>
     <p>设 $a_1=1$，$a_{n+1}=\sqrt{2+a_n}$。证明 $\{a_n\}$ 收敛并求极限。</p>
@@ -615,13 +703,24 @@ details.vid-wrap .vid{margin:0;border:0;border-radius:0;box-shadow:none}
     </div></details>
   </div>
 
+  <p class="plain">$e$ 不是算出来的，是<b>证明存在之后命名</b>的：先证 $(1+\frac1n)^n$ 递增有上界，于是极限存在，再把这个极限叫 $e$。算几个值就有感觉：$a_1=2$，$a_2=2.25$，$a_3\approx2.370$，$a_{10}\approx2.594$，$a_{100}\approx2.705$，一路爬向 $2.71828\ldots$，永远爬不到 $3$——定理里的上界 $3$ 就是这么来的。</p>
+
+  <p>它还有个来自钱袋子的解释：年利率 $100\%$ 分 $n$ 次复利，一元年底变成 $(1+\frac1n)^n$。一年结一次得 $2$，每月结一次得 $2.613$，每天结一次得 $2.7146$，连续复利就是 $e\approx2.71828$。<b>分得越细，增长越慢地逼近一个上限</b>——这就是"单调递增且有上界"在现实里的样子。顺带记住 $2\le a_n&lt;3$：$e$ 不是有理数（无理性要到级数章再证）。</p>
+
   <div class="box thm"><div class="tag" data-k="定理"><span class="num">定理 2.8</span>　Cauchy 收敛准则</div>
     <p>$\{a_n\}$ 收敛 $\iff$ $\forall\eps&gt;0,\ \exists N,\ \forall m,n&gt;N:\ |a_m-a_n|&lt;\eps$。</p>
     <p>满足后一条的数列称为<b> Cauchy 列</b>。它的好处是<b>不需要预先知道极限值</b>。</p>
   </div>
 
+  <p class="plain">把两个定义并排看：收敛定义里有一个 $a$，Cauchy 条件里<b>没有 $a$</b>。它换了个问法——不问"离目标还有多远"，只问"自己人之间挤得紧不紧"。$|a_m-a_n|&lt;\eps$ 要求的是<b>尾巴整体的直径</b>小：任取尾巴里的两项，互相都靠得近。好处是<b>可以真的动手验</b>：不必先猜出极限，只比较数列自己的项。</p>
+
   <div class="box warn"><div class="tag">易错</div>
     <p>"$|a_{n+1}-a_n|\to0$"<b>不能</b>推出收敛。反例：$a_n=\ln n$，相邻差 $\ln(1+\frac1n)\to0$，但 $a_n\to+\infty$。Cauchy 准则要求的是<b>任意两项</b>都靠近，而不是相邻两项。</p>
+  </div>
+
+  <div class="box hist"><div class="tag">来龙去脉</div>
+    <p>Cauchy 在十九世纪二十年代的教程里就提出了这个判据：数列收敛，当且仅当它自己人挤得足够紧。但当时"实数是什么"还没说清，他无法证明"Cauchy 列一定有极限"——这件事恰好等价于实数的完备性。</p>
+    <p>完备性要等 Dedekind 的分割与 Cantor 的构造（大致在十九世纪七十年代）才补上。所以这条"准则"虽冠着 Cauchy 的名字，真正成立却依赖后面那代人的工作。本书把它放在确界原理之后讲，顺序才是对的：<b>先有完备的实数轴，才有"挤紧了必定有落脚点"。</b></p>
   </div>
 
   <p class="take"><b>本节带走</b>：存在性定理让你不必先知道极限值：有界 + 单调就够了。</p>
@@ -633,6 +732,10 @@ details.vid-wrap .vid{margin:0;border:0;border-radius:0;box-shadow:none}
     <p>逆否：<b>若能找到两个子列收敛到不同的值（或某个子列发散），则原数列发散。</b></p>
   </div>
 
+  <p class="plain">子列是从原数列里挑出无穷多项、<b>保持原来的先后顺序</b>排成的新数列，比如只取偶数项。它和原数列共享同一条尾巴，所以原数列收敛，子列必然收敛到同一个值。</p>
+
+  <p>反过来用就是判发散的利器：<b>只要找到两条子列落在不同地方，原数列就发散</b>。因为若原数列收敛于 $A$，那么它的<b>每一条</b>子列都得收敛于 $A$，不可能一条去 $1$、一条去 $-1$。这比用定义硬证"不存在 $A$"省力得多：不必对每个候选 $A$ 逐一排除。"保持顺序"和"无穷多项"两个条件不能丢：只挑有限项得到的是有限数列，谈不上极限；打乱顺序则可能改变结果——$1,-1,\frac12,-\frac12,\dots$ 收敛于 $0$，把正项全排前面、负项全排后面就不再收敛。</p>
+
   <div class="box ex"><div class="tag"><span class="num">例 2.6</span>　判定发散</div>
     <p>证明 $a_n=(-1)^n$ 发散。</p>
     <details class="ans"><summary>解答</summary><div class="body">
@@ -641,6 +744,10 @@ details.vid-wrap .vid{margin:0;border:0;border-radius:0;box-shadow:none}
   </div>
 
   <p>顺带一提：有界数列必有收敛子列（Bolzano–Weierstrass 定理），这条在第七章会用有限覆盖定理证明。它说明"有界"虽然不足以保证收敛，但至少保证"某一部分收敛"。</p>
+
+  <p>这条定理与 2.2 的有界性正好配成一对：收敛 $\Rightarrow$ 有界，但有界未必收敛；把结论削弱成"有收敛子列"，逆命题就成立了。<b>"有界"管不住整条数列，却管得住某一条子列</b>——这是"紧性"的第一印象，第七章学有限覆盖时会再见。</p>
+
+  <p class="plain">合起来就是一套工作流程：拿到数列，先看有没有界。无界，直接判发散；有界，再去找子列——找到一条不算数，要<b>两条极限不同</b>的才能判发散；若所有子列都被迫收敛到同一个值，那原数列就收敛（这条在后续课程里反复出现）。</p>
 
   <p class="take"><b>本节带走</b>：找两个子列不同极限，比正面证明发散省力得多。</p>
 
