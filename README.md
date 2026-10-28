@@ -1,5 +1,10 @@
 # 数学分析 · 上册预习讲义
 
+> **本仓库已归档（2026-10-28）**：内容并入 <https://github.com/LUgABeEEE/math-lecture-notes>，
+> 在线阅读改为 <https://lugabeeee.github.io/math-lecture-notes/analysis-vol1/>。
+> 本仓库的 `index.html` 现在是一个跳转页；源码、构建脚本与 `index-offline.html` 保留在此作存档。
+> 若要继续维护，请在合并后的仓库里改 `analysis-vol1/`（`python3 build.py` 会重新生成 `index.html`）。
+
 **在线版**：https://lugabeeee.github.io/math-analysis-preview/
 
 写给数学系大一新生的《数学分析》上册预习讲义，按**华东师范大学数学科学学院编《数学分析》第六版（上册）**的章节顺序编排。
